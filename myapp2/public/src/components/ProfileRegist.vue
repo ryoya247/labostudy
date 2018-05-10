@@ -11,7 +11,6 @@
         <hr>
         <div class = "formwrapper">
           <b-container class='registForm'>
-            <!-- <b-form @submit='onSubmit'> -->
               <b-form-group label="Profile Picture">
                 <div>
                   <b-btn v-b-modal.SelPicModal>Select Picture</b-btn>
@@ -24,12 +23,12 @@
                 <b-form-input v-model='userInfo.userName' type='text' placeholder='name' required></b-form-input>
               </b-form-group>
               <b-form-group label="comment">
-                <b-form-textarea v-model='userInfo.userComment' placeholder='comment' :rows='5' :max-rows='8'></b-form-textarea>
+                <b-form-textarea v-model='userInfo.userBio' placeholder='comment' :rows='5' :max-rows='8'></b-form-textarea>
               </b-form-group>
               <hr>
               <b-row class='buttons'>
                 <b-col>
-                  <b-button type="submit" @click="onRegister" variant="info">保存</b-button>
+                  <b-button @click="onRegister" variant="info">保存</b-button>
                 </b-col>
               </b-row>
             <!-- </b-form> -->
@@ -40,7 +39,7 @@
   </div>
 </template>
 <script>
-import firebase from 'firebase'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ProfileRegist',
@@ -48,19 +47,39 @@ export default {
     return {
       userInfo: {
         userName: '',
-        uesrBio: '',
+        userBio: '',
         userEmail: ''
       },
       myCroppa: {}
     }
   },
-  mounted () {
-    console.log('params', this.$route.params.userEmail)
-    console.log('currentUser', firebase.auth().currentUser)
+  computed: {
+    ...mapGetters([
+      'getUserId',
+      'getCurrentUserInfo'
+    ])
+  },
+  mounted: function () {
+    console.log(this.$route.params)
+    if (this.$route.params) {
+      this.setDefaultUserInfo(this.$route.params.userEmail)
+    }
+  },
+  updated: function () {
+    console.log(this.$route.params)
+    if (this.getCurrentUserInfo) {
+      this.userInfo.userEmail = this.getCurrentUserInfo.userEmail
+    }
   },
   methods: {
+    ...mapActions('profiles/', {
+      setDefaultUserInfo: 'SET_DEFAULT_USER_INFO',
+      setProfile: 'SET_PROFILE'
+    }),
     onRegister () {
       console.log('click onRegister true')
+      this.setProfile(this.userInfo)
+      this.$router.push({ name: 'MainPage' })
     }
   }
 }
