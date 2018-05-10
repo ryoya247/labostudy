@@ -11,7 +11,6 @@
         <hr>
         <div class ="formwrapper">
         <b-container class='SignUpForm'>
-          <b-form @submit='onSubmit'>
             <b-form-group label='Your email'>
               <b-form-input v-model='email' type='email' placeholder='email' required></b-form-input>
             </b-form-group>
@@ -24,10 +23,9 @@
                 <b-button type="submit" variant="info">Register</b-button>
               </b-col> -->
               <b-col>
-                <b-button type="submit" variant="info">Register</b-button>
+                <b-button @click='onSubmit' variant="info">Register</b-button>
               </b-col>
             </b-row>
-          </b-form>
         </b-container>
       </div>
         <hr>
@@ -42,6 +40,7 @@
 
 <script>
 import firebase from 'firebase'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Register',
@@ -52,13 +51,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setNewUser: 'SET_NEW_USER'
+    }),
     onSubmit: function () {
       console.log('onSubmit')
       const $router = this.$router
       if (this.email && this.password) {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
           function (user) {
-            console.log('register: success', user)
+            console.log('register: success', user.uid)
             $router.push({
               name: 'ProfileRegist',
               params: { userEmail: user.email }

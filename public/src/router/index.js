@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Register from '@/components/Register'
 import SignIn from '@/components/SignIn'
 import ProfileRegist from '@/components/ProfileRegist'
+import MainPage from '@/components/MainPage'
 
 Vue.use(Router)
 
