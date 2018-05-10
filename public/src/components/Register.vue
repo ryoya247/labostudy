@@ -16,7 +16,7 @@
               <b-form-input v-model='email' type='email' placeholder='email' required></b-form-input>
             </b-form-group>
             <b-form-group label='Password'>
-              <b-form-input v-model='password' type='text' placeholder='password' required></b-form-input>
+              <b-form-input v-model='password' type='password' placeholder='password' required></b-form-input>
             </b-form-group>
             <hr>
             <b-row class='buttons'>
@@ -58,9 +58,11 @@ export default {
       if (this.email && this.password) {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
           function (user) {
-            console.log('registuser: success')
-            let userEmail = this.email
-            $router.push({ name: 'ProfileRegist', params: userEmail })
+            console.log('register: success', user)
+            $router.push({
+              name: 'ProfileRegist',
+              params: { userEmail: user.email }
+            })
           },
           function (error) {
             var errorCode = error.code
