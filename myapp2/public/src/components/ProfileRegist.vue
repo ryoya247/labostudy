@@ -21,10 +21,10 @@
                 </div>
               </b-form-group>
               <b-form-group label='Your Name'>
-                <b-form-input v-model='userName' type='text' placeholder='name' required></b-form-input>
+                <b-form-input v-model='userInfo.userName' type='text' placeholder='name' required></b-form-input>
               </b-form-group>
               <b-form-group label="comment">
-                <b-form-textarea v-model='userComment' placeholder='comment' :rows='5' :max-rows='8'></b-form-textarea>
+                <b-form-textarea v-model='userInfo.userComment' placeholder='comment' :rows='5' :max-rows='8'></b-form-textarea>
               </b-form-group>
               <hr>
               <b-row class='buttons'>
@@ -40,14 +40,23 @@
   </div>
 </template>
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'ProfileRegist',
   data () {
     return {
-      userName: '',
-      userComment: '',
+      userInfo: {
+        userName: '',
+        uesrBio: '',
+        userEmail: ''
+      },
       myCroppa: {}
     }
+  },
+  mounted () {
+    console.log('params', this.$route.params.userEmail)
+    console.log('currentUser', firebase.auth().currentUser)
   },
   methods: {
     onRegister () {
