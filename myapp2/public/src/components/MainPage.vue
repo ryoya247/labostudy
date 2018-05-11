@@ -1,6 +1,9 @@
 <template>
   <div class = 'mainpage'>
     <h1>this is mainpage</h1>
+    <p>こんにちは、{{ this.getCurrentUserInfo.userName }}さん</p>
+    <p>{{ this.getCurrentUserInfo.userName }}さんのemail → {{ this.getCurrentUserInfo.userEmail}}</p>
+    <p>ひとこと → {{ this.getCurrentUserInfo.userBio }}</p>
     <b-button @click='onSignOut'>signOut</b-button>
   </div>
 </template>
