@@ -11,9 +11,8 @@
         <hr>
         <div class ="formwrapper">
           <b-container class='SignInForm'>
-            <b-form @submit='onSubmit'>
               <b-form-group label='Your email'>
-                <b-form-input v-model='email' type='email' placeholder='email' required></b-form-input>
+                <b-form-input v-model='userEmail' type='email' placeholder='email' required></b-form-input>
               </b-form-group>
               <b-form-group label='Password'>
                 <b-form-input v-model='password' type='text' placeholder='password' required></b-form-input>
@@ -24,10 +23,9 @@
                   <b-button type="submit" variant="info">Register</b-button>
                 </b-col> -->
                 <b-col>
-                  <b-button type="submit" variant="info">SignIn</b-button>
+                  <b-button @click='onSignIn' variant="info">SignIn</b-button>
                 </b-col>
               </b-row>
-            </b-form>
           </b-container>
         </div>
           <hr>
@@ -40,17 +38,28 @@
   </div>
 </template>
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'SignIn',
   data () {
     return {
-      email: '',
+      userEmail: '',
       password: ''
     }
   },
   methods: {
-    onSubmit () {
-      console.log('onSubmit')
+    onSignIn () {
+      console.log('on click Signin')
+      firebase.auth().signInWithEmailAndPassword(this.userEmail, this.password).then(
+        (user) => {
+          console.log('sign in success !!')
+          this.$router.push({ name: 'MainPage' })
+        },
+        (err) => {
+          console.log('sign in failed', err)
+        }
+      )
     }
   }
 }
