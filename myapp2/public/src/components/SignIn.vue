@@ -53,7 +53,7 @@ export default {
       console.log('on click Signin')
       firebase.auth().signInWithEmailAndPassword(this.userEmail, this.password).then(
         (user) => {
-          console.log('sign in success !!')
+          console.log('*** sign in ***')
           this.$router.push({ name: 'MainPage' })
         },
         (err) => {
