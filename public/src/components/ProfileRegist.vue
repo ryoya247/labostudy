@@ -13,7 +13,6 @@
           <b-container class='registForm'>
               <b-form-group label="Profile Picture">
                 <div>
-                  <img :src="img_def" alt="これは画像だよ！！！">
                   <b-button v-b-modal.SelPicModal>Select Picture</b-button>
                   <b-modal id="SelPicModal" title="Select Picture">
                     <croppa v-model="myCroppa"></croppa>
@@ -46,7 +45,6 @@ export default {
   name: 'ProfileRegist',
   data () {
     return {
-      img_def: require("../assets/IMG_1680"),
       userInfo: {
         userName: '',
         userBio: '',
