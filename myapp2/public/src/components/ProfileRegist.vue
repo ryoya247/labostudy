@@ -15,7 +15,13 @@
                 <div>
                   <b-button v-b-modal.SelPicModal>Select Picture</b-button>
                   <b-modal id="SelPicModal" title="Select Picture">
-                    <croppa v-model="myCroppa"></croppa>
+                    <croppa v-model="myCroppa"
+                            :width="300"
+                            :height="300"
+                            :prevent-white-space="true"
+                            :image-border-radius="310"
+                            :show-loading="true">
+                    </croppa>
                   </b-modal>
                 </div>
               </b-form-group>
@@ -40,6 +46,8 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+// import moment from 'moment'
+// import firebase from 'firebase'
 
 export default {
   name: 'ProfileRegist',
@@ -61,13 +69,14 @@ export default {
     ])
   },
   mounted: function () {
-    console.log(this.$route.params)
+    console.log('mounted', this.$route.params)
     if (this.$route.params) {
       this.setDefaultUserInfo(this.$route.params.userEmail)
+      this.userInfo.userEmail = this.$route.params.userEmail
     }
   },
   updated: function () {
-    console.log(this.$route.params)
+    console.log(this.getCurrentUserInfo)
     if (this.getCurrentUserInfo) {
       this.userInfo.userEmail = this.getCurrentUserInfo.userEmail
     }
@@ -82,6 +91,26 @@ export default {
       this.setProfile(this.userInfo)
       this.$router.push({ name: 'MainPage' })
     }
+    // uploadPhoto () {
+    // //   console.log(this.myCroppa.generateBlob(blob))
+    //   var date = moment()
+    //   var profileImageUrl = date.format('1+YYYY/MM/DD HH:mm') + '.jpg'
+    //   const storageProfilePhotoRef = storage.ref('profilepictures')
+    //   const path = profileImageUrl
+    //   const photoImagesRef = storageProfilePhotoRef.child(path)
+    //   // generateBlobで、画像からblobオブジェクトを作成します。
+    //   // blobオブジェクトをそのままputメソッドで、Cloud Storageにアップしています。
+    //   this.myCroppa.generateBlob((blob) => {
+    //     photoImagesRef.put(blob)
+    //       .then((snapshot) => {
+    //         const photoURL = snapshot.downloadURL
+    //         this.editInfo.userIcon = photoURL
+    //       })
+    //       .catch((err) => {
+    //         console.log('upload error:', err)
+    //       })
+    //   })
+    // }
   }
 }
 </script>
@@ -102,5 +131,10 @@ export default {
   width: 60%;
   padding: 30px 0;
   margin: 0 auto;
+}
+.croppa-container {
+  background-color: lightblue;
+  border: 2px solid grey;
+  border-radius: 50%;
 }
 </style>
