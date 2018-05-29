@@ -21,6 +21,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$firebase = firebaseApp
 export const db = firebaseApp.database()
+export const storage = firebaseApp.storage()
 
 sync(store, router)
 store.dispatch('initUser')
@@ -34,7 +35,24 @@ firebaseApp.auth().onAuthStateChanged(function (user) {
       router,
       components: { App },
       template: '<App/>'
+      // methods: {
+      //   croppaOnInit () {
+      //     this.croppa.addClipPlugin(function (ctx, x, y, w, h) {
+      //       /*
+      //        * ctx: canvas context
+      //        * x: start point (top-left corner) x coordination
+      //        * y: start point (top-left corner) y coordination
+      //        * w: croppa width
+      //        * h: croppa height
+      //       */
+      //       console.log(x, y, w, h)
+      //       ctx.beginPath()
+      //       ctx.arc(x + w / 2, y + h / 2, w / 2, 0, 2 * Math.PI, true)
+      //       ctx.closePath()
+      //     })
+      //   }
+      // }
     })
   }
-  console.log('main.js:onAuthStateChanged', user, app)
+  console.log('onAuthStateChanged[main.js]', user)
 })

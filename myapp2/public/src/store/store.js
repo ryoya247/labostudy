@@ -12,6 +12,7 @@ const currentUserRef = (currentUserId) => { return db.ref('users/' + currentUser
 
 const myplugins = store => {
   firebaseApp.auth().onAuthStateChanged(function (user) {
+    console.log('in myPlugins', user)
     if (user) {
       store.dispatch(getterConstants.GET_USER_INFO, user.uid)
     }
@@ -31,7 +32,7 @@ const store = new Vuex.Store({
   mutations: {
     ...firebaseMutations,
     setUser (state, user) {
-      console.log('setUser:mutations', user)
+      console.log('setUser in mutations', user)
       state.authUser = user
       if (user) {
         state.currentUserId = user.uid
@@ -50,11 +51,10 @@ const store = new Vuex.Store({
       })
     },
     setUser (context, user) {
-      console.log('setUser:actions', user)
+      console.log('setUser in actions', user)
       context.commit('setUser', user)
     },
     [getterConstants.GET_USER_INFO]: firebaseAction(({ bindFirebaseRef }, currentUserId) => {
-      console.log('bind:getterConstants.GET_USER_INFO', currentUserId)
       if (!currentUserId) currentUserId = '__GHOST_USER__'
       bindFirebaseRef('currentUser', currentUserRef(currentUserId), { wait: true })
     })
