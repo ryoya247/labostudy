@@ -3,8 +3,8 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Register from '@/components/Register'
 import SignIn from '@/components/SignIn'
-import ProfileRegist from '@/components/ProfileRegist'
-import MainPage from '@/components/MainPage'
+import ProfileRegist from '@/views/ProfileRegist'
+import MainPage from '@/views/MainPage'
 
 import firebaseApp from './../../firebase_setup'
 
