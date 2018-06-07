@@ -1,9 +1,9 @@
 <template>
   <div class = 'mainpage'>
     <h1>this is mainpage</h1>
-    <p>こんにちは、{{ this.userInfo.userName }}さん</p>
-    <p>{{ this.userInfo.userName }}さんのemail → {{ this.userInfo.userEmail}}</p>
-    <p>ひとこと → {{ this.userInfo.userBio }}</p>
+    <p>こんにちは、{{ this.getUserName }}さん</p>
+    <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
+    <p>ひとこと → {{ this.getUserBio }}</p>
     <b-button @click='onSignOut'>signOut</b-button>
     <span class="info-profimg">
       <b-img rounded="circle" :src="'static/img/IMG_1680.PNG'" width="75" height="75" class="m-1" />
@@ -24,7 +24,7 @@
 </template>
 <script>
 import firebase from 'firebase'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -41,31 +41,51 @@ export default {
   computed: {
     ...mapGetters([
       'getUserId',
+      'getCurrentUser',
       'getCurrentUserInfo'
-    ])
-  },
-  created () {
-    console.log('created', this.getCurrentUserInfo)
-  },
-  mounted () {
-    console.log('mounted', this.getCurrentUserInfo)
-    if (this.getCurrentUserInfo) {
-      this.userInfo.userName = this.getCurrentUserInfo.userName
-      this.userInfo.userEmail = this.getCurrentUserInfo.userEmail
-      this.userInfo.userBio = this.getCurrentUserInfo.userBio
+    ]),
+    getUserName () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName
+      else return ''
+    },
+    getUserEmail () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userEmail) return this.getCurrentUserInfo.userEmail
+      else return ''
+    },
+    getUserBio () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userBio) return this.getCurrentUserInfo.userBio
+      else return ''
+    },
+    getUserIcon () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) return this.getCurrentUserInfo.userIcon
+      else return ''
     }
   },
-  updated () {
-    console.log('updated', this.getCurrentUserInfo)
+  created () {
+    console.log('::MainPage created::')
   },
+  // mounted: function () {
+  //   console.log('mounted: getUserId', this.getUserId)
+  //   console.log('mounted: getCurrentUser', this.getCurrentUser)
+  //   console.log('mounted: getCurrentUser', this.getCurrentUserInfo)
+  //   if (this.getCurrentUserInfo) {
+  //     this.userInfo.userName = this.getCurrentUserInfo.userName
+  //     this.userInfo.userEmail = this.getCurrentUserInfo.userEmail
+  //     this.userInfo.userBio = this.getCurrentUserInfo.userBio
+  //   }
+  //   console.log('this.userInfo', this.userInfo)
+  // },
   methods: {
+    ...mapActions({
+      destroySession: 'destroySession'
+    }),
     onSignOut () {
-      firebase.auth().signOut().then(
-        (user) => {
-          console.log('*** sign out ***')
+      firebase.auth().signOut()
+        .then((user) => this.destroySession())
+        .then(() => {
+          console.log('destroySession:::::')
           this.$router.replace({ name: 'SignIn' })
-        }
-      )
+        })
     }
   }
 }

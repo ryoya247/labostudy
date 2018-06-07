@@ -15,7 +15,7 @@
                 <b-form-input v-model='userEmail' type='email' placeholder='email' required></b-form-input>
               </b-form-group>
               <b-form-group label='Password'>
-                <b-form-input v-model='password' type='text' placeholder='password' required></b-form-input>
+                <b-form-input v-model='password' type='password' placeholder='password' required></b-form-input>
               </b-form-group>
               <hr>
               <b-row class='buttons'>
@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     onSignIn () {
-      console.log('on click Signin')
       firebase.auth().signInWithEmailAndPassword(this.userEmail, this.password).then(
         (user) => {
           console.log('*** sign in ***')

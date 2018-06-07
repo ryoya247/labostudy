@@ -24,12 +24,17 @@ export const db = firebaseApp.database()
 export const storage = firebaseApp.storage()
 
 sync(store, router)
+console.log('mainjs:: initUser')
 store.dispatch('initUser')
 
 let app
 firebaseApp.auth().onAuthStateChanged(function (user) {
   if (!app) {
     app = new Vue({
+      mounted () {
+        console.log('Vue mounted.')
+        console.log(store.state)
+      },
       el: '#app',
       store,
       router,

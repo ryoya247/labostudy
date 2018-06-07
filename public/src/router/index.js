@@ -6,12 +6,21 @@ import SignIn from '@/components/SignIn'
 import ProfileRegist from '@/components/ProfileRegist'
 import MainPage from '@/components/MainPage'
 
+import firebaseApp from './../../firebase_setup'
+
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
+  mode: 'hash',
+  linkActiveClass: 'open active',
   routes: [
     {
       path: '/',
+      name: 'MainPage',
+      component: MainPage
+    },
+    {
+      path: '/signin',
       name: 'SignIn',
       component: SignIn
     },
@@ -24,11 +33,47 @@ export default new Router({
       path: '/profileregist',
       name: 'ProfileRegist',
       component: ProfileRegist
-    },
-    {
-      path: '/mianpage',
-      name: 'MainPage',
-      component: MainPage
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  let currentUser = firebaseApp.auth().currentUser
+  console.log('currentUser::::', currentUser)
+  console.log('requireAuth::::', requiresAuth)
+  if (requiresAuth && !currentUser) {
+    next({ name: 'SignIn' })
+  // } else if (currentUser && !currentUser.displayName) {
+  //   next({ name: 'ProfileRegist' })
+  } else if (!requiresAuth && currentUser) {
+    next()
+  } else {
+    next()
+  }
+})
+export default router
+// export default new Router({
+//   routes: [
+//     {
+//       path: '/',
+//       name: 'SignIn',
+//       component: SignIn
+//     },
+//     {
+//       path: '/register',
+//       name: 'Register',
+//       component: Register
+//     },
+//     {
+//       path: '/profileregist',
+//       name: 'ProfileRegist',
+//       component: ProfileRegist
+//     },
+//     {
+//       path: '/mianpage',
+//       name: 'MainPage',
+//       component: MainPage
+//     }
+//   ]
+// })
