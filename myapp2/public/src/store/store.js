@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { firebaseMutations, firebaseAction } from 'vuexfire'
 import firebaseApp from './../../firebase_setup'
-import * as getterConstants from './getterConstants'
+import * as constants from './constants'
 import { profilesModule } from './profiles'
 
 const db = firebaseApp.database()
+
 Vue.use(Vuex)
 
 const currentUserRef = (currentUserId) => { return db.ref('users/' + currentUserId) }
@@ -14,7 +15,7 @@ const myplugins = store => {
   firebaseApp.auth().onAuthStateChanged(function (user) {
     console.log('in myPlugins', user)
     if (user) {
-      store.dispatch(getterConstants.GET_USER_INFO, user.uid)
+      store.dispatch(constants.GET_USER_INFO, user.uid)
     }
   })
 }
@@ -31,31 +32,38 @@ const store = new Vuex.Store({
   },
   mutations: {
     ...firebaseMutations,
+    destroySession (state) {
+      console.log('destroySession::', state)
+      console.log(Object.keys(state))
+      state.currentUserId = ''
+      state.currentUser = {}
+      console.log('destroyedSession::', state)
+    },
     setUser (state, user) {
       console.log('setUser in mutations', user)
       state.authUser = user
       if (user) {
         state.currentUserId = user.uid
-        console.log('Auth:1', user, location.herf)
+        console.log('Auth:1', state.currentUser)
       } else {
         state.currentUserId = null
-        console.log('Auth:0', user, location.herf)
+        console.log('Auth:0', user)
       }
     }
   },
   actions: {
+    destroySession (context) {
+      context.commit('destroySession')
+    },
     initUser (context) {
       firebaseApp.auth().onAuthStateChanged(function (user) {
         console.log('onAuthStateChanged:', user)
         context.commit('setUser', user)
       })
     },
-    setUser (context, user) {
-      console.log('setUser in actions', user)
-      context.commit('setUser', user)
-    },
-    [getterConstants.GET_USER_INFO]: firebaseAction(({ bindFirebaseRef }, currentUserId) => {
+    [constants.GET_USER_INFO]: firebaseAction(({ bindFirebaseRef }, currentUserId) => {
       if (!currentUserId) currentUserId = '__GHOST_USER__'
+      console.log(currentUserId)
       bindFirebaseRef('currentUser', currentUserRef(currentUserId), { wait: true })
     })
   },
