@@ -83,7 +83,7 @@ export default {
     onRegister () {
       console.log('click onRegister true')
       this.setProfile(this.userInfo)
-      this.$router.push({ name: 'MainPage' })
+      this.$router.push({ name: 'mainpage' })
     }
     // uploadPhoto () {
     // //   console.log(this.myCroppa.generateBlob(blob))

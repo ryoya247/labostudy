@@ -5,6 +5,7 @@ import Register from '@/components/Register'
 import SignIn from '@/components/SignIn'
 import ProfileRegist from '@/views/ProfileRegist'
 import MainPage from '@/views/MainPage'
+import Full from '@/container/Full'
 
 import firebaseApp from './../../firebase_setup'
 
@@ -16,8 +17,15 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'MainPage',
-      component: MainPage
+      name: 'full',
+      component: Full,
+      children: [
+        {
+          path: 'mainpage',
+          name: 'MainPage',
+          component: MainPage
+        }
+      ]
     },
     {
       path: '/signin',

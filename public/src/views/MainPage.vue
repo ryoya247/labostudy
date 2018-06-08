@@ -1,6 +1,5 @@
 <template>
   <div class = 'mainpage'>
-    <Header />
     <h1>this is mainpage</h1>
     <p>こんにちは、{{ this.getUserName }}さん</p>
     <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
@@ -26,12 +25,8 @@
 <script>
 import firebase from 'firebase'
 import { mapGetters, mapActions } from 'vuex'
-import Header from '../components/Header/Header.vue'
 
 export default {
-  components: {
-    Header
-  },
   data () {
     return {
       myCroppa: {},
