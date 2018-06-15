@@ -3,18 +3,18 @@
     <b-container>
       <b-jumbotron bg-variant='light' text-variant='info'>
         <template slot='header'>
-          Register
+          新規登録
         </template>
         <template slot='lead'>
-          This is Register page. You have to fill in the all blanks.
+          これは新規登録画面だよ。
         </template>
         <hr>
         <div class ="formwrapper">
         <b-container class='SignUpForm'>
-            <b-form-group label='Your email'>
+            <b-form-group label='E-mail'>
               <b-form-input v-model='email' type='email' placeholder='email' required></b-form-input>
             </b-form-group>
-            <b-form-group label='Password'>
+            <b-form-group label='パスワード'>
               <b-form-input v-model='password' type='password' placeholder='password' required></b-form-input>
             </b-form-group>
             <hr>
@@ -23,15 +23,15 @@
                 <b-button type="submit" variant="info">Register</b-button>
               </b-col> -->
               <b-col>
-                <b-button @click='onSubmit' variant="info">Register</b-button>
+                <b-button @click='onSubmit' variant="info">登録</b-button>
               </b-col>
             </b-row>
         </b-container>
       </div>
         <hr>
         <b-row>
-          <b-col><p>You already have an account??</p></b-col>
-          <b-col><router-link :to="{ name: 'SignIn' }">Go to SignIn page.</router-link></b-col>
+          <b-col><p>既にアカウントを持ってる？</p></b-col>
+          <b-col><router-link :to="{ name: 'SignIn' }">ここからログイン</router-link></b-col>
         </b-row>
       </b-jumbotron>
     </b-container>

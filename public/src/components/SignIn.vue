@@ -3,18 +3,18 @@
     <b-container>
       <b-jumbotron bg-variant="light" text-variant="info">
         <template slot="header">
-          Sign In
+          ログイン
         </template>
         <template slot="lead">
-          This is Sign In page.
+          これはログインページだよ
         </template>
         <hr>
         <div class ="formwrapper">
           <b-container class='SignInForm'>
-              <b-form-group label='Your email'>
+              <b-form-group label='E-mail'>
                 <b-form-input v-model='userEmail' type='email' placeholder='email' required></b-form-input>
               </b-form-group>
-              <b-form-group label='Password'>
+              <b-form-group label='パスワード'>
                 <b-form-input v-model='password' type='password' placeholder='password' required></b-form-input>
               </b-form-group>
               <hr>
@@ -23,15 +23,15 @@
                   <b-button type="submit" variant="info">Register</b-button>
                 </b-col> -->
                 <b-col>
-                  <b-button @click='onSignIn' variant="info">SignIn</b-button>
+                  <b-button @click='onSignIn' variant="info">ログイン</b-button>
                 </b-col>
               </b-row>
           </b-container>
         </div>
           <hr>
           <b-row>
-            <b-col><p>You don't have an account?</p></b-col>
-            <b-col><router-link :to="{ name: 'Register' }">Go to Register page.</router-link></b-col>
+            <b-col><p>アカウントがない？</p></b-col>
+            <b-col><router-link :to="{ name: 'Register' }">ここから新規登録</router-link></b-col>
           </b-row>
       </b-jumbotron>
     </b-container>
