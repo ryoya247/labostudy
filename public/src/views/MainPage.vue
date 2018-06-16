@@ -4,10 +4,7 @@
     <p>こんにちは、{{ this.getUserName }}さん</p>
     <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
     <p>ひとこと → {{ this.getUserBio }}</p>
-    <b-button @click='onSignOut'>signOut</b-button>
-    <span class="info-profimg">
-      <b-img rounded="circle" :src="'static/img/IMG_1680.PNG'" width="75" height="75" class="m-1" />
-    </span>
+    <!-- <b-button @click='onSignOut'>signOut</b-button> -->
     <div>
       <b-button v-b-modal.SelPicModal>Select Picture</b-button>
       <b-modal id="SelPicModal" title="Select Picture">
@@ -23,8 +20,8 @@
   </div>
 </template>
 <script>
-import firebase from 'firebase'
-import { mapGetters, mapActions } from 'vuex'
+// import firebase from 'firebase'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -63,7 +60,7 @@ export default {
   },
   created () {
     console.log('::MainPage created::')
-  },
+  }
   // mounted: function () {
   //   console.log('mounted: getUserId', this.getUserId)
   //   console.log('mounted: getCurrentUser', this.getCurrentUser)
@@ -75,19 +72,18 @@ export default {
   //   }
   //   console.log('this.userInfo', this.userInfo)
   // },
-  methods: {
-    ...mapActions({
-      destroySession: 'destroySession'
-    }),
-    onSignOut () {
-      firebase.auth().signOut()
-        .then((user) => this.destroySession())
-        .then(() => {
-          console.log('destroySession:::::')
-          this.$router.replace({ name: 'SignIn' })
-        })
-    }
-  }
+  // methods: {
+  //   ...mapActions({
+  //     destroySession: 'destroySession'
+  //   }),
+  //   onSignOut () {
+  //     firebase.auth().signOut()
+  //       .then((user) => this.destroySession())
+  //       .then(() => {
+  //         console.log('destroySession:::::')
+  //         this.$router.replace({ name: 'SignIn' })
+  //       })
+  //   }
 }
 
 </script>

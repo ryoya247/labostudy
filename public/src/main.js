@@ -9,6 +9,7 @@ import store from './store/store'
 import firebaseApp from './../firebase_setup'
 import BootstrapVue from 'bootstrap-vue'
 import Croppa from 'vue-croppa'
+import VueSweetalert2 from 'vue-sweetalert2'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-croppa/dist/vue-croppa.css'
@@ -16,6 +17,7 @@ import 'vue-croppa/dist/vue-croppa.css'
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(Croppa)
+Vue.use(VueSweetalert2)
 
 Vue.config.productionTip = false
 

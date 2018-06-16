@@ -19,6 +19,10 @@ let router = new Router({
       path: '/',
       name: 'full',
       component: Full,
+      meta: {
+        requiresAuth: true
+      },
+      redirect: 'mainpage',
       children: [
         {
           path: 'mainpage',
