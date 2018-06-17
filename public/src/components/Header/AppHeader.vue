@@ -2,7 +2,7 @@
   <div class ='header'>
     <b-navbar toggleable="md" type="dark" variant="info">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <b-navbar-brand href="#">Lab_Study</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item href="#">Link</b-nav-item>
@@ -43,12 +43,25 @@ export default {
       destroySession: 'destroySession'
     }),
     logout () {
-      firebase.auth().signOut()
-        .then((user) => this.destroySession())
-        .then(() => {
-          console.log('destroySession:::::')
-          this.$router.replace({ name: 'SignIn' })
-        })
+      this.$swal({
+        title: '確認',
+        text: 'ログアウトしますか？',
+        type: 'question',
+        showCancelButton: true
+      }).then((result) => {
+        if (result.value) {
+          firebase.auth().signOut()
+            .then((user) => this.destroySession())
+            .then(() => {
+              console.log('destroySession:::::')
+              this.$router.replace({ name: 'SignIn' })
+            })
+          this.$swal({
+            title: 'ログアウトしました',
+            type: 'success'
+          })
+        }
+      })
     }
   }
 }

@@ -1,12 +1,13 @@
 <template>
   <div class="app">
     <app-header></app-header>
-    <router-view></router-view>
+    <div class="routerView">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script>
 import AppHeader from '../components/Header/AppHeader.vue'
-console.log(AppHeader)
 
 export default {
   name: 'full',
@@ -16,4 +17,7 @@ export default {
 }
 </script>
 <style>
+.routerView{
+  margin: 50px;
+}
 </style>

@@ -4,8 +4,7 @@
     <p>こんにちは、{{ this.getUserName }}さん</p>
     <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
     <p>ひとこと → {{ this.getUserBio }}</p>
-    <!-- <b-button @click='onSignOut'>signOut</b-button> -->
-    <div>
+    <!-- <div>
       <b-button v-b-modal.SelPicModal>Select Picture</b-button>
       <b-modal id="SelPicModal" title="Select Picture">
         <croppa v-model="myCroppa"
@@ -16,7 +15,8 @@
                 :show-loading="true">
         </croppa>
       </b-modal>
-    </div>
+    </div> -->
+      <b-button @click="makeSeminer">勉強会を作成</b-button>
   </div>
 </template>
 <script>
@@ -60,36 +60,25 @@ export default {
   },
   created () {
     console.log('::MainPage created::')
-  }
-  // mounted: function () {
-  //   console.log('mounted: getUserId', this.getUserId)
-  //   console.log('mounted: getCurrentUser', this.getCurrentUser)
-  //   console.log('mounted: getCurrentUser', this.getCurrentUserInfo)
-  //   if (this.getCurrentUserInfo) {
-  //     this.userInfo.userName = this.getCurrentUserInfo.userName
-  //     this.userInfo.userEmail = this.getCurrentUserInfo.userEmail
-  //     this.userInfo.userBio = this.getCurrentUserInfo.userBio
-  //   }
-  //   console.log('this.userInfo', this.userInfo)
+  },
+  // mounted () {
+  //   console.log(this.getUserName)
+  //   this.userInfo.userName = this.getUserName
+  //   this.userInfo.userEmail = this.getUserEmail
+  //   this.userInfo.userBio = this.getUserBio
+  //   this.userInfo.userIcon = this.getUserIcon
+  //   console.log(this.userInfo)
   // },
-  // methods: {
-  //   ...mapActions({
-  //     destroySession: 'destroySession'
-  //   }),
-  //   onSignOut () {
-  //     firebase.auth().signOut()
-  //       .then((user) => this.destroySession())
-  //       .then(() => {
-  //         console.log('destroySession:::::')
-  //         this.$router.replace({ name: 'SignIn' })
-  //       })
-  //   }
+  methods: {
+    makeSeminer () {
+      console.log(this.getUserId)
+      // this.$router.push({ name: 'SeminerRegist', params: { item: this.userInfo } })
+      this.$router.push({ name: 'SeminerRegist' })
+    }
+  }
 }
 
 </script>
 <style scoped>
-.mainpage{
-  max-width: 800px;
-  margin: 15px auto;
-}
+
 </style>

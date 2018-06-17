@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Register from '@/components/Register'
 import SignIn from '@/components/SignIn'
+import SeminerRegist from '@/components/SeminerRegist'
 import ProfileRegist from '@/views/ProfileRegist'
 import MainPage from '@/views/MainPage'
 import Full from '@/container/Full'
@@ -28,6 +29,11 @@ let router = new Router({
           path: 'mainpage',
           name: 'MainPage',
           component: MainPage
+        },
+        {
+          path: 'seminerregist',
+          name: 'SeminerRegist',
+          component: SeminerRegist
         }
       ]
     },
