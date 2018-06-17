@@ -31,7 +31,7 @@ let router = new Router({
           component: MainPage
         },
         {
-          path: 'seminerregist',
+          path: 'seminer-regist',
           name: 'SeminerRegist',
           component: SeminerRegist
         }
