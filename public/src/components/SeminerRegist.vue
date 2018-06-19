@@ -8,6 +8,7 @@
             {{ this.seminerInfo.seminerTitle }}
           </b-card>
           <b-card title="参加者詳細" bg-variant="light" class="form-card">
+
           </b-card>
 
           <b-card title="イベント画像" bg-variant="light" class="form-card">
@@ -41,9 +42,10 @@
             </b-row>
           </b-card>
           <b-card title="場所" bg-variant="light" class="form-card">
+            <b-form-select v-model="selectedCanpassType" :options="canpassType" />
             <GmapMap
-              :center="{lat:10, lng:10}"
-              :zoom="7"
+              :center="this.getCanpassType"
+              :zoom="14"
               map-type-id="terrain"
               style="width: 100%; height: 300px"
             >
@@ -51,8 +53,8 @@
                 :key="index"
                 v-for="(m, index) in markers"
                 :position="m.position"
-                :clickable="true"
-                :draggable="true"
+                :clickable="false"
+                :draggable="false"
                 @click="center=m.position"
               />
             </GmapMap>
@@ -76,7 +78,41 @@ export default{
         userBio: '',
         userIcon: ''
       },
-      myCroppa: {}
+      myCroppa: {},
+      canpassType: [
+        {
+          value: 'aoyama',
+          text: '青山キャンパス'
+        },
+        {
+          value: 'sagamihara',
+          text: '相模原キャンパス'
+        }
+      ],
+      selectedCanpassType: 'meta',
+      markers: {
+        sagamihara: {
+          position: {
+            lat: 35.566032,
+            lng: 139.403646
+          }
+        },
+        aoyama: {
+          position: {
+            lat: 35.660374,
+            lng: 139.709558
+          }
+        }
+      }
+    }
+  },
+  computed: {
+    getCanpassType () {
+      if (this.selectedCanpassType === 'meta') {
+        return {lat: 35.566032, lng: 139.403646}
+      } else if (this.markers[this.selectedCanpassType].position) {
+        return this.markers[this.selectedCanpassType].position
+      }
     }
   }
   // mounted: function () {
@@ -92,6 +128,7 @@ export default{
 
 <style scoped>
 .form-card{
+  border: lightgray solid 5px;
   margin-bottom: 10px;
 }
 </style>
