@@ -4,11 +4,23 @@
       <b-row>
         <b-col cols="8">
           <b-card title="イベント名" bg-variant="light" class="form-card">
-            <b-form-input size="sm" type="text" placeholder="イベント名を入力" v-model="seminerInfo.seminerTitle"></b-form-input>
-            {{ this.seminerInfo.seminerTitle }}
+            <b-form-input size="lg" type="text" placeholder="イベント名を入力" v-model="seminerInfo.Title"></b-form-input>
           </b-card>
           <b-card title="参加者詳細" bg-variant="light" class="form-card">
-
+            <b-row>
+              <b-col cols="6">
+                <label for="participation">参加枠名</label>
+                <b-form-input v-model="seminerInfo.detailMember.name" id="participation" size="sm" type="text"></b-form-input>
+              </b-col>
+              <b-col cols="3">
+                <label for="capacity">定員数</label>
+                <b-form-input v-model="seminerInfo.detailMember.capa" id="capacity" size="sm" type="text"></b-form-input>
+              </b-col>
+              <b-col cols="3">
+                <label for="avlorlot">先着 / 抽選</label>
+                <b-form-select v-model="seminerInfo.detailMember.arrivalOrLottely" id="avlorlot" size="sm" />
+              </b-col>
+            </b-row>
           </b-card>
 
           <b-card title="イベント画像" bg-variant="light" class="form-card">
@@ -29,15 +41,15 @@
             <b-row>
               <b-col sm="5"><label for="dateStr">開始日時</label></b-col>
               <b-col sm="7" id="dateStr">
-                <b-form-input size="sm" type="date"></b-form-input>
-                <b-form-input size="sm" type="time"></b-form-input>
+                <b-form-input v-model="seminerInfo.seminerDate.start.date" size="sm" type="date"></b-form-input>
+                <b-form-input v-model="seminerInfo.seminerDate.start.time" size="sm" type="time"></b-form-input>
               </b-col>
             </b-row>
             <b-row>
               <b-col sm="5"><label for="dateStr">終了日時</label></b-col>
               <b-col sm="7" id="dateStr">
-                <b-form-input size="sm" type="date"></b-form-input>
-                <b-form-input size="sm" type="time"></b-form-input>
+                <b-form-input v-model="seminerInfo.seminerDate.end.date" size="sm" type="date"></b-form-input>
+                <b-form-input v-model="seminerInfo.seminerDate.end.time" size="sm" type="time"></b-form-input>
               </b-col>
             </b-row>
           </b-card>
@@ -70,7 +82,25 @@ export default{
   data () {
     return {
       seminerInfo: {
-        seminerTitle: ''
+        Title: '',
+        detailMember: {
+          name: '',
+          capa: '',
+          arrivalOrLottely: ''
+        },
+        seminerImage: '',
+        seminerDate: {
+          start: {
+            date: '',
+            time: ''
+          },
+          end: {
+            date: '',
+            time: ''
+          }
+        },
+        Place: '',
+        Discription: ''
       },
       userInfo: {
         userName: '',
@@ -114,6 +144,9 @@ export default{
         return this.markers[this.selectedCanpassType].position
       }
     }
+  },
+  updated: function () {
+    console.log(this.seminerInfo)
   }
   // mounted: function () {
   //   console.log(this.$route.params)
