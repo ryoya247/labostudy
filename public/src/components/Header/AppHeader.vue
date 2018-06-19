@@ -11,10 +11,11 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <!-- <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/> -->
-            <b-dropdown no-caret>
+            <b-dropdown size="lg" right>
               <template slot="button-content">
-                <b-img  :src="'static/img/IMG_1680.PNG'" width="75" height="75" class="m-1" />
+                <i class="far fa-user"></i>
               </template>
+              <b-img  :src="'static/img/IMG_1680.PNG'" width="60" height="60" class="m-1" />
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0">プロフィール</b-dropdown-item-button>
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0"  @click="logout">ログアウト</b-dropdown-item-button>
             </b-dropdown>
