@@ -3,7 +3,7 @@ const firebaseConfig = {
   authDomain: 'myapp2-b32b4.firebaseapp.com',
   databaseURL: 'https://myapp2-b32b4.firebaseio.com',
   projectId: 'myapp2-b32b4',
-  storageBucket: '',
+  storageBucket: 'myapp2-b32b4.appspot.com',
   messagingSenderId: '55488749381'
 }
 

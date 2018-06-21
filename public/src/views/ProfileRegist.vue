@@ -14,15 +14,7 @@
               <b-form-group label="Profile Picture">
                 <div>
                   <b-button v-b-modal.SelPicModal>Select Picture</b-button>
-                  <b-modal id="SelPicModal" title="Select Picture">
-                    <croppa v-model="myCroppa"
-                            :width="300"
-                            :height="300"
-                            :prevent-white-space="true"
-                            :image-border-radius="310"
-                            :show-loading="true">
-                    </croppa>
-                  </b-modal>
+                  <b-img v-if="userInfo.userIcon" width="80px" height="80px" :src="userInfo.userIcon" alt=""/>
                 </div>
               </b-form-group>
               <b-form-group label='Your Name'>
@@ -42,11 +34,24 @@
         </div>
       </b-jumbotron>
     </b-container>
+    <b-modal id="SelPicModal" title="Select Picture" ref="modal" @hide="handleClickEvent">
+      <croppa v-model="myCroppa"
+              :width="300"
+              :height="300"
+              :prevent-white-space="true"
+              :show-remove-button="true"
+              remove-button-color="black"
+              :accept="'image/*'"
+              @file-type-mismatch="onFileTypeMismatch"
+              :show-loading="true">
+      </croppa>
+    </b-modal>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import moment from 'moment'
+import { storage } from '@/main'
+import moment from 'moment'
 // import firebase from 'firebase'
 
 export default {
@@ -56,7 +61,7 @@ export default {
       userInfo: {
         userName: '',
         userBio: '',
-        userEmail: '',
+        userEmail: this.currentEmail,
         userIcon: ''
       },
       myCroppa: {}
@@ -66,13 +71,29 @@ export default {
     ...mapGetters([
       'getUserId',
       'getCurrentUserInfo'
-    ])
+    ]),
+    getCurrentUserEmail () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userEmail) {
+        return this.getCurrentUserInfo.userEmail
+      } else {
+        return ''
+      }
+    }
   },
-  mounted: function () {
-    console.log('mounted', this.$route.params)
-    if (this.$route.params) {
-      this.setDefaultUserInfo(this.$route.params.userEmail)
-      this.userInfo.userEmail = this.$route.params.userEmail
+  // },
+  // mounted: function () {
+  //   console.log('mounted', this.$route.params)
+  //   console.log('mounted', this.getCurrentUserEmail)
+  //   if (this.$route.params) {
+  //     this.setDefaultUserInfo(this.$route.params.userEmail)
+  //     this.userInfo.userEmail = this.$route.params.userEmail
+  //   }
+  // },
+  created: function () {
+    console.log('created', this.$firebase.auth().currentUser.email)
+    if (this.$firebase.auth().currentUser.email) {
+      this.setDefaultUserInfo(this.$firebase.auth().currentUser.email)
+      this.userInfo.userEmail = this.$firebase.auth().currentUser.email
     }
   },
   methods: {
@@ -83,28 +104,57 @@ export default {
     onRegister () {
       console.log('click onRegister true')
       this.setProfile(this.userInfo)
-      this.$router.push({ name: 'mainpage' })
+      this.$router.push({ name: 'MainPage' })
+    },
+    handleClickEvent: function (evt) {
+      // console.log(evt)
+      if ((evt.trigger === 'backdrop' || evt.trigger === 'cancel' || evt.trigger === 'header-close') && this.myCroppa.imageSet) {
+        evt.preventDefault()
+        if (confirm('てっててててて')) {
+          this.removeCroppa()
+        }
+      } else if ((evt.trigger === 'backdrop' || evt.trigger === 'cancel' || evt.trigger === 'header-close') && !this.myCroppa.imageSet) {
+        this.$refs.modal.hide()
+      } else if (evt.trigger === 'ok' && !this.myCroppa.imageSet) {
+        evt.preventDefault()
+        alert('アラートだよ')
+      } else if (evt.trigger === 'ok' && this.myCroppa.imageSet) {
+        this.uploadResizedPhoto()
+      }
+    },
+    removeCroppa: function () {
+      this.myCroppa.remove()
+      this.$refs.modal.hide()
+    },
+    onFileTypeMismatch (file) {
+      this.swal({
+        text: 'jpg, gif, png形式でアップして下さい。',
+        type: 'warning'
+      })
+    },
+    uploadResizedPhoto () {
+    // console.log(this.myCroppa.generateBlob(blob))
+      var date = moment()
+      let userId = this.getUserId
+      var profileImageUrl = (date / 1000) + '.jpg'
+      const storageProfilePhotoRef = storage.ref('profilepictures/' + userId)
+      const path = profileImageUrl
+      const photoImagesRef = storageProfilePhotoRef.child(path)
+      console.log('ここ', photoImagesRef)
+      // generateBlobで、画像からblobオブジェクトを作成します。
+      // blobオブジェクトをそのままputメソッドで、Cloud Storageにアップしています。
+      this.myCroppa.generateBlob((blob) => {
+        photoImagesRef.put(blob)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              this.userInfo.userIcon = url
+            })
+          })
+          .catch((err) => {
+            console.log('upload error:', err)
+          })
+      })
     }
-    // uploadPhoto () {
-    // //   console.log(this.myCroppa.generateBlob(blob))
-    //   var date = moment()
-    //   var profileImageUrl = date.format('1+YYYY/MM/DD HH:mm') + '.jpg'
-    //   const storageProfilePhotoRef = storage.ref('profilepictures')
-    //   const path = profileImageUrl
-    //   const photoImagesRef = storageProfilePhotoRef.child(path)
-    //   // generateBlobで、画像からblobオブジェクトを作成します。
-    //   // blobオブジェクトをそのままputメソッドで、Cloud Storageにアップしています。
-    //   this.myCroppa.generateBlob((blob) => {
-    //     photoImagesRef.put(blob)
-    //       .then((snapshot) => {
-    //         const photoURL = snapshot.downloadURL
-    //         this.editInfo.userIcon = photoURL
-    //       })
-    //       .catch((err) => {
-    //         console.log('upload error:', err)
-    //       })
-    //   })
-    // }
   }
 }
 </script>
@@ -125,10 +175,5 @@ export default {
   width: 60%;
   padding: 30px 0;
   margin: 0 auto;
-}
-.croppa-container {
-  background-color: lightblue;
-  border: 2px solid grey;
-  border-radius: 50%;
 }
 </style>

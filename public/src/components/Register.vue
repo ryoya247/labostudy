@@ -3,10 +3,10 @@
     <b-container>
       <b-jumbotron bg-variant='light' text-variant='info'>
         <template slot='header'>
-          新規登録
+          Lab_Study
         </template>
         <template slot='lead'>
-          これは新規登録画面だよ。
+          <h3>新規登録</h3>
         </template>
         <hr>
         <div class ="formwrapper">
@@ -79,9 +79,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h3{
+  text-align: center;
+  margin-top: 50px;
+}
 .register{
-  max-width: 800px;
-  margin: 15px auto;
+  max-width: 600px;
+  margin: 60px auto;
 }
 .buttons{
   text-align: right;
@@ -92,7 +96,7 @@ export default {
   border-radius: 10px;
 }
 .SignUpForm{
-  width: 60%;
+  width: 80%;
   padding: 30px 0;
   margin: 0 auto;
 }

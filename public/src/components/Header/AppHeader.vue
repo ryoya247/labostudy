@@ -15,7 +15,8 @@
               <template slot="button-content">
                 <i class="far fa-user"></i>
               </template>
-              <b-img  :src="'static/img/IMG_1680.PNG'" width="60" height="60" class="m-1" />
+                <b-img  v-if="this.getUserIcon" :src="this.getUserIcon" width="60" height="60" class="m-1" />
+                <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="60" height="60" class="m-1" />
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0">プロフィール</b-dropdown-item-button>
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0"  @click="logout">ログアウト</b-dropdown-item-button>
             </b-dropdown>
@@ -35,10 +36,19 @@
 </template>
 <script>
 import firebase from 'firebase'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'AppHeader',
+  computed: {
+    ...mapGetters([
+      'getCurrentUserInfo'
+    ]),
+    getUserIcon: function () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) return this.getCurrentUserInfo.userIcon
+      else return ''
+    }
+  },
   methods: {
     ...mapActions({
       destroySession: 'destroySession'

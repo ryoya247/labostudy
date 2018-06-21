@@ -1,15 +1,15 @@
 <template>
-  <div class="signin">
+  <div class = 'signin'>
     <b-container>
-      <b-jumbotron bg-variant="light" text-variant="info">
-        <template slot="header">
-          ログイン
+      <b-jumbotron bg-variant='light' text-variant='info'>
+        <template slot='header'>
+          Lab_Study
         </template>
-        <template slot="lead">
-          これはログインページだよ
+        <template slot='lead'>
+          <h3>ログイン</h3>
         </template>
         <hr>
-        <div class ="formwrapper">
+        <div class ='formwrapper'>
           <b-container class='SignInForm'>
               <b-form-group label='E-mail'>
                 <b-form-input v-model='userEmail' type='email' placeholder='email' required></b-form-input>
@@ -20,10 +20,10 @@
               <hr>
               <b-row class='buttons'>
                 <!-- <b-col>
-                  <b-button type="submit" variant="info">Register</b-button>
+                  <b-button type='submit' variant='info'>Register</b-button>
                 </b-col> -->
                 <b-col>
-                  <b-button @click='onSignIn' variant="info">ログイン</b-button>
+                  <b-button @click='onSignIn' variant='info'>ログイン</b-button>
                 </b-col>
               </b-row>
           </b-container>
@@ -31,7 +31,7 @@
           <hr>
           <b-row>
             <b-col><p>アカウントがない？</p></b-col>
-            <b-col><router-link :to="{ name: 'Register' }">ここから新規登録</router-link></b-col>
+            <b-col><router-link :to="{ name: 'Register'}">ここから新規登録</router-link></b-col>
           </b-row>
       </b-jumbotron>
     </b-container>
@@ -63,10 +63,16 @@ export default {
   }
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+h3{
+  text-align: center;
+  margin-top: 50px;
+}
 .signin{
-  max-width: 800px;
-  margin: 15px auto;
+  max-width: 600px;
+  margin: 60px auto;
 }
 .buttons{
   text-align: right;
@@ -77,7 +83,7 @@ export default {
   border-radius: 10px;
 }
 .SignInForm{
-  width: 60%;
+  width: 80%;
   margin: 0 auto;
   padding: 30px 0;
 }

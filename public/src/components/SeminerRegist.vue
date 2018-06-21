@@ -1,11 +1,13 @@
 <template>
   <div>
-    <!-- <b-container> -->
       <b-row>
-        <b-col cols="8">
+        <b-col cols="7">
+          <!-- イベント名 -->
           <b-card title="イベント名" bg-variant="light" class="form-card">
             <b-form-input size="lg" type="text" placeholder="イベント名を入力" v-model="seminerInfo.Title"></b-form-input>
           </b-card>
+
+          <!-- 参加者詳細 -->
           <b-card title="参加者詳細" bg-variant="light" class="form-card">
             <b-row>
               <b-col cols="6">
@@ -23,6 +25,7 @@
             </b-row>
           </b-card>
 
+          <!-- イベント画像 -->
           <b-card title="イベント画像" bg-variant="light" class="form-card">
               <b-button v-b-modal.SelPicModal>Select Picture</b-button>
               <b-modal id="SelPicModal" title="Select Picture">
@@ -35,8 +38,15 @@
                 </croppa>
               </b-modal>
           </b-card>
+
+          <!-- イベント詳細 -->
+          <b-card title="イベント詳細" bg-variant="light" class="form-card">
+            <b-form-input size="lg" type="text" placeholder="イベント名を入力" v-model="seminerInfo.Title"></b-form-input>
+          </b-card>
         </b-col>
-        <b-col cols="4">
+
+        <!-- sidebar (right) -->
+        <b-col cols="5">
           <b-card title="開催日時" bg-variant="light" class="form-card">
             <b-row>
               <b-col sm="5"><label for="dateStr">開始日時</label></b-col>
@@ -73,7 +83,7 @@
           </b-card>
         </b-col>
       </b-row>
-    <!-- </b-container> -->
+    <b-button>公開</b-button>
   </div>
 </template>
 
