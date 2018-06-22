@@ -4,7 +4,7 @@
         <b-col cols="7">
           <!-- イベント名 -->
           <b-card title="イベント名" bg-variant="light" class="form-card">
-            <b-form-input size="lg" type="text" placeholder="イベント名を入力" v-model="seminerInfo.Title"></b-form-input>
+            <b-form-input size="lg" type="text" placeholder="イベント名を入力" v-model="seminerInfo.title"></b-form-input>
           </b-card>
 
           <!-- 参加者詳細 -->
@@ -27,21 +27,42 @@
 
           <!-- イベント画像 -->
           <b-card title="イベント画像" bg-variant="light" class="form-card">
-              <b-button v-b-modal.SelPicModal>Select Picture</b-button>
+              <b-button v-b-modal.SelPicModal>画像を選択</b-button>
               <b-modal id="SelPicModal" title="Select Picture">
                 <croppa v-model="myCroppa"
-                        :width="300"
+                        :width="400"
                         :height="300"
                         :prevent-white-space="true"
-                        :image-border-radius="310"
                         :show-loading="true">
                 </croppa>
               </b-modal>
           </b-card>
 
+          <!-- イベント主催者 -->
+          <b-card title="主催者情報" bg-variant="light" class="form-card">
+            <b-row>
+              <b-col cols="6">
+               <b-img :src="this.getUserIcon" width="80" height="80"></b-img>
+             </b-col>
+             <b-col cols="6">
+               <p>{{ this.getCurrentUserInfo.userName }}</p>
+               <p>{{ this.getCurrentUserInfo.userEmail }}</p>
+             </b-col>
+             </b-row>
+          </b-card>
+
           <!-- イベント詳細 -->
           <b-card title="イベント詳細" bg-variant="light" class="form-card">
-            <b-form-input size="lg" type="text" placeholder="イベント名を入力" v-model="seminerInfo.Title"></b-form-input>
+            <b-form-textarea v-model="seminerInfo.description"
+                             placeholder="MarkDownで書けるようにしたい"
+                             :rows="10"
+                             :max-rows="10"
+                             :no-resize=true>
+            </b-form-textarea>
+          </b-card>
+
+          <b-card title="マークダウンの結果" bg-variant="light" class="form-card">
+            <vue-markdown :source="seminerInfo.description"></vue-markdown>
           </b-card>
         </b-col>
 
@@ -88,11 +109,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import VueMarkdown from 'vue-markdown'
+
 export default{
+  components: {
+    VueMarkdown
+  },
   data () {
     return {
       seminerInfo: {
-        Title: '',
+        title: '',
         detailMember: {
           name: '',
           capa: '',
@@ -109,8 +136,8 @@ export default{
             time: ''
           }
         },
-        Place: '',
-        Discription: ''
+        place: '',
+        description: ''
       },
       userInfo: {
         userName: '',
@@ -147,11 +174,24 @@ export default{
     }
   },
   computed: {
+    ...mapGetters([
+      'getCurrentUserInfo'
+    ]),
     getCanpassType () {
       if (this.selectedCanpassType === 'meta') {
         return {lat: 35.566032, lng: 139.403646}
       } else if (this.markers[this.selectedCanpassType].position) {
         return this.markers[this.selectedCanpassType].position
+      }
+    },
+    getUserIcon () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) {
+        return this.getCurrentUserInfo.userIcon
+      }
+    },
+    getDescription () {
+      if (this.seminerInfo.description) {
+        return this.seminerInfo.description
       }
     }
   },
