@@ -4,18 +4,6 @@
     <p>こんにちは、{{ this.getUserName }}さん</p>
     <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
     <p>ひとこと → {{ this.getUserBio }}</p>
-    <!-- <div>
-      <b-button v-b-modal.SelPicModal>Select Picture</b-button>
-      <b-modal id="SelPicModal" title="Select Picture">
-        <croppa v-model="myCroppa"
-                :width="300"
-                :height="300"
-                :prevent-white-space="true"
-                :image-border-radius="310"
-                :show-loading="true">
-        </croppa>
-      </b-modal>
-    </div> -->
       <b-button @click="makeSeminer">勉強会を作成</b-button>
   </div>
 </template>
