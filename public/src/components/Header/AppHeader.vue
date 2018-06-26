@@ -15,8 +15,11 @@
               <template slot="button-content">
                 <i class="far fa-user"></i>
               </template>
+              <div class="navbar-profile">
                 <b-img  v-if="this.getUserIcon" :src="this.getUserIcon" width="60" height="60" class="m-1" />
                 <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="60" height="60" class="m-1" />
+                {{ this.getUserName }}
+              </div>
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0">プロフィール</b-dropdown-item-button>
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0"  @click="logout">ログアウト</b-dropdown-item-button>
             </b-dropdown>
@@ -46,6 +49,10 @@ export default {
     ]),
     getUserIcon: function () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) return this.getCurrentUserInfo.userIcon
+      else return ''
+    },
+    getUserName: function () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName
       else return ''
     }
   },
@@ -79,4 +86,7 @@ export default {
 
 </script>
 <style>
+.navbar-profile{
+  display: flex;
+}
 </style>

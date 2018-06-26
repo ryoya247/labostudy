@@ -1,4 +1,3 @@
-
 import { firebaseMutations, firebaseAction } from 'vuexfire'
 import firebaseApp from './../../firebase_setup'
 import * as Constants from './constants'

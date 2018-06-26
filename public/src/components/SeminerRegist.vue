@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="eventRegistHeader">
+      <h2>イベント登録</h2>
+      <b-button @click="onSeminerRegist">登録</b-button>
+    </div>
+
       <b-row>
         <b-col cols="7">
           <!-- イベント名 -->
@@ -20,7 +25,7 @@
               </b-col>
               <b-col cols="3">
                 <label for="avlorlot">先着 / 抽選</label>
-                <b-form-select v-model="seminerInfo.detailMember.arrivalOrLottely" id="avlorlot" size="sm" />
+                <b-form-select v-model="seminerInfo.detailMember.arrivalOrLottely" id="avlorlot" :options="arrivalOrLottely" size="sm" />
               </b-col>
             </b-row>
           </b-card>
@@ -30,7 +35,7 @@
               <b-button v-b-modal.SelPicModal>画像を選択</b-button>
               <b-modal id="SelPicModal" title="Select Picture">
                 <croppa v-model="myCroppa"
-                        :width="400"
+                        :width="600"
                         :height="300"
                         :prevent-white-space="true"
                         :show-loading="true">
@@ -61,7 +66,7 @@
             </b-form-textarea>
           </b-card>
 
-          <b-card title="マークダウンの結果" bg-variant="light" class="form-card">
+          <b-card title="Markdownプレビュー" bg-variant="light" class="form-card">
             <vue-markdown :source="seminerInfo.description"></vue-markdown>
           </b-card>
         </b-col>
@@ -85,7 +90,7 @@
             </b-row>
           </b-card>
           <b-card title="場所" bg-variant="light" class="form-card">
-            <b-form-select v-model="selectedCanpassType" :options="canpassType" />
+            <b-form-select v-model="seminerInfo.place" :options="canpassType" />
             <GmapMap
               :center="this.getCanpassType"
               :zoom="14"
@@ -104,15 +109,16 @@
           </b-card>
         </b-col>
       </b-row>
-    <b-button>公開</b-button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+// import { storage } from '@/main'
 import VueMarkdown from 'vue-markdown'
 
 export default{
+  name: 'SeminerRegist',
   components: {
     VueMarkdown
   },
@@ -136,8 +142,9 @@ export default{
             time: ''
           }
         },
-        place: '',
-        description: ''
+        place: 'meta',
+        description: '',
+        ownerId: this.getUserId
       },
       userInfo: {
         userName: '',
@@ -156,7 +163,16 @@ export default{
           text: '相模原キャンパス'
         }
       ],
-      selectedCanpassType: 'meta',
+      arrivalOrLottely: [
+        {
+          value: 'arrival',
+          text: '先着'
+        },
+        {
+          value: 'lottely',
+          text: '抽選'
+        }
+      ],
       markers: {
         sagamihara: {
           position: {
@@ -175,13 +191,14 @@ export default{
   },
   computed: {
     ...mapGetters([
+      'getUserId',
       'getCurrentUserInfo'
     ]),
     getCanpassType () {
-      if (this.selectedCanpassType === 'meta') {
+      if (this.seminerInfo.place === 'meta') {
         return {lat: 35.566032, lng: 139.403646}
-      } else if (this.markers[this.selectedCanpassType].position) {
-        return this.markers[this.selectedCanpassType].position
+      } else if (this.markers[this.seminerInfo.place].position) {
+        return this.markers[this.seminerInfo.place].position
       }
     },
     getUserIcon () {
@@ -197,6 +214,22 @@ export default{
   },
   updated: function () {
     console.log(this.seminerInfo)
+  },
+  methods: {
+    ...mapActions('seminers/', {
+      setNewSeminer: 'SET_NEW_SEMINER'
+    }),
+    onSeminerRegist () {
+      console.log('currentUserId', this.getUserId)
+      console.log('onckick regist button')
+      this.seminerInfo.ownerId = this.getUserId
+      this.setNewSeminer(this.seminerInfo)
+      this.$router.push({ name: 'MainPage' })
+      this.$swal({
+        type: 'success',
+        text: '登録しました！'
+      })
+    }
   }
   // mounted: function () {
   //   console.log(this.$route.params)
@@ -213,5 +246,14 @@ export default{
 .form-card{
   border: lightgray solid 5px;
   margin-bottom: 10px;
+}
+.eventRegistHeader{
+  margin: 30px auto;
+  display: flex;
+  text-align: center;
+}
+.eventRegistHeader h2{
+  font-weight: bold;
+  text-align: center;
 }
 </style>

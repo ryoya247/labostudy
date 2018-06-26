@@ -4,6 +4,7 @@ import { firebaseMutations, firebaseAction } from 'vuexfire'
 import firebaseApp from './../../firebase_setup'
 import * as constants from './constants'
 import { profilesModule } from './profiles'
+import { seminersModule } from './seminers'
 
 const db = firebaseApp.database()
 
@@ -21,7 +22,8 @@ const myplugins = store => {
 }
 const store = new Vuex.Store({
   modules: {
-    profiles: profilesModule
+    profiles: profilesModule,
+    seminers: seminersModule
   },
   state: {
     currentUserId: firebaseApp.auth().currentUser
