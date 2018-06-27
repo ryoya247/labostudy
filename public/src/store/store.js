@@ -17,6 +17,9 @@ const myplugins = store => {
     console.log('in myPlugins', user)
     if (user) {
       store.dispatch(constants.GET_USER_INFO, user.uid)
+
+      let dispatchHeader = 'seminers/'
+      store.dispatch(dispatchHeader + constants.GET_SEMINERS)
     }
   })
 }

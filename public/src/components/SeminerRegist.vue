@@ -3,6 +3,7 @@
     <div class="eventRegistHeader">
       <h2>イベント登録</h2>
       <b-button @click="onSeminerRegist">登録</b-button>
+      <b-button @click="cancelRegist">キャンセル</b-button>
     </div>
 
       <b-row>
@@ -229,6 +230,9 @@ export default{
         type: 'success',
         text: '登録しました！'
       })
+    },
+    cancelRegist () {
+      this.$router.push('/mainpage')
     }
   }
   // mounted: function () {

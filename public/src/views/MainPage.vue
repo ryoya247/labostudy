@@ -34,6 +34,9 @@ export default {
       'getCurrentUser',
       'getCurrentUserInfo'
     ]),
+    ...mapGetters('seminers/', [
+      'getSeminers'
+    ]),
     getUserName () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName
       else return ''
@@ -54,14 +57,9 @@ export default {
   created () {
     console.log('::MainPage created::')
   },
-  // mounted () {
-  //   console.log(this.getUserName)
-  //   this.userInfo.userName = this.getUserName
-  //   this.userInfo.userEmail = this.getUserEmail
-  //   this.userInfo.userBio = this.getUserBio
-  //   this.userInfo.userIcon = this.getUserIcon
-  //   console.log(this.userInfo)
-  // },
+  mounted () {
+    console.log(this.getSeminers)
+  },
   methods: {
     makeSeminer () {
       console.log(this.getUserId)
