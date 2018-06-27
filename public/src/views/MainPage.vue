@@ -5,11 +5,13 @@
     <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
     <p>ひとこと → {{ this.getUserBio }}</p>
       <b-button @click="makeSeminer">勉強会を作成</b-button>
+      <seminer></seminer>
   </div>
 </template>
 <script>
 // import firebase from 'firebase'
 import { mapGetters } from 'vuex'
+import seminer from '@/components/seminer.vue'
 
 export default {
   data () {
@@ -22,6 +24,9 @@ export default {
         userIcon: ''
       }
     }
+  },
+  components: {
+    seminer
   },
   computed: {
     ...mapGetters([

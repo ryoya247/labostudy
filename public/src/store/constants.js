@@ -5,6 +5,9 @@ module.exports = {
   SET_NEW_PROFILE: 'SET_NEW_PROFILE',
   SET_PROFILE: 'SET_PROFILE',
 
-  // seminers
+  // SEMINERS
+  // getters
+  GET_SEMINERS: 'GET_SEMINERS',
+  // setters
   SET_NEW_SEMINER: 'SET_NEW_SEMINER'
 }
