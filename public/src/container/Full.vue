@@ -17,7 +17,7 @@ export default {
 }
 </script>
 <style>
-.routerView{
-  margin: 50px;
-}
+/* .routerView{
+  margin: 5
+} */
 </style>

@@ -1,11 +1,15 @@
 <template>
   <div class = 'mainpage'>
-    <h1>this is mainpage</h1>
-    <p>こんにちは、{{ this.getUserName }}さん</p>
-    <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
-    <p>ひとこと → {{ this.getUserBio }}</p>
-      <b-button @click="makeSeminer">勉強会を作成</b-button>
-      <seminer></seminer>
+    <b-container>
+      <h1>this is mainpage</h1>
+      <p>こんにちは、{{ this.getUserName }}さん</p>
+      <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
+      <p>ひとこと → {{ this.getUserBio }}</p>
+        <b-button @click="makeSeminer">勉強会を作成</b-button>
+        <div v-for="(seminer, index) in getSeminers" :key="index">
+          <seminer :content="seminer"></seminer>
+        </div>
+    </b-container>
   </div>
 </template>
 <script>
@@ -58,7 +62,7 @@ export default {
     console.log('::MainPage created::')
   },
   mounted () {
-    console.log(this.getSeminers)
+    console.log('getSeminers', Object.keys(this.getSeminers))
   },
   methods: {
     makeSeminer () {

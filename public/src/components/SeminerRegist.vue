@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-container>
     <div class="eventRegistHeader">
       <h2>イベント登録</h2>
       <b-button @click="onSeminerRegist">登録</b-button>
@@ -110,6 +111,7 @@
           </b-card>
         </b-col>
       </b-row>
+    </b-container>
   </div>
 </template>
 
