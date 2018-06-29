@@ -9,5 +9,9 @@ module.exports = {
   // getters
   GET_SEMINERS: 'GET_SEMINERS',
   // setters
-  SET_NEW_SEMINER: 'SET_NEW_SEMINER'
+  SET_NEW_SEMINER: 'SET_NEW_SEMINER',
+
+  // peoples
+  // getters
+  GET_USERS: 'GET_USERS'
 }

@@ -1,6 +1,7 @@
 import { firebaseMutations, firebaseAction } from 'vuexfire'
 import firebaseApp from './../../firebase_setup'
 import * as Constants from './constants'
+
 const db = firebaseApp.database()
 const setEmailRegistRef = (currentUserId) => { return db.ref('users/' + currentUserId + '/userInfo/userEmail') }
 const setProfileRegistRef = (currentUserId) => { return db.ref('users/' + currentUserId + '/userInfo/userEmail') }

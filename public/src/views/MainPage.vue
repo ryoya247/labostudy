@@ -3,12 +3,14 @@
     <b-container>
       <h1>this is mainpage</h1>
       <p>こんにちは、{{ this.getUserName }}さん</p>
-      <p>{{ this.getUserName }}さんのemail → {{ this.getUserEmail}}</p>
-      <p>ひとこと → {{ this.getUserBio }}</p>
-        <b-button @click="makeSeminer">勉強会を作成</b-button>
+      <b-button @click="makeSeminer">勉強会を作成</b-button>
+      <b-row>
+        <b-col cols="8">
         <div v-for="(seminer, index) in getSeminers" :key="index">
-          <seminer :content="seminer"></seminer>
+          <seminer v-if="index != '.key'" :title="seminer.title" :ownerId="seminer.ownerId" :seminerDate="seminer.seminerDate" :itemId="index" :detailMember="seminer.detailMember" :description="seminer.description"></seminer>
         </div>
+      </b-col>
+    </b-row>
     </b-container>
   </div>
 </template>

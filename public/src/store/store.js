@@ -5,6 +5,7 @@ import firebaseApp from './../../firebase_setup'
 import * as constants from './constants'
 import { profilesModule } from './profiles'
 import { seminersModule } from './seminers'
+import { peoplesModule } from './peoples'
 
 const db = firebaseApp.database()
 
@@ -20,13 +21,17 @@ const myplugins = store => {
 
       let dispatchHeader = 'seminers/'
       store.dispatch(dispatchHeader + constants.GET_SEMINERS)
+
+      dispatchHeader = 'peoples/'
+      store.dispatch(dispatchHeader + constants.GET_USERS)
     }
   })
 }
 const store = new Vuex.Store({
   modules: {
     profiles: profilesModule,
-    seminers: seminersModule
+    seminers: seminersModule,
+    peoples: peoplesModule
   },
   state: {
     currentUserId: firebaseApp.auth().currentUser
