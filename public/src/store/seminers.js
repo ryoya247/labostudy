@@ -21,6 +21,9 @@ export const seminersModule = {
       const setSeminerRef = seminerRef.push()
       setSeminerRef.set(value)
     }),
+    [constants.ADD_USER_TO_SEMINER]: firebaseAction((context, value) => {
+      console.log(value)
+    }),
     [constants.GET_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
       bindFirebaseRef('seminers', seminerRef, { wait: true })
     })

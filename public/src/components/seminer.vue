@@ -23,19 +23,28 @@
         <b-button>参加</b-button>
       </div> -->
         <h6 slot="header" class="header-text">{{ seminerDate.start.date }} / {{ seminerDate.start.time }}〜 {{seminerDate.end.date}} / {{seminerDate.end.time}}</h6>
-        <b-button slot="header" class="header-button">参加</b-button>
+        <b-button slot="header" class="header-button" variant="primary" @click="onParticipate">参加</b-button>
       <b-media>
+        <h6 style="font-weight: bold">{{ this.getUserInfoByUserId(ownerId).userName }}</h6>
+        <h6>{{ this.getUserInfoByUserId(ownerId).userEmail }}</h6>
         <b-img v-if="this.getUserInfoByUserId(ownerId).userIcon" slot="aside" :src="this.getUserInfoByUserId(ownerId).userIcon" width="50" height="50"/>
         <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="50" height="50"/>
       </b-media>
-      {{ this.getUserInfoByUserId(ownerId).userName }}
+      <b-card-body>
+        <b-button v-b-toggle.collapse>{{ title }}</b-button>
+        <b-collapse id="collapse">
+          <b-card>
+            <vue-markdown>{{ description }}</vue-markdown>
+          </b-card>
+        </b-collapse>
+      </b-card-body>
 
     </b-card>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import VueMarkdown from 'vue-markdown'
 
 export default{
@@ -66,13 +75,36 @@ export default{
   },
   data () {
     return {
-
+      id: 'collapse'
     }
   },
   computed: {
     ...mapGetters('peoples/', [
       'getUserInfoByUserId'
     ])
+  },
+  methods: {
+    ...mapActions('seminers/', {
+      addUserToSeminer: 'ADD_USER_TO_SEMINER'
+    }),
+    onParticipate () {
+      this.$swal({
+        title: '確認',
+        text: 'この勉強会に参加しますか？',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.value) {
+          console.log(this.addUserToSeminer(this.itemId))
+          this.$swal({
+            title: '参加しました。',
+            type: 'success'
+          })
+        }
+      })
+    }
   }
 }
 </script>
@@ -84,6 +116,6 @@ export default{
   float: right;
 }
 .seminer-component{
-  margin: 10px 0;
+  margin-bottom: 10px;
 }
 </style>

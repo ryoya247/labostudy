@@ -3,8 +3,10 @@
     <b-container>
     <div class="eventRegistHeader">
       <h2>イベント登録</h2>
-      <b-button @click="onSeminerRegist">登録</b-button>
-      <b-button @click="cancelRegist">キャンセル</b-button>
+      <div class="header-button">
+        <b-button @click="onSeminerRegist">登録</b-button>
+        <b-button @click="cancelRegist">キャンセル</b-button>
+      </div>
     </div>
 
       <b-row>
@@ -116,7 +118,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 // import { storage } from '@/main'
 import VueMarkdown from 'vue-markdown'
 
@@ -219,9 +221,6 @@ export default{
     console.log(this.seminerInfo)
   },
   methods: {
-    ...mapActions('seminers/', {
-      setNewSeminer: 'SET_NEW_SEMINER'
-    }),
     onSeminerRegist () {
       console.log('currentUserId', this.getUserId)
       console.log('onckick regist button')
@@ -256,10 +255,11 @@ export default{
 .eventRegistHeader{
   margin: 30px auto;
   display: flex;
-  text-align: center;
 }
 .eventRegistHeader h2{
   font-weight: bold;
-  text-align: center;
+}
+.header-button{
+  float: right;
 }
 </style>
