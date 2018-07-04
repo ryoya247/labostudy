@@ -4,6 +4,7 @@ import * as constants from './constants'
 
 const db = firebaseApp.database()
 const seminerRef = db.ref('seminers/')
+const perticipateSeminerRef = db.ref('participateSeminers/')
 
 export const seminersModule = {
   namespaced: true,
@@ -22,6 +23,9 @@ export const seminersModule = {
       setSeminerRef.set(value)
     }),
     [constants.ADD_USER_TO_SEMINER]: firebaseAction((context, value) => {
+      const currentUserId = context.rootState.cuurentUserId
+      const addUserRef = perticipateSeminerRef.child(currentUserId)
+      addUserRef.set(value)
       console.log(value)
     }),
     [constants.GET_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
