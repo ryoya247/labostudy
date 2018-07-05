@@ -3,11 +3,11 @@
     <b-container>
       <div class="list-title">
         <h1>Seminer List</h1>
-        <p>ハロー、{{ this.getUserName }}さん！</p>
+        <b-button class="make-seminer" @click="makeSeminer">勉強会を作成</b-button>
+        <b-button class="participate-seminer" @click="toMySeminerList">参加予定</b-button>
       </div>
-      <b-button class="participate-seminer" @click="toMySeminerList">参加予定</b-button>
-      <b-button class="make-seminer" @click="makeSeminer">勉強会を作成</b-button>
-      <b-row class="clear">
+      <p>ハロー、{{ this.getUserName }}さん！</p>
+      <b-row>
         <b-col cols="8">
           <div v-for="(seminer, index) in getSeminers" :key="index">
             <seminer v-if="index != '.key'" :title="seminer.title" :ownerId="seminer.ownerId" :seminerDate="seminer.seminerDate" :itemId="index" :detailMember="seminer.detailMember" :description="seminer.description"></seminer>
@@ -89,14 +89,15 @@ export default {
 </script>
 <style scoped>
 .make-seminer, .participate-seminer{
-  float: right;
   margin-top: 20px;
-  margin-left: 10px;
+  margin-right: 5px;
+}
+.make-seminer{
+  margin-left: auto;
 }
 .list-title{
-  float: left;
+  margin-bottom: 20px;
+  display: flex;
 }
-.clear{
-  clear: both;
-}
+
 </style>

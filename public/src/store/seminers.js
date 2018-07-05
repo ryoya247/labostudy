@@ -38,6 +38,24 @@ export const seminersModule = {
   },
   getters: {
     getSeminers: state => state.seminers,
-    getParticipateSeminers: state => state.participateSeminers
+    getSeminersById: (state, getters, rootState) => (itemId) => {
+      // let seminers = {}
+      // const stateSeminers = state.seminers
+      // const stateParticipateSeminers = state.participateSeminers
+      // for (let seminerId in stateParticipateSeminers[rootState.currentUserId]) {
+      //   console.log(seminerId)
+      // }
+      let mySeminers = {}
+      for (let seminerId in state.participateSeminers[rootState.currentUserId]) {
+        if (itemId === seminerId) {
+          mySeminers[seminerId] = state.seminers[seminerId]
+        }
+      }
+      return mySeminers
+    },
+    getParticipateSeminers: (state, getters, rootState) => {
+      const stateParticipateSeminers = state.participateSeminers
+      return stateParticipateSeminers[rootState.currentUserId]
+    }
   }
 }
