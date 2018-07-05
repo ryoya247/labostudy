@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Register from '@/components/Register'
 import SignIn from '@/components/SignIn'
 import SeminerRegist from '@/components/SeminerRegist'
+import SeminerMyList from '@/views/SeminerMyList'
 import ProfileRegist from '@/views/ProfileRegist'
 import MainPage from '@/views/MainPage'
 import Full from '@/container/Full'
@@ -34,6 +35,11 @@ let router = new Router({
           path: 'seminer-regist',
           name: 'SeminerRegist',
           component: SeminerRegist
+        },
+        {
+          path: 'seminer-my-list',
+          name: 'SeminerMyList',
+          component: SeminerMyList
         }
       ]
     },

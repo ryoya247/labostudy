@@ -5,7 +5,7 @@
         <h1>Seminer List</h1>
         <p>ハロー、{{ this.getUserName }}さん！</p>
       </div>
-      <b-button class="participate-seminer">参加予定</b-button>
+      <b-button class="participate-seminer" @click="toMySeminerList">参加予定</b-button>
       <b-button class="make-seminer" @click="makeSeminer">勉強会を作成</b-button>
       <b-row class="clear">
         <b-col cols="8">
@@ -79,6 +79,9 @@ export default {
       console.log(this.getUserId)
       // this.$router.push({ name: 'SeminerRegist', params: { item: this.userInfo } })
       this.$router.push({ name: 'SeminerRegist' })
+    },
+    toMySeminerList () {
+      this.$router.push({ name: 'SeminerMyList' })
     }
   }
 }

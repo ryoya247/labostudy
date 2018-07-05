@@ -21,6 +21,7 @@ const myplugins = store => {
 
       let dispatchHeader = 'seminers/'
       store.dispatch(dispatchHeader + constants.GET_SEMINERS)
+      store.dispatch(dispatchHeader + constants.GET_PRTICIPATE_SEMINERS)
 
       dispatchHeader = 'peoples/'
       store.dispatch(dispatchHeader + constants.GET_USERS)
