@@ -2,7 +2,7 @@
   <div class ='header'>
     <b-navbar toggleable="md" type="dark" variant="info">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand href="#">Lab_Study</b-navbar-brand>
+      <b-navbar-brand @click="brandClick" href="#">Lab_Study</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item href="#">Link</b-nav-item>
@@ -10,18 +10,18 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
+            <b-button variant="info" @click="toDushBoard">ダッシュボード</b-button>
+            <b-button variant="info" @click="makeSeminer">勉強会を作成</b-button>
             <!-- <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/> -->
-            <b-dropdown size="lg" right>
+            <b-dropdown size="sm" variant="info" right>
               <template slot="button-content">
-                <i class="far fa-user"></i>
+                <!-- <i class="far fa-user"></i> -->
+                <b-img  v-if="this.getUserIcon" :src="this.getUserIcon" width="30" height="30" class="m-1" />
+                <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="30" height="30" class="m-1" />
               </template>
-              <div class="navbar-profile">
-                <b-img  v-if="this.getUserIcon" :src="this.getUserIcon" width="60" height="60" class="m-1" />
-                <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="60" height="60" class="m-1" />
-                {{ this.getUserName }}
-              </div>
-                <b-dropdown-item-button size="sm" class="my-2 my-sm-0">プロフィール</b-dropdown-item-button>
-                <b-dropdown-item-button size="sm" class="my-2 my-sm-0"  @click="logout">ログアウト</b-dropdown-item-button>
+                <b-dropdown-item-button size="sm" class="my-2 my-sm-0" @click="toProfile">{{ this.getUserName }}</b-dropdown-item-button>
+                <b-dropdown-item-button size="sm" class="my-2 my-sm-0" @click="toMySeminerList">参加リスト</b-dropdown-item-button>
+                <b-dropdown-item-button size="sm" class="my-2 my-sm-0" @click="logout">ログアウト</b-dropdown-item-button>
             </b-dropdown>
           </b-nav-form>
           <!-- <b-nav-item-dropdown right>
@@ -60,6 +60,21 @@ export default {
     ...mapActions({
       destroySession: 'destroySession'
     }),
+    makeSeminer () {
+      this.$router.push({ name: 'SeminerRegist' })
+    },
+    toMySeminerList () {
+      this.$router.push({ name: 'SeminerMyList' })
+    },
+    brandClick () {
+      this.$router.replace({ name: 'MainPage' })
+    },
+    toDushBoard () {
+      this.$router.push({ name: 'DushBoard' })
+    },
+    toProfile () {
+      this.$router.push({ name: 'Profile' })
+    },
     logout () {
       this.$swal({
         title: '確認',
@@ -86,7 +101,5 @@ export default {
 
 </script>
 <style>
-.navbar-profile{
-  display: flex;
-}
+
 </style>

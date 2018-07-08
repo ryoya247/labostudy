@@ -8,7 +8,7 @@
       <b-card>
         <div v-for="(mysem, seminerKey) in getParticipateSeminers" :key="seminerKey">
           <div v-for="(mySeminer, index) in getSeminersById(seminerKey)" :key="index">
-            <p>{{ mySeminer.title }}</p>
+            <p>{{ mySeminer }}</p>
           </div>
         </div>
       </b-card>
@@ -35,7 +35,7 @@ export default{
     }
   },
   mounted: function () {
-    console.log(Object.keys(this.getParticipateSeminers))
+    console.log(this.getParticipateSeminers)
   }
 }
 </script>
@@ -44,9 +44,9 @@ export default{
 .list-title{
   display: flex;
   margin-bottom: 20px;
+  margin-top: 10px;
 }
 .back-button{
-  margin-top: 20px;
   margin-left: auto;
 }
 </style>

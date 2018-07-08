@@ -11,6 +11,7 @@ import BootstrapVue from 'bootstrap-vue'
 import Croppa from 'vue-croppa'
 import VueSweetalert2 from 'vue-sweetalert2'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import FullCalendar from 'vue-full-calendar'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-croppa/dist/vue-croppa.css'
@@ -19,6 +20,7 @@ Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(Croppa)
 Vue.use(VueSweetalert2)
+Vue.use(FullCalendar)
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyDu1p6YN1MO9bMeTovk-wYwfJneUuu4qes',

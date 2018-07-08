@@ -3,19 +3,20 @@
     <b-container>
       <div class="list-title">
         <h1>Seminer List</h1>
-        <b-button class="make-seminer" @click="makeSeminer">勉強会を作成</b-button>
-        <b-button class="participate-seminer" @click="toMySeminerList">参加予定</b-button>
+        <!-- <b-button class="make-seminer" @click="makeSeminer">勉強会を作成</b-button> -->
+        <!-- <b-button class="participate-seminer" @click="toMySeminerList">参加予定</b-button> -->
       </div>
       <p>ハロー、{{ this.getUserName }}さん！</p>
       <b-row>
-        <b-col cols="8">
+        <b-col cols="7">
           <div v-for="(seminer, index) in getSeminers" :key="index">
-            <seminer v-if="index != '.key'" :title="seminer.title" :ownerId="seminer.ownerId" :seminerDate="seminer.seminerDate" :itemId="index" :detailMember="seminer.detailMember" :description="seminer.description"></seminer>
+            <seminer v-if="index != '.key'" :title="seminer.title" :ownerId="seminer.ownerId" :seminerDate="seminer.seminerDate" :itemId="index" :detailMember="seminer.detailMember" :description="seminer.description" @openDetail="openDetail"></seminer>
           </div>
         </b-col>
-        <b-col cols="4">
-          <b-card>
-            <p>test</p>
+        <b-col cols="5">
+          <h3>勉強会詳細</h3>
+          <b-card v-if="this.open">
+            <p>oooopppenenenen</p>
           </b-card>
         </b-col>
       </b-row>
@@ -36,7 +37,8 @@ export default {
         userEmail: '',
         userBio: '',
         userIcon: ''
-      }
+      },
+      open: false
     }
   },
   components: {
@@ -75,29 +77,39 @@ export default {
     console.log('getSeminers', Object.keys(this.getSeminers))
   },
   methods: {
-    makeSeminer () {
-      console.log(this.getUserId)
-      // this.$router.push({ name: 'SeminerRegist', params: { item: this.userInfo } })
-      this.$router.push({ name: 'SeminerRegist' })
-    },
-    toMySeminerList () {
-      this.$router.push({ name: 'SeminerMyList' })
+    openDetail () {
+      if (!this.open) {
+        console.log('this.open = true')
+        this.open = true
+      } else if (this.open) {
+        console.log('this.open = false')
+        this.open = false
+      }
     }
+  //   makeSeminer () {
+  //     console.log(this.getUserId)
+  //     // this.$router.push({ name: 'SeminerRegist', params: { item: this.userInfo } })
+  //     this.$router.push({ name: 'SeminerRegist' })
+  //   },
+  //   toMySeminerList () {
+  //     this.$router.push({ name: 'SeminerMyList' })
+  //   }
   }
 }
 
 </script>
 <style scoped>
-.make-seminer, .participate-seminer{
+/* .make-seminer, .participate-seminer{
   margin-top: 20px;
   margin-right: 5px;
-}
-.make-seminer{
+} */
+/* .make-seminer{
   margin-left: auto;
-}
+} */
 .list-title{
-  margin-bottom: 20px;
-  display: flex;
+  /* margin-bottom: 5px; */
+  margin-top: 5px;
+  /* display: flex; */
 }
 
 </style>

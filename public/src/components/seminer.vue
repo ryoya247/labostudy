@@ -22,8 +22,10 @@
         <h6>{{ seminerDate.start.date }} / {{ seminerDate.start.time }}〜</h6>
         <b-button>参加</b-button>
       </div> -->
-        <h6 slot="header" class="header-text">{{ seminerDate.start.date }} / {{ seminerDate.start.time }}〜 {{seminerDate.end.date}} / {{seminerDate.end.time}}</h6>
-        <b-button slot="header" class="header-button" variant="primary" @click="onParticipate">参加</b-button>
+      <div slot="header" class="header-group">
+        <p class="mb-0">{{ seminerDate.start.date }} / {{ seminerDate.start.time }}〜 {{seminerDate.end.date}} / {{seminerDate.end.time}}</p>
+        <b-button class="header-button mb-0" variant="primary" @click="onParticipate">参加</b-button>
+      </div>
       <b-media>
         <h6 style="font-weight: bold">{{ this.getUserInfoByUserId(ownerId).userName }}</h6>
         <h6>{{ this.getUserInfoByUserId(ownerId).userEmail }}</h6>
@@ -31,12 +33,13 @@
         <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="50" height="50"/>
       </b-media>
       <b-card-body>
-        <b-button v-b-toggle.collapse>{{ title }}</b-button>
+        <!-- <b-button v-b-toggle.collapse>{{ title }}</b-button>
         <b-collapse id="collapse">
           <b-card>
             <vue-markdown>{{ description }}</vue-markdown>
           </b-card>
-        </b-collapse>
+        </b-collapse> -->
+        <b-button @click="toParent">{{ title }}</b-button>
       </b-card-body>
 
     </b-card>
@@ -104,16 +107,20 @@ export default{
           })
         }
       })
+    },
+    toParent () {
+      console.log('button clicked')
+      this.$emit('openDetail')
     }
   }
 }
 </script>
 <style scoped>
-.header-text{
-  float: left;
+.header-group{
+  display: flex;
 }
 .header-button{
-  float: right;
+  margin-left: auto;
 }
 .seminer-component{
   margin-bottom: 10px;

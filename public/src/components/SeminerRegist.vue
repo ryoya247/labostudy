@@ -2,27 +2,29 @@
   <div>
     <b-container>
     <div class="eventRegistHeader">
-      <h2>イベント登録</h2>
-      <b-button @click="onSeminerRegist" class="register-button">登録</b-button>
-      <b-button @click="cancelRegist" class="back-button">キャンセル</b-button>
+      <h2>勉強会作成</h2>
+      <b-button @click="onSeminerRegist" class="register-button" variant="primary">登録</b-button>
+      <b-button @click="cancelRegist" class="back-button" variant="danger">キャンセル</b-button>
     </div>
 
       <b-row>
         <b-col cols="7">
           <!-- イベント名 -->
-          <b-card title="イベント名" bg-variant="light" class="form-card">
-            <b-form-input size="lg" type="text" placeholder="イベント名を入力" v-model="seminerInfo.title"></b-form-input>
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">勉強会名</p>
+            <b-form-input size="lg" type="text" placeholder="勉強会のタイトルを入力" v-model="seminerInfo.title"></b-form-input>
           </b-card>
 
           <!-- 参加者詳細 -->
-          <b-card title="参加者詳細" bg-variant="light" class="form-card">
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">参加者詳細</p>
             <b-row>
               <b-col cols="6">
                 <label for="participation">参加枠名</label>
                 <b-form-input v-model="seminerInfo.detailMember.name" id="participation" size="sm" type="text"></b-form-input>
               </b-col>
               <b-col cols="3">
-                <label for="capacity">定員数</label>
+                <label for="capacity">定員数（人）</label>
                 <b-form-input v-model="seminerInfo.detailMember.capa" id="capacity" size="sm" type="text"></b-form-input>
               </b-col>
               <b-col cols="3">
@@ -33,7 +35,8 @@
           </b-card>
 
           <!-- イベント画像 -->
-          <b-card title="イベント画像" bg-variant="light" class="form-card">
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">イベント画像（未実装）</p>
               <b-button v-b-modal.SelPicModal>画像を選択</b-button>
               <b-modal id="SelPicModal" title="Select Picture">
                 <croppa v-model="myCroppa"
@@ -46,7 +49,8 @@
           </b-card>
 
           <!-- イベント主催者 -->
-          <b-card title="主催者情報" bg-variant="light" class="form-card">
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">主催者情報</p>
             <b-row>
               <b-col cols="6">
                <b-img :src="this.getUserIcon" width="80" height="80"></b-img>
@@ -59,7 +63,8 @@
           </b-card>
 
           <!-- イベント詳細 -->
-          <b-card title="イベント詳細" bg-variant="light" class="form-card">
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">詳細</p>
             <b-form-textarea v-model="seminerInfo.description"
                              placeholder="MarkDownで書けるようにしたい"
                              :rows="10"
@@ -68,14 +73,16 @@
             </b-form-textarea>
           </b-card>
 
-          <b-card title="Markdownプレビュー" bg-variant="light" class="form-card">
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">詳細プレビュー</p>
             <vue-markdown :source="seminerInfo.description"></vue-markdown>
           </b-card>
         </b-col>
 
         <!-- sidebar (right) -->
         <b-col cols="5">
-          <b-card title="開催日時" bg-variant="light" class="form-card">
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">開催日時</p>
             <b-row>
               <b-col sm="5"><label for="dateStr">開始日時</label></b-col>
               <b-col sm="7" id="dateStr">
@@ -91,7 +98,8 @@
               </b-col>
             </b-row>
           </b-card>
-          <b-card title="場所" bg-variant="light" class="form-card">
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">場所</p>
             <b-form-select v-model="seminerInfo.place" :options="canpassType" />
             <GmapMap
               :center="this.getCanpassType"
@@ -250,11 +258,11 @@ export default{
 
 <style scoped>
 .form-card{
-  border: lightgray solid 5px;
+  border: lightgray solid 3px;
   margin-bottom: 10px;
 }
 .register-button, .back-button{
-  margin-top: 20px;
+  width: 150px;
   margin-right: 5px;
 }
 .register-button{
@@ -262,9 +270,13 @@ export default{
 }
 .eventRegistHeader{
   margin-bottom: 20px;
+  margin-top: 10px;
   display: flex;
 }
 .eventRegistHeader h2{
+  font-weight: bold;
+}
+.header-text{
   font-weight: bold;
 }
 </style>

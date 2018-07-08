@@ -6,6 +6,8 @@ import SignIn from '@/components/SignIn'
 import SeminerRegist from '@/components/SeminerRegist'
 import SeminerMyList from '@/views/SeminerMyList'
 import ProfileRegist from '@/views/ProfileRegist'
+import Profile from '@/views/Profile'
+import DushBoard from '@/views/DushBoard'
 import MainPage from '@/views/MainPage'
 import Full from '@/container/Full'
 
@@ -40,6 +42,16 @@ let router = new Router({
           path: 'seminer-my-list',
           name: 'SeminerMyList',
           component: SeminerMyList
+        },
+        {
+          path: 'dush-board',
+          name: 'DushBoard',
+          component: DushBoard
+        },
+        {
+          path: 'profile',
+          name: 'Profile',
+          component: Profile
         }
       ]
     },
