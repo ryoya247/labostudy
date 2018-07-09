@@ -10,7 +10,7 @@
       <b-row>
         <b-col cols="7">
           <div v-for="(seminer, index) in getSeminers" :key="index">
-            <seminer v-if="index != '.key'" :title="seminer.title" :ownerId="seminer.ownerId" :seminerDate="seminer.seminerDate" :itemId="index" :detailMember="seminer.detailMember" :description="seminer.description" @openDetail="openDetail"></seminer>
+            <seminer v-if="index != '.key' && seminer" :title="seminer.title" :ownerId="seminer.ownerId" :seminerDate="seminer.seminerDate" :itemId="index" :detailMember="seminer.detailMember" :description="seminer.description" @openDetail="openDetail"></seminer>
           </div>
         </b-col>
         <b-col cols="5">
