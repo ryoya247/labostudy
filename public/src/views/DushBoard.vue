@@ -7,6 +7,7 @@
           <b-tab title="主催の勉強会">
             <b-card header-tag="header" class="intab-card">
               <p slot="header" class="mb-0">{{ this.getUserName }}さん主催の勉強会</p>
+              {{ this.getCurrentMyseminers(this.getUserId) }}
             </b-card>
           </b-tab>
           <b-tab title="参加する勉強会">
@@ -30,7 +31,11 @@ export default{
   },
   computed: {
     ...mapGetters([
+      'getUserId',
       'getCurrentUserInfo'
+    ]),
+    ...mapGetters('seminers/', [
+      'getCurrentMyseminers'
     ]),
     getUserName () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName

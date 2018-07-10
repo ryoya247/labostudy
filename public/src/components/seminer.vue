@@ -24,7 +24,8 @@
       </div> -->
       <div slot="header" class="header-group">
         <p class="mb-0">{{ seminerDate.start.date }} / {{ seminerDate.start.time }}〜 {{seminerDate.end.date}} / {{seminerDate.end.time}}</p>
-        <b-button class="header-button mb-0" variant="primary" @click="onParticipate">参加</b-button>
+        <b-button v-if="checkSeminerOwner" class="header-button mb-0" variant="primary" @click="onParticipate">参加</b-button>
+        <b-button v-else class="header-button mb-0" variant="info" disabled>あなたが主催</b-button>
       </div>
       <b-media>
         <h6 style="font-weight: bold">{{ this.getUserInfoByUserId(ownerId).userName }}</h6>
@@ -82,9 +83,19 @@ export default{
     }
   },
   computed: {
+    ...mapGetters([
+      'getUserId'
+    ]),
     ...mapGetters('peoples/', [
       'getUserInfoByUserId'
-    ])
+    ]),
+    checkSeminerOwner () {
+      if (this.getUserId === this.ownerId) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   methods: {
     ...mapActions('seminers/', {
