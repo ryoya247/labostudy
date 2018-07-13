@@ -13,6 +13,11 @@
           <b-tab title="参加する勉強会">
             <b-card header-tag="header" class="intab-card">
               <p slot="header" class="mb-0">{{ this.getUserName }}さんの参加予定勉強会</p>
+              <div v-for="(mysem, seminerKey) in getParticipateSeminers" :key="seminerKey">
+                <div v-for="(mySeminer, index) in getSeminersById(seminerKey)" :key="index">
+                  <p>{{ mySeminer }}</p>
+                </div>
+              </div>
             </b-card>
           </b-tab>
         </b-tabs>
@@ -35,7 +40,9 @@ export default{
       'getCurrentUserInfo'
     ]),
     ...mapGetters('seminers/', [
-      'getCurrentMyseminers'
+      'getCurrentMyseminers',
+      'getParticipateSeminers',
+      'getSeminersById'
     ]),
     getUserName () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName

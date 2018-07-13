@@ -10,6 +10,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
+            <i class="far fa-question-circle"></i>
             <b-button variant="info" @click="toDushBoard">ダッシュボード</b-button>
             <b-button variant="info" @click="makeSeminer">勉強会を作成</b-button>
             <!-- <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/> -->
