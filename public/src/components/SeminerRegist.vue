@@ -2,9 +2,15 @@
   <div>
     <b-container>
     <div class="eventRegistHeader">
-      <h2>勉強会作成</h2>
-      <b-button @click="onSeminerRegist" class="register-button" variant="primary">登録</b-button>
-      <b-button @click="cancelRegist" class="back-button" variant="danger">キャンセル</b-button>
+      <b-row>
+        <b-col cols="12" md="7">
+          <h2>勉強会作成</h2>
+        </b-col>
+        <b-col cols="12" md="5">
+          <b-button @click="onSeminerRegist" class="register-button" variant="primary">登録</b-button>
+          <b-button @click="cancelRegist" class="back-button" variant="danger">キャンセル</b-button>
+        </b-col>
+      </b-row>
     </div>
 
       <b-row>
@@ -76,13 +82,11 @@
               </b-tab>
             </b-tabs>
           </b-card>
-<!--
-          <b-card header-tag="header" bg-variant="light" class="form-card">
+          <!-- <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">詳細プレビュー</p>
             <vue-markdown :source="seminerInfo.description"></vue-markdown>
           </b-card> -->
         </b-col>
-
         <!-- sidebar (right) -->
         <b-col cols="5">
           <b-card header-tag="header" bg-variant="light" class="form-card">
@@ -90,14 +94,14 @@
             <b-row>
               <b-col sm="5"><label for="dateStr">開催日</label></b-col>
               <b-col sm="7" id="dateStr">
-                <b-form-input v-model="seminerInfo.seminerDate.start.date" size="sm" type="date"></b-form-input>
-                <b-form-input v-model="seminerInfo.seminerDate.start.time" size="sm" type="time"></b-form-input>
+                <b-form-input v-model="seminerInfo.seminerDate.date" size="sm" type="date"></b-form-input>
+                {{ seminerInfo.seminerDate.date }}
+                <b-form-input v-model="seminerInfo.seminerDate.startTime" size="sm" type="time"></b-form-input>
               </b-col>
             </b-row>
             <b-row>
               <b-col sm="7" id="dateStr">
-                
-                <b-form-input v-model="seminerInfo.seminerDate.end.time" size="sm" type="time"></b-form-input>
+                <b-form-input v-model="seminerInfo.seminerDate.endTime" size="sm" type="time"></b-form-input>
               </b-col>
                 <!-- <div class="block">
                   <span class="demonstration">Default</span>
@@ -191,14 +195,9 @@ export default{
         },
         seminerImage: '',
         seminerDate: {
-          start: {
-            date: '',
-            time: ''
-          },
-          end: {
-            date: '',
-            time: ''
-          }
+          date: '',
+          startTime: '',
+          endTime: ''
         },
         description: '',
         ownerId: this.getUserId,
@@ -332,7 +331,6 @@ export default{
 .eventRegistHeader{
   margin-bottom: 20px;
   margin-top: 10px;
-  display: flex;
 }
 .eventRegistHeader h2{
   font-weight: bold;

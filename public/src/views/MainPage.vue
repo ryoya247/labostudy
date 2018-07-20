@@ -8,11 +8,11 @@
       </div>
       <p>ハロー、{{ this.getUserName }}さん！</p>
       <b-row>
-        <b-col cols="7">
-          <div v-for="(seminer, index) in getSeminers" :key="index">
-            <seminer v-if="index != '.key' && seminer" :seminer="seminer" :seminerId="index" :type="'list'"></seminer>
-          </div>
-        </b-col>
+          <b-col cols="12" md="7" class="md_overflow">
+            <div v-for="(seminer, index) in getSeminers" :key="index">
+              <seminer v-if="index != '.key' && seminer" :seminer="seminer" :seminerId="index" :type="'list'"></seminer>
+            </div>
+          </b-col>
         <b-col cols="5">
           <h3></h3>
           <!-- <b-card v-if="this.open">
@@ -110,6 +110,10 @@ export default {
 /* .make-seminer{
   margin-left: auto;
 } */
+.md_overflow{
+  height: 1000px;
+  overflow: auto;
+}
 .list-title{
   /* margin-bottom: 5px; */
   margin-top: 5px;

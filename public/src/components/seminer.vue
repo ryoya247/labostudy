@@ -15,7 +15,7 @@
           </b-row>
           <b-row>
             <b-col cols="12">
-            {{ seminer.seminerDate.start.date }} {{ seminer.seminerDate.start.time }}~
+            {{ seminer.seminerDate.date }} {{ seminer.seminerDate.startTime }}~
           </b-col>
           </b-row>
         </div>
@@ -46,13 +46,14 @@
               <h4 class="mb-0">{{ seminer.title }}</h4>
             </b-col>
             <b-col cols="4">
-              <b-button class="header-button mb-0" variant="success">編集</b-button>
-              <b-button class="header-button mb-0" variant="danger" style="margin-right: 5px;">削除</b-button>
+              <b-button class="header-button mb-0" variant="success">
+                <i class="far fa-edit"></i></b-button>
+              <b-button class="header-button mb-0" variant="danger" style="margin-right: 5px;" @click="deleteMySeminer(seminerId)"><i class="far fa-trash-alt"></i></b-button>
             </b-col>
           </b-row>
           <b-row>
             <b-col cols="12">
-              {{ seminer.seminerDate.start.date }}
+              {{ seminer.seminerDate.date }}
             </b-col>
           </b-row>
         </div>
@@ -73,7 +74,7 @@
           </b-row>
           <b-row>
             <b-col cols="12">
-              {{ seminer.seminerDate.start.date }}
+              {{ seminer.seminerDate.date }}
             </b-col>
           </b-row>
         </div>
@@ -124,7 +125,8 @@ export default{
   },
   methods: {
     ...mapActions('seminers/', {
-      addUserToSeminer: 'ADD_USER_TO_SEMINER'
+      addUserToSeminer: 'ADD_USER_TO_SEMINER',
+      removeMySeminer: 'REMOVE_MY_SEMINER'
     }),
     onParticipate () {
       this.$swal({
@@ -147,6 +149,18 @@ export default{
     toParent () {
       console.log('button clicked')
       this.$emit('openDetail')
+    },
+    deleteMySeminer (seminerId) {
+      this.$swal({
+        title: '確認',
+        text: '勉強会を削除しますか？',
+        type: 'warning',
+        showCancelButton: true
+      }).then((result) => {
+        if (result) {
+          this.removeMySeminer(seminerId)
+        }
+      })
     }
   }
 }

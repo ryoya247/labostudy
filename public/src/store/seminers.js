@@ -41,6 +41,13 @@ export const seminersModule = {
       const addSeminerParticipateRef = seminerParticiRef(value).child(currentUserId)
       addSeminerParticipateRef.set(1)
     }),
+    [constants.REMOVE_MY_SEMINER]: firebaseAction((context, value) => {
+      const currentUserId = context.rootState.currentUserId
+      const removeSeminerRef = seminerRef.child(value)
+      const removeMySeminerRef = currentMySeminersRef.child(currentUserId).child(value)
+      removeSeminerRef.remove()
+      removeMySeminerRef.remove()
+    }),
     [constants.GET_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
       bindFirebaseRef('seminers', seminerRef, { wait: true })
     }),
