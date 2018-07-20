@@ -10,23 +10,28 @@ import firebaseApp from './../firebase_setup'
 import BootstrapVue from 'bootstrap-vue'
 import Croppa from 'vue-croppa'
 import VueSweetalert2 from 'vue-sweetalert2'
-import * as VueGoogleMaps from 'vue2-google-maps'
+// import * as VueGoogleMaps from 'vue2-google-maps'
 import FullCalendar from 'vue-full-calendar'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import locale from 'element-ui/lib/locale/lang/ja'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-croppa/dist/vue-croppa.css'
+import 'fullcalendar/dist/fullcalendar.min.css'
 
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(Croppa)
 Vue.use(VueSweetalert2)
 Vue.use(FullCalendar)
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyDu1p6YN1MO9bMeTovk-wYwfJneUuu4qes',
-    libraries: 'places'
-  }
-})
+Vue.use(ElementUI, {locale})
+// Vue.use(VueGoogleMaps, {
+//   load: {
+//     key: 'AIzaSyDu1p6YN1MO9bMeTovk-wYwfJneUuu4qes',
+//     libraries: 'places'
+//   }
+// })
 
 Vue.config.productionTip = false
 

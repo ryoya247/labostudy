@@ -4,15 +4,12 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <b-navbar-brand @click="brandClick" href="#">Lab_Study</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
-        <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
-        </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <i class="far fa-question-circle"></i>
             <b-button variant="info" @click="toDushBoard">ダッシュボード</b-button>
             <b-button variant="info" @click="makeSeminer">勉強会を作成</b-button>
+            <b-button variant="info"><i class="far fa-question-circle" width="30px" height="30px"></i></b-button>
             <!-- <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/> -->
             <b-dropdown size="sm" variant="info" right>
               <template slot="button-content">

@@ -3,24 +3,31 @@
     <b-container>
       <div class="list-title">
         <h1>ダッシュボード</h1>
-        <b-tabs>
-          <b-tab title="主催の勉強会">
-            <b-card header-tag="header" class="intab-card">
-              <p slot="header" class="mb-0">{{ this.getUserName }}さん主催の勉強会</p>
-              {{ this.getCurrentMyseminers(this.getUserId) }}
-            </b-card>
-          </b-tab>
-          <b-tab title="参加する勉強会">
-            <b-card header-tag="header" class="intab-card">
-              <p slot="header" class="mb-0">{{ this.getUserName }}さんの参加予定勉強会</p>
-              <div v-for="(mysem, seminerKey) in getParticipateSeminers" :key="seminerKey">
-                <div v-for="(mySeminer, index) in getSeminersById(seminerKey)" :key="index">
-                  <p>{{ mySeminer }}</p>
+        <b-row>
+          <b-col cols="7">
+            <b-tabs>
+              <b-tab title="主催の勉強会">
+                <div class="intab-card">
+                  <div v-for="(seminer, index) in this.getCurrentMyseminers(this.getUserId)" :key="index">
+                    <seminer :seminer="seminer" :seminerId="index" :type="'dashboard-my'"></seminer>
+                  </div>
                 </div>
-              </div>
-            </b-card>
-          </b-tab>
-        </b-tabs>
+              </b-tab>
+              <b-tab title="参加する勉強会">
+                <div class="intab-card">
+                  <div v-for="(mysem, seminerKey) in getParticipateSeminers" :key="seminerKey">
+                    <div v-for="(mySeminer, index) in getSeminersById(seminerKey)" :key="index">
+                        <seminer :seminer="mySeminer" :seminerId="index" :type="'dashboard-part'"></seminer>
+                    </div>
+                  </div>
+                </div>
+              </b-tab>
+            </b-tabs>
+          </b-col>
+          <b-col cols="5">
+            <full-calendar :events="events" :config="this.config"></full-calendar>
+          </b-col>
+        </b-row>
       </div>
     </b-container>
   </div>
@@ -28,11 +35,37 @@
 <script>
 import { mapGetters } from 'vuex'
 import { FullCalendar } from 'vue-full-calendar'
+import 'fullcalendar/dist/locale/ja'
+import seminer from '@/components/seminer.vue'
 
 export default{
   name: 'DushBoard',
   components: {
-    FullCalendar
+    FullCalendar,
+    seminer
+  },
+  data () {
+    return {
+      events: [
+        {
+          title: 'event1',
+          start: '2018-07-17'
+        },
+        {
+          title: 'event2',
+          start: '2010-01-05',
+          end: '2010-01-07'
+        },
+        {
+          title: 'event3',
+          start: '2010-01-09T12:30:00',
+          allDay: false
+        }
+      ],
+      config: {
+        local: 'ja'
+      }
+    }
   },
   computed: {
     ...mapGetters([

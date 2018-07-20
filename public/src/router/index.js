@@ -8,6 +8,7 @@ import SeminerMyList from '@/views/SeminerMyList'
 import ProfileRegist from '@/views/ProfileRegist'
 import Profile from '@/views/Profile'
 import DushBoard from '@/views/DushBoard'
+import SeminerDetail from '@/views/SeminerDetail'
 import MainPage from '@/views/MainPage'
 import Full from '@/container/Full'
 
@@ -52,6 +53,11 @@ let router = new Router({
           path: 'profile',
           name: 'Profile',
           component: Profile
+        },
+        {
+          path: 'seminer-detail',
+          name: 'SeminerDetail',
+          component: SeminerDetail
         }
       ]
     },

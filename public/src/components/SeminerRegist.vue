@@ -15,6 +15,11 @@
             <b-form-input size="lg" type="text" placeholder="勉強会のタイトルを入力" v-model="seminerInfo.title"></b-form-input>
           </b-card>
 
+          <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">サブタイトル（50文字以内）</p>
+            <b-form-input type="text" placeholder="サブタイトル" v-model="seminerInfo.title"></b-form-input>
+          </b-card>
+
           <!-- 参加者詳細 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">参加者詳細</p>
@@ -27,56 +32,55 @@
                 <label for="capacity">定員数（人）</label>
                 <b-form-input v-model="seminerInfo.detailMember.capa" id="capacity" size="sm" type="text"></b-form-input>
               </b-col>
-              <b-col cols="3">
+              <!-- <b-col cols="3">
                 <label for="avlorlot">先着 / 抽選</label>
                 <b-form-select v-model="seminerInfo.detailMember.arrivalOrLottely" id="avlorlot" :options="arrivalOrLottely" size="sm" />
-              </b-col>
+              </b-col> -->
             </b-row>
           </b-card>
 
           <!-- イベント画像 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">イベント画像（未実装）</p>
+            <p slot="header" class="mb-0 header-text">イベント画像</p>
               <b-button v-b-modal.SelPicModal>画像を選択</b-button>
-              <b-modal id="SelPicModal" title="Select Picture">
+              <div class="img-wrapper">
+                <b-img class="cropped-img" v-if="this.seminerInfo.seminerImage" fluid :src="this.seminerInfo.seminerImage" alt=""/>
+              </div>
+              <b-modal size="lg" id="SelPicModal" title="Select Picture" ref="modal" @hide="handleClickEvent">
                 <croppa v-model="myCroppa"
-                        :width="600"
+                        :width="700"
                         :height="300"
                         :prevent-white-space="true"
+                        remove-button-color="black"
+                        :accept="'image/*'"
+                        @file-type-mismatch="onFileTypeMismatch"
                         :show-loading="true">
                 </croppa>
               </b-modal>
           </b-card>
 
-          <!-- イベント主催者 -->
-          <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">主催者情報</p>
-            <b-row>
-              <b-col cols="6">
-               <b-img :src="this.getUserIcon" width="80" height="80"></b-img>
-             </b-col>
-             <b-col cols="6">
-               <p>{{ this.getCurrentUserInfo.userName }}</p>
-               <p>{{ this.getCurrentUserInfo.userEmail }}</p>
-             </b-col>
-             </b-row>
-          </b-card>
-
           <!-- イベント詳細 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">詳細</p>
-            <b-form-textarea v-model="seminerInfo.description"
-                             placeholder="MarkDownで書けるようにしたい"
-                             :rows="10"
-                             :max-rows="10"
-                             :no-resize=true>
-            </b-form-textarea>
+            <b-tabs>
+              <b-tab title="編集">
+                <b-form-textarea v-model="seminerInfo.description"
+                                 placeholder="MarkDown"
+                                 :rows="10"
+                                 :max-rows="10"
+                                 :no-resize=true>
+                </b-form-textarea>
+              </b-tab>
+              <b-tab title="プレビュー">
+                <vue-markdown :source="seminerInfo.description"></vue-markdown>
+              </b-tab>
+            </b-tabs>
           </b-card>
-
+<!--
           <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">詳細プレビュー</p>
             <vue-markdown :source="seminerInfo.description"></vue-markdown>
-          </b-card>
+          </b-card> -->
         </b-col>
 
         <!-- sidebar (right) -->
@@ -84,21 +88,64 @@
           <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">開催日時</p>
             <b-row>
-              <b-col sm="5"><label for="dateStr">開始日時</label></b-col>
+              <b-col sm="5"><label for="dateStr">開催日</label></b-col>
               <b-col sm="7" id="dateStr">
                 <b-form-input v-model="seminerInfo.seminerDate.start.date" size="sm" type="date"></b-form-input>
                 <b-form-input v-model="seminerInfo.seminerDate.start.time" size="sm" type="time"></b-form-input>
               </b-col>
             </b-row>
             <b-row>
-              <b-col sm="5"><label for="dateStr">終了日時</label></b-col>
               <b-col sm="7" id="dateStr">
-                <b-form-input v-model="seminerInfo.seminerDate.end.date" size="sm" type="date"></b-form-input>
+                
                 <b-form-input v-model="seminerInfo.seminerDate.end.time" size="sm" type="time"></b-form-input>
               </b-col>
+                <!-- <div class="block">
+                  <span class="demonstration">Default</span>
+                  <el-date-picker
+                    v-model="value1"
+                    type="datetime"
+                    placeholder="Select date and time">
+                  </el-date-picker>
+                </div>
+                <el-time-select
+                  placeholder="Start time"
+                  v-model="startTime"
+                  :picker-options="{
+                    start: '08:30',
+                    step: '00:15',
+                    end: '18:30'
+                  }">
+                </el-time-select>
+                <el-time-select
+                  placeholder="End time"
+                  v-model="endTime"
+                  :picker-options="{
+                    start: '08:30',
+                    step: '00:15',
+                    end: '18:30',
+                    minTime: startTime
+                  }">
+                </el-time-select> -->
             </b-row>
           </b-card>
+          <!-- イベント主催者 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
+            <p slot="header" class="mb-0 header-text">主催者情報</p>
+              <!-- <b-col cols="3">
+               <b-img :src="this.getUserIcon" width="80" height="80"></b-img>
+             </b-col>
+             <b-col cols="9">
+               <p>{{ this.getCurrentUserInfo.userName }}</p>
+               <p>{{ this.getCurrentUserInfo.userBio }}</p>
+             </b-col> -->
+               <b-media>
+                 <b-img v-if="this.getCurrentUserInfo.userIcon" slot="aside" :src="this.getCurrentUserInfo.userIcon" width="70" height="70" alt="placeholder" class="eyecatch"/>
+                 <b-img v-else slot="aside" width="70" height="70" alt="placeholder" blank blank-color="#ccc" class="eyecatch" />
+                 <h5 class="mt-0">{{ this.getCurrentUserInfo.userName }}</h5>
+                 <p>{{ this.getCurrentUserInfo.userBio }}</p>
+               </b-media>
+          </b-card>
+          <!-- <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">場所</p>
             <b-form-select v-model="seminerInfo.place" :options="canpassType" />
             <GmapMap
@@ -116,7 +163,7 @@
                 @click="center=m.position"
               />
             </GmapMap>
-          </b-card>
+          </b-card> -->
         </b-col>
       </b-row>
     </b-container>
@@ -125,8 +172,9 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import { storage } from '@/main'
+import { storage } from '@/main'
 import VueMarkdown from 'vue-markdown'
+import moment from 'moment'
 
 export default{
   name: 'SeminerRegist',
@@ -139,8 +187,7 @@ export default{
         title: '',
         detailMember: {
           name: '',
-          capa: '',
-          arrivalOrLottely: ''
+          capa: ''
         },
         seminerImage: '',
         seminerDate: {
@@ -153,9 +200,9 @@ export default{
             time: ''
           }
         },
-        place: 'meta',
         description: '',
-        ownerId: this.getUserId
+        ownerId: this.getUserId,
+        value1: ''
       },
       userInfo: {
         userName: '',
@@ -163,41 +210,7 @@ export default{
         userBio: '',
         userIcon: ''
       },
-      myCroppa: {},
-      canpassType: [
-        {
-          value: 'aoyama',
-          text: '青山キャンパス'
-        },
-        {
-          value: 'sagamihara',
-          text: '相模原キャンパス'
-        }
-      ],
-      arrivalOrLottely: [
-        {
-          value: 'arrival',
-          text: '先着'
-        },
-        {
-          value: 'lottely',
-          text: '抽選'
-        }
-      ],
-      markers: {
-        sagamihara: {
-          position: {
-            lat: 35.566032,
-            lng: 139.403646
-          }
-        },
-        aoyama: {
-          position: {
-            lat: 35.660374,
-            lng: 139.709558
-          }
-        }
-      }
+      myCroppa: {}
     }
   },
   computed: {
@@ -205,13 +218,13 @@ export default{
       'getUserId',
       'getCurrentUserInfo'
     ]),
-    getCanpassType () {
-      if (this.seminerInfo.place === 'meta') {
-        return {lat: 35.566032, lng: 139.403646}
-      } else if (this.markers[this.seminerInfo.place].position) {
-        return this.markers[this.seminerInfo.place].position
-      }
-    },
+    // getCanpassType () {
+    //   if (this.seminerInfo.place === 'meta') {
+    //     return {lat: 35.566032, lng: 139.403646}
+    //   } else if (this.markers[this.seminerInfo.place].position) {
+    //     return this.markers[this.seminerInfo.place].position
+    //   }
+    // },
     getUserIcon () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) {
         return this.getCurrentUserInfo.userIcon
@@ -243,6 +256,54 @@ export default{
     },
     cancelRegist () {
       this.$router.push('/mainpage')
+    },
+    handleClickEvent: function (evt) {
+      // console.log(evt)
+      if ((evt.trigger === 'backdrop' || evt.trigger === 'cancel' || evt.trigger === 'header-close') && this.myCroppa.imageSet) {
+        evt.preventDefault()
+        if (confirm('てっててててて')) {
+          this.removeCroppa()
+        }
+      } else if ((evt.trigger === 'backdrop' || evt.trigger === 'cancel' || evt.trigger === 'header-close') && !this.myCroppa.imageSet) {
+        this.$refs.modal.hide()
+      } else if (evt.trigger === 'ok' && !this.myCroppa.imageSet) {
+        evt.preventDefault()
+        alert('アラートだよ')
+      } else if (evt.trigger === 'ok' && this.myCroppa.imageSet) {
+        this.uploadResizedPhoto()
+      }
+    },
+    removeCroppa: function () {
+      this.myCroppa.remove()
+      this.$refs.modal.hide()
+    },
+    onFileTypeMismatch (file) {
+      this.swal({
+        text: 'jpg, gif, png形式でアップして下さい。',
+        type: 'warning'
+      })
+    },
+    uploadResizedPhoto () {
+    // console.log(this.myCroppa.generateBlob(blob))
+      var date = moment()
+      let userId = this.getUserId
+      var seminerImageUrl = (date / 1000) + '.jpg'
+      const storageSeminerImagesRef = storage.ref('seminerImages/' + userId)
+      const path = seminerImageUrl
+      const seminerImagesRef = storageSeminerImagesRef.child(path)
+      // generateBlobで、画像からblobオブジェクトを作成します。
+      // blobオブジェクトをそのままputメソッドで、Cloud Storageにアップしています。
+      this.myCroppa.generateBlob((blob) => {
+        seminerImagesRef.put(blob)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              this.seminerInfo.seminerImage = url
+            })
+          })
+          .catch((err) => {
+            console.log('upload error:', err)
+          })
+      })
     }
   }
   // mounted: function () {
@@ -278,5 +339,11 @@ export default{
 }
 .header-text{
   font-weight: bold;
+}
+.cropped-img{
+  object-fit: cover;
+}
+.img-wrapper{
+  width: 100%;
 }
 </style>

@@ -1,49 +1,84 @@
 <template>
-  <div class="seminer-component">
-    <!-- <b-card bg-variant="light">
-      <b-row>
-        <b-col cols="4">
-          <b-img v-if="this.getUserIcon" :src="this.getUserIcon" width="50" height="50"/>
-          <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="50" height="50"/>
-          {{ title }}
-        </b-col>
-        <b-col cols="7">
-          <p>日付 {{ seminerDate.start.date }} / 開始 {{ seminerDate.start.time }}</p>
-          {{ detailMember.capa }}
-        </b-col>
-        <b-col cols="1">
-          <b-button>参加</b-button>
-        </b-col>
-      </b-row>
-      <vue-markdown>{{ description }}</vue-markdown>
-    </b-card> -->
-    <b-card header-tag="header">
-      <!-- <div slot="header" class="card-header">
-        <h6>{{ seminerDate.start.date }} / {{ seminerDate.start.time }}〜</h6>
-        <b-button>参加</b-button>
-      </div> -->
-      <div slot="header" class="header-group">
-        <p class="mb-0">{{ seminerDate.start.date }} / {{ seminerDate.start.time }}〜 {{seminerDate.end.date}} / {{seminerDate.end.time}}</p>
-        <b-button v-if="checkSeminerOwner" class="header-button mb-0" variant="primary" @click="onParticipate">参加</b-button>
-        <b-button v-else class="header-button mb-0" variant="info" disabled>あなたが主催</b-button>
-      </div>
-      <b-media>
-        <h6 style="font-weight: bold">{{ this.getUserInfoByUserId(ownerId).userName }}</h6>
-        <h6>{{ this.getUserInfoByUserId(ownerId).userEmail }}</h6>
-        <b-img v-if="this.getUserInfoByUserId(ownerId).userIcon" slot="aside" :src="this.getUserInfoByUserId(ownerId).userIcon" width="50" height="50"/>
-        <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="50" height="50"/>
-      </b-media>
-      <b-card-body>
-        <!-- <b-button v-b-toggle.collapse>{{ title }}</b-button>
-        <b-collapse id="collapse">
-          <b-card>
-            <vue-markdown>{{ description }}</vue-markdown>
-          </b-card>
-        </b-collapse> -->
-        <b-button @click="toParent">{{ title }}</b-button>
-      </b-card-body>
+  <div v-if="type === 'list'">
+    <div class="seminer-component">
+      <b-card header-tag="header">
+        <div slot="header" class="header-group">
+          <b-row>
+            <b-col cols="10">
+              <h4 class="mb-0"><router-link :to="{ name: 'SeminerDetail', params: { oid: seminer.ownerId, sid: seminerId } }" class="title-link">{{ seminer.title }}</router-link></h4>
+            </b-col>
+            <b-col cols="2">
+              <div v-if="!checkSeminerOwner">
+                <b-button class="header-button mb-0 header-owner" variant="info" disabled>主催</b-button>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="12">
+            {{ seminer.seminerDate.start.date }} {{ seminer.seminerDate.start.time }}~
+          </b-col>
+          </b-row>
+        </div>
+        <div class="inCard-user">
+          <b-media>
+            <b-img v-if="seminer.seminerImage" slot="aside" :src="seminer.seminerImage" width="100" height="100" alt="placeholder" class="eyecatch"/>
+            <b-img v-else slot="aside" width="100" height="100" alt="placeholder" blank blank-color="#ccc" class="eyecatch" />
+          </b-media>
 
-    </b-card>
+          <b-img v-if="this.getUserInfoByUserId(seminer.ownerId).userIcon"  :src="this.getUserInfoByUserId(seminer.ownerId).userIcon" width="30" height="30"/>
+          <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="50" height="50"/>
+          <h6 style="font-weight: bold">{{ this.getUserInfoByUserId(seminer.ownerId).userName }}</h6>
+        </div>
+        <b-card-body>
+          <!-- <b-button @click="toParent">{{ title }}</b-button> -->
+        </b-card-body>
+      </b-card>
+    </div>
+  </div>
+
+  <!-- ダッシュボード、主催の勉強会 -->
+  <div v-else-if="type === 'dashboard-my'">
+    <div class="seminer-component">
+      <b-card header-tag="header">
+        <div slot="header" class="header-group">
+          <b-row>
+            <b-col cols="8">
+              <h4 class="mb-0">{{ seminer.title }}</h4>
+            </b-col>
+            <b-col cols="4">
+              <b-button class="header-button mb-0" variant="success">編集</b-button>
+              <b-button class="header-button mb-0" variant="danger" style="margin-right: 5px;">削除</b-button>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="12">
+              {{ seminer.seminerDate.start.date }}
+            </b-col>
+          </b-row>
+        </div>
+      </b-card>
+    </div>
+  </div>
+
+  <!-- ダッシュボード、参加する勉強会 -->
+  <div v-else-if="type === 'dashboard-part'">
+    <div class="seminer-component">
+      <b-card header-tag="header">
+        <div slot="header" class="header-group">
+          <b-row>
+            <b-col cols="12">
+              <h4 class="mb-0">{{ seminer.title }}</h4>
+            </b-col>
+
+          </b-row>
+          <b-row>
+            <b-col cols="12">
+              {{ seminer.seminerDate.start.date }}
+            </b-col>
+          </b-row>
+        </div>
+      </b-card>
+    </div>
   </div>
 </template>
 
@@ -57,29 +92,19 @@ export default{
     VueMarkdown
   },
   props: {
-    title: {
-      default: '',
+    seminer: {
+    },
+    type: {
       type: String
     },
-    ownerId: {
+    seminerId: {
       default: '',
-      type: String
-    },
-    seminerDate: {
-    },
-    detailMember: {
-    },
-    itemId: {
-      default: '',
-      type: String
-    },
-    description: {
       type: String
     }
   },
   data () {
     return {
-      id: 'collapse'
+
     }
   },
   computed: {
@@ -90,7 +115,7 @@ export default{
       'getUserInfoByUserId'
     ]),
     checkSeminerOwner () {
-      if (this.getUserId === this.ownerId) {
+      if (this.getUserId === this.seminer.ownerId) {
         return false
       } else {
         return true
@@ -111,7 +136,7 @@ export default{
         cancelButtonColor: '#d33'
       }).then((result) => {
         if (result.value) {
-          console.log(this.addUserToSeminer(this.itemId))
+          console.log(this.addUserToSeminer(this.seminerId))
           this.$swal({
             title: '参加しました。',
             type: 'success'
@@ -127,13 +152,30 @@ export default{
 }
 </script>
 <style scoped>
-.header-group{
+/* .header-group{
   display: flex;
-}
+} */
 .header-button{
-  margin-left: auto;
+  float: right;
+}
+.header-owner{
+  border-radius: 30px;
 }
 .seminer-component{
   margin-bottom: 10px;
+}
+.title-link{
+  text-decoration: none;
+  color: black;
+}
+.title-link:hover{
+  color: gray;
+}
+.inCard-user{
+  display: flex;
+}
+.eyecatch{
+  object-fit: cover;
+  border: 2px dashed lightgray;
 }
 </style>

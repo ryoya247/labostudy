@@ -2,7 +2,7 @@
   <div class = 'mainpage'>
     <b-container>
       <div class="list-title">
-        <h1>Seminer List</h1>
+        <h1>List</h1>
         <!-- <b-button class="make-seminer" @click="makeSeminer">勉強会を作成</b-button> -->
         <!-- <b-button class="participate-seminer" @click="toMySeminerList">参加予定</b-button> -->
       </div>
@@ -10,25 +10,30 @@
       <b-row>
         <b-col cols="7">
           <div v-for="(seminer, index) in getSeminers" :key="index">
-            <seminer v-if="index != '.key' && seminer" :title="seminer.title" :ownerId="seminer.ownerId" :seminerDate="seminer.seminerDate" :itemId="index" :detailMember="seminer.detailMember" :description="seminer.description" @openDetail="openDetail"></seminer>
+            <seminer v-if="index != '.key' && seminer" :seminer="seminer" :seminerId="index" :type="'list'"></seminer>
           </div>
         </b-col>
         <b-col cols="5">
-          <h3>勉強会詳細</h3>
-          <b-card v-if="this.open">
+          <h3></h3>
+          <!-- <b-card v-if="this.open">
             <p>oooopppenenenen</p>
-          </b-card>
+          </b-card> -->
         </b-col>
       </b-row>
+      <!-- <full-calendar :events="events"></full-calendar> -->
     </b-container>
   </div>
 </template>
 <script>
 // import firebase from 'firebase'
 import { mapGetters } from 'vuex'
+// import { FullCalendar } from 'vue-full-calendar'
 import seminer from '@/components/seminer.vue'
 
 export default {
+  // components: {
+  //   FullCalendar,
+  // },
   data () {
     return {
       myCroppa: {},
@@ -37,8 +42,7 @@ export default {
         userEmail: '',
         userBio: '',
         userIcon: ''
-      },
-      open: false
+      }
     }
   },
   components: {
@@ -77,15 +81,15 @@ export default {
     console.log('getSeminers', Object.keys(this.getSeminers))
   },
   methods: {
-    openDetail () {
-      if (!this.open) {
-        console.log('this.open = true')
-        this.open = true
-      } else if (this.open) {
-        console.log('this.open = false')
-        this.open = false
-      }
-    }
+    // openDetail () {
+    //   if (!this.open) {
+    //     console.log('this.open = true')
+    //     this.open = true
+    //   } else if (this.open) {
+    //     console.log('this.open = false')
+    //     this.open = false
+    //   }
+    // }
   //   makeSeminer () {
   //     console.log(this.getUserId)
   //     // this.$router.push({ name: 'SeminerRegist', params: { item: this.userInfo } })
