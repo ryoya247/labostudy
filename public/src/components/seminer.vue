@@ -19,18 +19,17 @@
           </b-col>
           </b-row>
         </div>
-        <div class="inCard-user">
           <b-media>
-            <b-img v-if="seminer.seminerImage" slot="aside" :src="seminer.seminerImage" width="100" height="100" alt="placeholder" class="eyecatch"/>
-            <b-img v-else slot="aside" width="100" height="100" alt="placeholder" blank blank-color="#ccc" class="eyecatch" />
+            <b-img v-if="seminer.seminerImage" slot="aside" :src="seminer.seminerImage" width="70" height="70" alt="placeholder" class="eyecatch"/>
+            <b-img v-else slot="aside" width="70" height="70" alt="placeholder" blank blank-color="#ccc" class="eyecatch" />
+            {{ seminer.subtitle }}
           </b-media>
-
-          <b-img v-if="this.getUserInfoByUserId(seminer.ownerId).userIcon"  :src="this.getUserInfoByUserId(seminer.ownerId).userIcon" width="30" height="30"/>
-          <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="50" height="50"/>
-          <h6 style="font-weight: bold">{{ this.getUserInfoByUserId(seminer.ownerId).userName }}</h6>
-        </div>
-        <b-card-body>
-          <!-- <b-button @click="toParent">{{ title }}</b-button> -->
+        <b-card-body class="test">
+          <div class="inCard-user">
+            <b-img v-if="this.getUserInfoByUserId(seminer.ownerId).userIcon"  :src="this.getUserInfoByUserId(seminer.ownerId).userIcon" width="20" height="20"/>
+            <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="30" height="30"/>
+             <h6>{{ this.getUserInfoByUserId(seminer.ownerId).userName }}</h6>
+          </div>
         </b-card-body>
       </b-card>
     </div>
@@ -191,5 +190,8 @@ export default{
 .eyecatch{
   object-fit: cover;
   border: 2px dashed lightgray;
+}
+.test{
+  padding: 0;
 }
 </style>

@@ -23,11 +23,11 @@
 
           <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">サブタイトル（50文字以内）</p>
-            <b-form-input type="text" placeholder="サブタイトル" v-model="seminerInfo.title"></b-form-input>
+            <b-form-input type="text" placeholder="サブタイトル" v-model="seminerInfo.subtitle"></b-form-input>
           </b-card>
 
           <!-- 参加者詳細 -->
-          <b-card header-tag="header" bg-variant="light" class="form-card">
+          <!-- <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">参加者詳細</p>
             <b-row>
               <b-col cols="6">
@@ -38,12 +38,7 @@
                 <label for="capacity">定員数（人）</label>
                 <b-form-input v-model="seminerInfo.detailMember.capa" id="capacity" size="sm" type="text"></b-form-input>
               </b-col>
-              <!-- <b-col cols="3">
-                <label for="avlorlot">先着 / 抽選</label>
-                <b-form-select v-model="seminerInfo.detailMember.arrivalOrLottely" id="avlorlot" :options="arrivalOrLottely" size="sm" />
-              </b-col> -->
-            </b-row>
-          </b-card>
+            </b-row> -->
 
           <!-- イベント画像 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
@@ -98,50 +93,26 @@
                 {{ seminerInfo.seminerDate.date }}
                 <b-form-input v-model="seminerInfo.seminerDate.startTime" size="sm" type="time"></b-form-input>
               </b-col>
+              <template>
+                <div class="block">
+                  <span class="demonstration">Default</span>
+                  <el-date-picker
+                    v-model="value"
+                    type="datetime"
+                    placeholder="Select date and time">
+                  </el-date-picker>
+                </div>
+              </template>
             </b-row>
             <b-row>
               <b-col sm="7" id="dateStr">
                 <b-form-input v-model="seminerInfo.seminerDate.endTime" size="sm" type="time"></b-form-input>
               </b-col>
-                <!-- <div class="block">
-                  <span class="demonstration">Default</span>
-                  <el-date-picker
-                    v-model="value1"
-                    type="datetime"
-                    placeholder="Select date and time">
-                  </el-date-picker>
-                </div>
-                <el-time-select
-                  placeholder="Start time"
-                  v-model="startTime"
-                  :picker-options="{
-                    start: '08:30',
-                    step: '00:15',
-                    end: '18:30'
-                  }">
-                </el-time-select>
-                <el-time-select
-                  placeholder="End time"
-                  v-model="endTime"
-                  :picker-options="{
-                    start: '08:30',
-                    step: '00:15',
-                    end: '18:30',
-                    minTime: startTime
-                  }">
-                </el-time-select> -->
             </b-row>
           </b-card>
           <!-- イベント主催者 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">主催者情報</p>
-              <!-- <b-col cols="3">
-               <b-img :src="this.getUserIcon" width="80" height="80"></b-img>
-             </b-col>
-             <b-col cols="9">
-               <p>{{ this.getCurrentUserInfo.userName }}</p>
-               <p>{{ this.getCurrentUserInfo.userBio }}</p>
-             </b-col> -->
                <b-media>
                  <b-img v-if="this.getCurrentUserInfo.userIcon" slot="aside" :src="this.getCurrentUserInfo.userIcon" width="70" height="70" alt="placeholder" class="eyecatch"/>
                  <b-img v-else slot="aside" width="70" height="70" alt="placeholder" blank blank-color="#ccc" class="eyecatch" />
@@ -149,25 +120,6 @@
                  <p>{{ this.getCurrentUserInfo.userBio }}</p>
                </b-media>
           </b-card>
-          <!-- <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">場所</p>
-            <b-form-select v-model="seminerInfo.place" :options="canpassType" />
-            <GmapMap
-              :center="this.getCanpassType"
-              :zoom="14"
-              map-type-id="terrain"
-              style="width: 100%; height: 300px"
-            >
-              <GmapMarker
-                :key="index"
-                v-for="(m, index) in markers"
-                :position="m.position"
-                :clickable="false"
-                :draggable="false"
-                @click="center=m.position"
-              />
-            </GmapMap>
-          </b-card> -->
         </b-col>
       </b-row>
     </b-container>
@@ -189,6 +141,7 @@ export default{
     return {
       seminerInfo: {
         title: '',
+        subtitle: '',
         detailMember: {
           name: '',
           capa: ''
@@ -201,7 +154,7 @@ export default{
         },
         description: '',
         ownerId: this.getUserId,
-        value1: ''
+        value: ''
       },
       userInfo: {
         userName: '',

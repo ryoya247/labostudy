@@ -3,8 +3,6 @@
     <b-container>
       <div class="list-title">
         <h1>List</h1>
-        <!-- <b-button class="make-seminer" @click="makeSeminer">勉強会を作成</b-button> -->
-        <!-- <b-button class="participate-seminer" @click="toMySeminerList">参加予定</b-button> -->
       </div>
       <p>ハロー、{{ this.getUserName }}さん！</p>
       <b-row>
@@ -13,14 +11,7 @@
               <seminer v-if="index != '.key' && seminer" :seminer="seminer" :seminerId="index" :type="'list'"></seminer>
             </div>
           </b-col>
-        <b-col cols="5">
-          <h3></h3>
-          <!-- <b-card v-if="this.open">
-            <p>oooopppenenenen</p>
-          </b-card> -->
-        </b-col>
       </b-row>
-      <!-- <full-calendar :events="events"></full-calendar> -->
     </b-container>
   </div>
 </template>
