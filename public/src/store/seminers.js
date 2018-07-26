@@ -3,56 +3,60 @@ import firebaseApp from './../../firebase_setup'
 import * as constants from './constants'
 
 const db = firebaseApp.database()
-const seminerRef = db.ref('seminers/')
-const seminerParticiRef = (seminerKey) => {
-  return db.ref('seminers/' + seminerKey + '/participants')
+const seminersRef = db.ref('seminers/')
+const mySeminersRef = db.ref('mySeminers/')
+const attendSeminersRef = db.ref('attendSeminers/')
+
+const seminerAttendUsersRef = (seminerId) => {
+  return db.ref('seminers/' + semimerId + '/attendUsers')
 }
-const mySeminersRef = (currentUserId, seminerKey) => {
-  return db.ref('mySeminers/' + currentUserId + '/' + seminerKey)
+const currentMySeminersRef = (currentUserId, seminerId) => {
+  return db.ref('mySeminers/' + currentUserId + '/' + seminerId)
 }
-const participateSeminerRef = db.ref('participateSeminers/')
-const currentMySeminersRef = db.ref('mySeminers/')
 
 export const seminersModule = {
   namespaced: true,
   state: {
     seminers: {},
-    participateSeminers: {},
-    mySeminers: {}
+    mySeminers: {},
+    attendSeminers: {}
   },
   mutations: {
     ...firebaseMutations
   },
   actions: {
+    // 勉強会を新規登録した時の処理
     [constants.SET_NEW_SEMINER]: firebaseAction((context, value) => {
-      // const currentUserId = context.rootState.currentUserId
-      // const SeminerRegistRef = seminerRef.child(currentUserId).push()
-      // SeminerRegistRef.set(value)
-      const setSeminerRef = seminerRef.push()
-      const setMySeminersRef = mySeminersRef(context.rootState.currentUserId, setSeminerRef.getKey())
-      setMySeminersRef.set(1)
-      setSeminerRef.set(value)
+      const currentUserId = context.rootState.currentUserId
+      const setSeminersRef = seminersRef.push()
+      setSeminersRef.set(value)
+
+      const setCurrentMySeminersRef = currentMySeminersRef(currentUserId, setSeminersRef.getKey())
+      setCurrentMySeminersRef.set(1)
     }),
+    // 勉強会に参加した時の処理
     [constants.ADD_USER_TO_SEMINER]: firebaseAction((context, value) => {
       const currentUserId = context.rootState.currentUserId
-      console.log(currentUserId, value, context)
-      const addUserRef = participateSeminerRef.child(currentUserId).child(value)
-      addUserRef.set(1)
-      const addSeminerParticipateRef = seminerParticiRef(value).child(currentUserId)
-      addSeminerParticipateRef.set(1)
+      const setAttendSeminersRef = attendSeminersRef.child(currentUserId).child(value)
+      setAttendSeminersRef.set(1)
+      const setSeminerAttendUsersRef = seminerAttendUsersRef(value).child(currentUserId)
+      setSeminerAttendUsersRef.set(1)
     }),
+    // 登録した自分が主催の勉強会を削除した時の処理
     [constants.REMOVE_MY_SEMINER]: firebaseAction((context, value) => {
       const currentUserId = context.rootState.currentUserId
-      const removeSeminerRef = seminerRef.child(value)
-      const removeMySeminerRef = currentMySeminersRef.child(currentUserId).child(value)
+      const removeSeminersRef = seminersRef.child(value)
       removeSeminerRef.remove()
+
+      const removeMySeminersRef = currentMySeminersRef(currentUserId, value)
       removeMySeminerRef.remove()
     }),
+    // Getters constants
     [constants.GET_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
       bindFirebaseRef('seminers', seminerRef, { wait: true })
     }),
-    [constants.GET_PRTICIPATE_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
-      bindFirebaseRef('participateSeminers', participateSeminerRef, { wait: true })
+    [constants.GET_ATTEND_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
+      bindFirebaseRef('attendSeminers', attendSeminersRef, { wait: true })
     }),
     [constants.GET_CURRENT_MY_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
       bindFirebaseRef('mySeminers', currentMySeminersRef, { wait: true })
@@ -60,22 +64,20 @@ export const seminersModule = {
   },
   getters: {
     getSeminers: state => state.seminers,
-    getMySeminers: state => state.currentMySeminers,
-    getSeminersById: (state, getters, rootState) => (itemId) => {
-      let mySeminers = {}
-      if (state.participateSeminers[rootState.currentUserId]) {
-        for (let seminerId in state.participateSeminers[rootState.currentUserId]) {
-          if (itemId === seminerId) {
-            mySeminers[seminerId] = state.seminers[seminerId]
-          }
-        }
-      } else if (itemId === 'noseminers') {
-        return {'noseminers': 'noseminers'}
+    getMySeminers: state => state.mySeminers,
+    getAttendSeminers: state => state.attendSeminers,
+    getSeminerBySeminerId: (state, getters, rootState) => (seminerId) => {
+      let returnSeminer = {}
+      const seminers = state.seminers
+      if (seminers.seminerId) {
+        seminer = seminers.seminerId
+        return returnSeminer
+      } else {
+        return 'not exist seminer'
       }
-      return mySeminers
     },
-    getParticipateSeminers: (state, getters, rootState) => {
-      const stateParticipateSeminers = state.participateSeminers
+    getCurrentMySeminers: (state, getters, rootState) => (currentUserId) => {
+      const mySeminers = state.mySeminers
       if (stateParticipateSeminers[rootState.currentUserId]) {
         return stateParticipateSeminers[rootState.currentUserId]
       } else {
@@ -83,7 +85,6 @@ export const seminersModule = {
       }
     },
     getCurrentMyseminers: (state, getters, rootState) => (currentUserId) => {
-      // return用オブジェクト定義
       let returnMySeminers = {}
 
       const seminers = state.seminers

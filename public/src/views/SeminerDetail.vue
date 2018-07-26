@@ -8,7 +8,6 @@
     <b-row>
       <b-col cols="7">
         <b-card>
-          plplppk
         </b-card>
       </b-col>
     </b-row>
@@ -27,7 +26,8 @@ export default{
   data () {
     return {
       paraOid: '',
-      paraSid: ''
+      paraSid: '',
+      gotSeminer: {}
     }
   },
   computed: {
@@ -49,14 +49,11 @@ export default{
     if (this.$route.params) {
       this.paraOid = this.$route.params.oid
       this.paraSid = this.$route.params.sid
+      this.gotSeminer = this.getSeminersById(this.paraSid)
+      console.log(this.gotSeminer)
     } else {
       this.$router.replace('MainPage')
     }
-  },
-  methods: {
-    ...mapActions('seminers/', {
-      setNewSeminer: 'SET_NEW_SEMINER'
-    })
   }
 }
 </script>
