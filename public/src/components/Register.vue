@@ -14,11 +14,7 @@
             <b-form-group label='E-mail'>
               <b-form-input v-model='email' type='email' placeholder='email' required></b-form-input>
             </b-form-group>
-<<<<<<< HEAD:public/src/components/Register.vue
             <b-form-group label='パスワード'>
-=======
-            <b-form-group label='Password'>
->>>>>>> f6b7ee6... MainPage.vue を追加:myapp2/public/src/components/Register.vue
               <b-form-input v-model='password' type='password' placeholder='password' required></b-form-input>
             </b-form-group>
             <hr>
@@ -64,11 +60,7 @@ export default {
       if (this.email && this.password) {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
           function (user) {
-<<<<<<< HEAD:public/src/components/Register.vue
             console.log('register: success', user.uid)
-=======
-            console.log('register: success', user)
->>>>>>> f6b7ee6... MainPage.vue を追加:myapp2/public/src/components/Register.vue
             $router.push({
               name: 'ProfileRegist',
               params: { userEmail: user.email }
