@@ -50,3 +50,4 @@ typings/
 /functions/test*.js
 /functions/firebase-adminsdk/*.json
 /storage/_config/settings.json.tmp
+.DS_Store
