@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import VueMarkdown from 'vue-markdown'
 
 export default{

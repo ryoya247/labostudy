@@ -1,2 +1,2 @@
 # Lab_Study
-> this is Vue.js Project and 
+> this is Vue.js and Firebase project.

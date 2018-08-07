@@ -4,11 +4,11 @@ import * as constants from './constants'
 
 const db = firebaseApp.database()
 const seminersRef = db.ref('seminers/')
-const mySeminersRef = db.ref('mySeminers/')
+// const mySeminersRef = db.ref('mySeminers/')
 const attendSeminersRef = db.ref('attendSeminers/')
 
 const seminerAttendUsersRef = (seminerId) => {
-  return db.ref('seminers/' + semimerId + '/attendUsers')
+  return db.ref('seminers/' + seminerId + '/attendUsers')
 }
 const currentMySeminersRef = (currentUserId, seminerId) => {
   return db.ref('mySeminers/' + currentUserId + '/' + seminerId)
@@ -46,14 +46,14 @@ export const seminersModule = {
     [constants.REMOVE_MY_SEMINER]: firebaseAction((context, value) => {
       const currentUserId = context.rootState.currentUserId
       const removeSeminersRef = seminersRef.child(value)
-      removeSeminerRef.remove()
+      removeSeminersRef.remove()
 
       const removeMySeminersRef = currentMySeminersRef(currentUserId, value)
-      removeMySeminerRef.remove()
+      removeMySeminersRef.remove()
     }),
     // Getters constants
     [constants.GET_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
-      bindFirebaseRef('seminers', seminerRef, { wait: true })
+      bindFirebaseRef('seminers', seminersRef, { wait: true })
     }),
     [constants.GET_ATTEND_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
       bindFirebaseRef('attendSeminers', attendSeminersRef, { wait: true })
@@ -67,19 +67,18 @@ export const seminersModule = {
     getMySeminers: state => state.mySeminers,
     getAttendSeminers: state => state.attendSeminers,
     getSeminerBySeminerId: (state, getters, rootState) => (seminerId) => {
-      let returnSeminer = {}
       const seminers = state.seminers
       if (seminers.seminerId) {
-        seminer = seminers.seminerId
-        return returnSeminer
+        let seminer = seminers.seminerId
+        return seminer
       } else {
         return 'not exist seminer'
       }
     },
     getCurrentMySeminers: (state, getters, rootState) => (currentUserId) => {
       const mySeminers = state.mySeminers
-      if (stateParticipateSeminers[rootState.currentUserId]) {
-        return stateParticipateSeminers[rootState.currentUserId]
+      if (mySeminers[rootState.currentUserId]) {
+        return mySeminers[rootState.currentUserId]
       } else {
         return {'noseminers': 'noseminers'}
       }
