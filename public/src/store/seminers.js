@@ -75,14 +75,14 @@ export const seminersModule = {
         return 'not exist seminer'
       }
     },
-    getCurrentMySeminers: (state, getters, rootState) => (currentUserId) => {
-      const mySeminers = state.mySeminers
-      if (mySeminers[rootState.currentUserId]) {
-        return mySeminers[rootState.currentUserId]
-      } else {
-        return {'noseminers': 'noseminers'}
-      }
-    },
+    // getCurrentMySeminers: (state, getters, rootState) => (currentUserId) => {
+    //   const mySeminers = state.mySeminers
+    //   if (mySeminers[rootState.currentUserId]) {
+    //     return mySeminers[rootState.currentUserId]
+    //   } else {
+    //     return {'noseminers': 'noseminers'}
+    //   }
+    // },
     getCurrentMyseminers: (state, getters, rootState) => (currentUserId) => {
       let returnMySeminers = {}
 
