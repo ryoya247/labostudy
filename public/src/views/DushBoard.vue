@@ -4,7 +4,7 @@
       <div class="list-title">
         <h1>ダッシュボード</h1>
         <b-row>
-          <b-col cols="7">
+          <b-col cols="12">
             <b-tabs>
               <b-tab title="主催の勉強会">
                 <div class="intab-card">
@@ -24,8 +24,10 @@
               </b-tab>
             </b-tabs>
           </b-col>
-          <b-col cols="5">
-            <full-calendar :events="events" :config="this.config"></full-calendar>
+        </b-row>
+        <b-row>
+          <b-col cols="12">
+                <full-calendar :events="events" :config="this.config" ref="calender"></full-calendar>
           </b-col>
         </b-row>
       </div>

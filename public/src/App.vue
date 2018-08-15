@@ -8,5 +8,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import 'fullcalendar/dist/fullcalendar.css';
+@import '../static/css/my.css';
 </style>

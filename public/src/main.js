@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { sync } from 'vuex-router-sync'
@@ -10,11 +8,7 @@ import firebaseApp from './../firebase_setup'
 import BootstrapVue from 'bootstrap-vue'
 import Croppa from 'vue-croppa'
 import VueSweetalert2 from 'vue-sweetalert2'
-// import * as VueGoogleMaps from 'vue2-google-maps'
 import FullCalendar from 'vue-full-calendar'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/ja'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-croppa/dist/vue-croppa.css'
@@ -25,13 +19,6 @@ Vue.use(BootstrapVue)
 Vue.use(Croppa)
 Vue.use(VueSweetalert2)
 Vue.use(FullCalendar)
-Vue.use(ElementUI, {locale})
-// Vue.use(VueGoogleMaps, {
-//   load: {
-//     key: 'AIzaSyDu1p6YN1MO9bMeTovk-wYwfJneUuu4qes',
-//     libraries: 'places'
-//   }
-// })
 
 Vue.config.productionTip = false
 

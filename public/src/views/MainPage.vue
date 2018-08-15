@@ -16,7 +16,6 @@
   </div>
 </template>
 <script>
-// import firebase from 'firebase'
 import { mapGetters } from 'vuex'
 // import { FullCalendar } from 'vue-full-calendar'
 import seminer from '@/components/seminer.vue'
