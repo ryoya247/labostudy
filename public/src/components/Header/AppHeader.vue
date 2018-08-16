@@ -22,14 +22,6 @@
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0" @click="logout">ログアウト</b-dropdown-item-button>
             </b-dropdown>
           </b-nav-form>
-          <!-- <b-nav-item-dropdown right>
-            Using button-content slo
-            <template slot="button-content">
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Signout</b-dropdown-item>
-          </b-nav-item-dropdown> -->
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

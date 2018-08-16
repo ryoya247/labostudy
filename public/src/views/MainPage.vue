@@ -6,7 +6,7 @@
       </div>
       <p>ハロー、{{ this.getUserName }}さん！</p>
       <b-row>
-          <b-col cols="12" md="7" class="md_overflow">
+          <b-col cols="12" md="7">
             <div v-for="(seminer, index) in getSeminers" :key="index">
               <seminer v-if="index != '.key' && seminer" :seminer="seminer" :seminerId="index" :type="'list'"></seminer>
             </div>
@@ -17,7 +17,6 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-// import { FullCalendar } from 'vue-full-calendar'
 import seminer from '@/components/seminer.vue'
 
 export default {
@@ -71,43 +70,11 @@ export default {
     console.log('getSeminers', Object.keys(this.getSeminers))
   },
   methods: {
-    // openDetail () {
-    //   if (!this.open) {
-    //     console.log('this.open = true')
-    //     this.open = true
-    //   } else if (this.open) {
-    //     console.log('this.open = false')
-    //     this.open = false
-    //   }
-    // }
-  //   makeSeminer () {
-  //     console.log(this.getUserId)
-  //     // this.$router.push({ name: 'SeminerRegist', params: { item: this.userInfo } })
-  //     this.$router.push({ name: 'SeminerRegist' })
-  //   },
-  //   toMySeminerList () {
-  //     this.$router.push({ name: 'SeminerMyList' })
-  //   }
+
   }
 }
 
 </script>
 <style scoped>
-/* .make-seminer, .participate-seminer{
-  margin-top: 20px;
-  margin-right: 5px;
-} */
-/* .make-seminer{
-  margin-left: auto;
-} */
-.md_overflow{
-  height: 1000px;
-  overflow: auto;
-}
-.list-title{
-  /* margin-bottom: 5px; */
-  margin-top: 5px;
-  /* display: flex; */
-}
 
 </style>
