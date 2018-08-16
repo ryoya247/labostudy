@@ -10,5 +10,5 @@ export default {
 
 <style lang="scss">
 @import 'fullcalendar/dist/fullcalendar.css';
-@import '../static/css/my.css';
+@import '../static/css/my.sass';
 </style>
