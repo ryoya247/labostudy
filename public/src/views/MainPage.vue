@@ -1,15 +1,16 @@
 <template>
   <div class = 'mainpage'>
     <b-container>
-      <div class="list-title">
-        <h1>List</h1>
-      </div>
+      <h3 class="page_title">勉強会リスト</h3>
       <p>ハロー、{{ this.getUserName }}さん！</p>
       <b-row>
-          <b-col cols="12" md="7">
+          <b-col cols="12" md="6">
             <div v-for="(seminer, index) in getSeminers" :key="index">
               <seminer v-if="index != '.key' && seminer" :seminer="seminer" :seminerId="index" :type="'list'"></seminer>
             </div>
+          </b-col>
+          <b-col cols="12" md="6">
+            sfewf
           </b-col>
       </b-row>
     </b-container>
@@ -20,12 +21,8 @@ import { mapGetters } from 'vuex'
 import seminer from '@/components/seminer.vue'
 
 export default {
-  // components: {
-  //   FullCalendar,
-  // },
   data () {
     return {
-      myCroppa: {},
       userInfo: {
         userName: '',
         userEmail: '',
@@ -45,6 +42,9 @@ export default {
     ]),
     ...mapGetters('seminers/', [
       'getSeminers'
+    ]),
+    ...mapGetters('peoples/', [
+      'getUserInfoByUserId'
     ]),
     getUserName () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName

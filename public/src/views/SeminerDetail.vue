@@ -1,21 +1,19 @@
 <template>
   <b-container>
-    <div class="seminer-detail-header">
-      <h2>勉強会詳細</h2>
-      <b-button class="register-button" variant="primary">登録</b-button>
-      <b-button class="back-button" variant="danger">キャンセル</b-button>
-    </div>
+    <h2 class="page_title">勉強会詳細</h2>
     <b-row>
       <b-col cols="7">
         <b-card>
+          {{ seminer }}
         </b-card>
+        <b-button @click="onAttendButton">参加する</b-button>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import VueMarkdown from 'vue-markdown'
 
 export default{
@@ -25,9 +23,9 @@ export default{
   },
   data () {
     return {
-      paraOid: '',
-      paraSid: '',
-      gotSeminer: {}
+      params_oid: '',
+      params_sid: '',
+      seminer: {}
     }
   },
   computed: {
@@ -36,7 +34,7 @@ export default{
       'getCurrentUserInfo'
     ]),
     ...mapGetters('seminers/', [
-      'getSeminersById'
+      'getSeminerBySeminerId'
     ]),
     getUserIcon () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) {
@@ -47,31 +45,39 @@ export default{
   mounted: function () {
     console.log(this.$route.params)
     if (this.$route.params) {
-      this.paraOid = this.$route.params.oid
-      this.paraSid = this.$route.params.sid
-      this.gotSeminer = this.getSeminersById(this.paraSid)
-      console.log(this.gotSeminer)
+      this.params_oid = this.$route.params.oid
+      this.params_sid = this.$route.params.sid
+      this.seminer = this.getSeminerBySeminerId(this.params_sid)
     } else {
       this.$router.replace('MainPage')
+    }
+  },
+  methods: {
+    ...mapActions('seminers/', {
+      addUserToSeminer: 'ADD_USER_TO_SEMINER'
+    }),
+    onAttendButton () {
+      this.$swal({
+        title: '確認',
+        text: 'この勉強会に参加しますか？',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.value) {
+          console.log(this.addUserToSeminer(this.params_sid))
+          this.$swal({
+            title: '参加しました。',
+            type: 'success'
+          })
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-.seminer-detail-header{
-  margin-bottom: 20px;
-  margin-top: 10px;
-  display: flex;
-}
-.seminer-detail-header h2{
-  font-weight: bold;
-}
-.register-button, .back-button{
-  width: 150px;
-  margin-right: 5px;
-}
-.register-button{
-  margin-left: auto;
-}
+
 </style>

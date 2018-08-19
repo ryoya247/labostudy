@@ -65,7 +65,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="" scoped>
 h3{
   text-align: center;
   margin-top: 50px;

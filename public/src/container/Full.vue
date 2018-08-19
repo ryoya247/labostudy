@@ -1,14 +1,14 @@
 <template>
   <div class="app">
     <app-header></app-header>
-    <b-row>
-      <b-col sm="2" class="sidebar">
+    <div class="page_wrapper">
+      <div class="sidebar">
         <app-sidebar></app-sidebar>
-      </b-col>
-      <b-col sm="10">
+      </div>
+      <div class="page">
         <router-view></router-view>
-      </b-col>
-    </b-row>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -24,9 +24,5 @@ export default {
 }
 </script>
 <style>
-.sidebar {
-  height: 100vh;
-  background-color: skyblue;
-}
 
 </style>

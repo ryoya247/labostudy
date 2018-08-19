@@ -3,7 +3,7 @@ import firebaseApp from './../../firebase_setup'
 import * as constants from './constants'
 
 const db = firebaseApp.database()
-const usersRef = db.ref('users/')
+const usersRef = db.ref('users')
 
 export const peoplesModule = {
   namespaced: true,
@@ -19,8 +19,10 @@ export const peoplesModule = {
     })
   },
   getters: {
-    getUserInfoByUserId: (state) => (userId) => {
-      return state.users[userId] ? state.users[userId].userInfo : {}
+    getUsers: state => state.users,
+    getUserInfoByUserId: (state, getters, rootState) => (userId) => {
+      const users = state.users
+      return users[userId] ? users[userId].userInfo : {}
     }
   }
 }

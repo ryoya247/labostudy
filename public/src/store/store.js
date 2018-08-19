@@ -18,14 +18,12 @@ const myplugins = store => {
     console.log('in myPlugins', user)
     if (user) {
       store.dispatch(constants.GET_USER_INFO, user.uid)
+      store.dispatch('peoples/' + constants.GET_USERS)
 
-      let dispatchHeader = 'seminers/'
-      store.dispatch(dispatchHeader + constants.GET_SEMINERS)
-      store.dispatch(dispatchHeader + constants.GET_ATTEND_SEMINERS)
-      store.dispatch(dispatchHeader + constants.GET_CURRENT_MY_SEMINERS)
-
-      dispatchHeader = 'peoples/'
-      store.dispatch(dispatchHeader + constants.GET_USERS)
+      // var dispatchHeader = 'seminers/'
+      store.dispatch('seminers/' + constants.GET_SEMINERS)
+      store.dispatch('seminers/' + constants.GET_ATTEND_SEMINERS)
+      store.dispatch('seminers/' + constants.GET_CURRENT_MY_SEMINERS)
     }
   })
 }

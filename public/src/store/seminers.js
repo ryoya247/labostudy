@@ -4,7 +4,7 @@ import * as constants from './constants'
 
 const db = firebaseApp.database()
 const seminersRef = db.ref('seminers/')
-// const mySeminersRef = db.ref('mySeminers/')
+const mySeminersRef = db.ref('mySeminers/')
 const attendSeminersRef = db.ref('attendSeminers/')
 
 const seminerAttendUsersRef = (seminerId) => {
@@ -59,7 +59,7 @@ export const seminersModule = {
       bindFirebaseRef('attendSeminers', attendSeminersRef, { wait: true })
     }),
     [constants.GET_CURRENT_MY_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {
-      bindFirebaseRef('mySeminers', currentMySeminersRef, { wait: true })
+      bindFirebaseRef('mySeminers', mySeminersRef, { wait: true })
     })
   },
   getters: {
@@ -68,27 +68,18 @@ export const seminersModule = {
     getAttendSeminers: state => state.attendSeminers,
     getSeminerBySeminerId: (state, getters, rootState) => (seminerId) => {
       const seminers = state.seminers
-      if (seminers.seminerId) {
-        let seminer = seminers.seminerId
+      console.log(seminers)
+      if (seminers[seminerId]) {
+        let seminer = seminers[seminerId]
         return seminer
       } else {
         return 'not exist seminer'
       }
     },
-    // getCurrentMySeminers: (state, getters, rootState) => (currentUserId) => {
-    //   const mySeminers = state.mySeminers
-    //   if (mySeminers[rootState.currentUserId]) {
-    //     return mySeminers[rootState.currentUserId]
-    //   } else {
-    //     return {'noseminers': 'noseminers'}
-    //   }
-    // },
     getCurrentMyseminers: (state, getters, rootState) => (currentUserId) => {
       let returnMySeminers = {}
-
       const seminers = state.seminers
       const stateMySeminsers = state.mySeminers
-
       if (stateMySeminsers[currentUserId]) {
         for (let seminerId in stateMySeminsers[currentUserId]) {
           if (seminers[seminerId]) {
@@ -96,7 +87,6 @@ export const seminersModule = {
           }
         }
       }
-
       return returnMySeminers
     }
   }

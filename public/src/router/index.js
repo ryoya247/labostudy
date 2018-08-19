@@ -95,27 +95,3 @@ router.beforeEach((to, from, next) => {
   }
 })
 export default router
-// export default new Router({
-//   routes: [
-//     {
-//       path: '/',
-//       name: 'SignIn',
-//       component: SignIn
-//     },
-//     {
-//       path: '/register',
-//       name: 'Register',
-//       component: Register
-//     },
-//     {
-//       path: '/profileregist',
-//       name: 'ProfileRegist',
-//       component: ProfileRegist
-//     },
-//     {
-//       path: '/mianpage',
-//       name: 'MainPage',
-//       component: MainPage
-//     }
-//   ]
-// })

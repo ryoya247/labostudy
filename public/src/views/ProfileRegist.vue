@@ -52,7 +52,6 @@
 import { mapGetters, mapActions } from 'vuex'
 import { storage } from '@/main'
 import moment from 'moment'
-// import firebase from 'firebase'
 
 export default {
   name: 'ProfileRegist',
@@ -80,15 +79,6 @@ export default {
       }
     }
   },
-  // },
-  // mounted: function () {
-  //   console.log('mounted', this.$route.params)
-  //   console.log('mounted', this.getCurrentUserEmail)
-  //   if (this.$route.params) {
-  //     this.setDefaultUserInfo(this.$route.params.userEmail)
-  //     this.userInfo.userEmail = this.$route.params.userEmail
-  //   }
-  // },
   created: function () {
     console.log('created', this.$firebase.auth().currentUser.email)
     if (this.$firebase.auth().currentUser.email) {
@@ -140,9 +130,6 @@ export default {
       const storageProfilePhotoRef = storage.ref('profilepictures/' + userId)
       const path = profileImageUrl
       const photoImagesRef = storageProfilePhotoRef.child(path)
-      console.log('ここ', photoImagesRef)
-      // generateBlobで、画像からblobオブジェクトを作成します。
-      // blobオブジェクトをそのままputメソッドで、Cloud Storageにアップしています。
       this.myCroppa.generateBlob((blob) => {
         photoImagesRef.put(blob)
           .then((snapshot) => {
