@@ -43,7 +43,6 @@ export default{
     }
   },
   mounted: function () {
-    console.log(this.$route.params)
     if (this.$route.params) {
       this.params_oid = this.$route.params.oid
       this.params_sid = this.$route.params.sid

@@ -68,7 +68,6 @@ export const seminersModule = {
     getAttendSeminers: state => state.attendSeminers,
     getSeminerBySeminerId: (state, getters, rootState) => (seminerId) => {
       const seminers = state.seminers
-      console.log(seminers)
       if (seminers[seminerId]) {
         let seminer = seminers[seminerId]
         return seminer

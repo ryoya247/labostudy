@@ -5,22 +5,25 @@
         <div slot="header" class="header-group">
           <b-row>
             <b-col cols="10">
-              <h3 class="mb-0"><router-link :to="{ name: 'SeminerDetail', params: { oid: seminer.ownerId, sid: seminerId } }" class="title-link">{{ seminer.title }}</router-link></h3>
+              <p class="mb-0"><router-link :to="{ name: 'SeminerDetail', params: { oid: seminer.ownerId, sid: seminerId } }" class="title-link">{{ seminer.title }}</router-link></p>
             </b-col>
             <b-col cols="2">
               <div v-if="checkSeminerOwner">
                 <b-button class="header-button mb-0 header-owner" variant="info" disabled>主催</b-button>
               </div>
+              <div v-else>
+                <b-button class="header-button mb-0 header-owner" variant="primary" @click="toSeminerDetail">詳細を見る</b-button>
+              </div>
             </b-col>
           </b-row>
           <b-row>
             <b-col cols="12">
-            {{ seminer.seminerDate.date }} {{ seminer.seminerDate.startTime }}~
-          </b-col>
+              {{ seminer.seminerDate.date }} {{ seminer.seminerDate.startTime }}~
+            </b-col>
           </b-row>
         </div>
           <b-media>
-            <b-img v-if="seminer.seminerImage" slot="aside" :src="seminer.seminerImage" width="70" height="70" alt="placeholder" class="eyecatch"/>
+            <b-img v-if="seminer.seminerImage" slot="aside" :src="seminer.seminerImage" width="150" height="100" alt="placeholder" class="eyecatch"/>
             <b-img v-else slot="aside" width="70" height="70" alt="placeholder" blank blank-color="#ccc" class="eyecatch" />
             {{ seminer.subtitle }}
           </b-media>
@@ -140,6 +143,9 @@ export default{
       console.log('button clicked')
       this.$emit('openDetail')
     },
+    toSeminerDetail () {
+      this.$router.push({ name: 'SeminerDetail', params: { oid: this.seminer.ownerId, sid: this.seminerId } })
+    },
     deleteMySeminer (seminerId) {
       this.$swal({
         title: '確認',
@@ -158,6 +164,7 @@ export default{
 <style scoped>
 .header-button{
   float: right;
+  font-size: 0.8rem;
 }
 .header-owner{
   border-radius: 30px;

@@ -19,9 +19,6 @@
               </b-form-group>
               <hr>
               <b-row class='buttons'>
-                <!-- <b-col>
-                  <b-button type='submit' variant='info'>Register</b-button>
-                </b-col> -->
                 <b-col>
                   <b-button @click='onSignIn' variant='info'>ログイン</b-button>
                 </b-col>

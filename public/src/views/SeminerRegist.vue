@@ -193,7 +193,6 @@ export default{
       })
     },
     uploadResizedPhoto () {
-    // console.log(this.myCroppa.generateBlob(blob))
       var date = moment()
       let userId = this.getUserId
       var seminerImageUrl = (date / 1000) + '.jpg'

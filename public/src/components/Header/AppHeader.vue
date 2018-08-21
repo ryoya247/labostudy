@@ -76,7 +76,6 @@ export default {
           firebase.auth().signOut()
             .then((user) => this.destroySession())
             .then(() => {
-              console.log('destroySession:::::')
               this.$router.replace({ name: 'SignIn' })
             })
           this.$swal({
