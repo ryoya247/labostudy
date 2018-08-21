@@ -4,7 +4,7 @@
     <b-row>
       <b-col cols="7">
         <b-card>
-          {{ seminer }}
+          <b-img v-if="seminer.seminerImage" :src="seminer.seminerImage" width="200" alt="placeholder"/>
         </b-card>
         <b-button @click="onAttendButton">参加する</b-button>
       </b-col>

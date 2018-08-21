@@ -1,48 +1,25 @@
 <template>
   <div>
     <b-container>
-    <div class="eventRegistHeader">
-      <b-row>
-        <b-col cols="12" md="7">
-          <h2>勉強会作成</h2>
-        </b-col>
-        <b-col cols="12" md="5">
-          <b-button @click="onSeminerRegist" class="register-button" variant="primary">登録</b-button>
-          <b-button @click="cancelRegist" class="back-button" variant="danger">キャンセル</b-button>
-        </b-col>
-      </b-row>
-    </div>
-
+        <h2 class="page_title">勉強会作成</h2>
+        <b-button @click="onSeminerRegist" class="register-button" variant="primary">登録</b-button>
+        <b-button @click="cancelRegist" class="back-button" variant="danger">キャンセル</b-button>
       <b-row>
         <b-col cols="7">
           <!-- イベント名 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">勉強会名</p>
+            <p slot="header" class="mb-0 header-text">タイトル</p>
             <b-form-input size="lg" type="text" placeholder="勉強会のタイトルを入力" v-model="seminerInfo.title"></b-form-input>
           </b-card>
 
           <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">サブタイトル（50文字以内）</p>
+            <p slot="header" class="mb-0 header-text">サブタイトル</p>
             <b-form-input type="text" placeholder="サブタイトル" v-model="seminerInfo.subtitle"></b-form-input>
           </b-card>
 
-          <!-- 参加者詳細 -->
-          <!-- <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">参加者詳細</p>
-            <b-row>
-              <b-col cols="6">
-                <label for="participation">参加枠名</label>
-                <b-form-input v-model="seminerInfo.detailMember.name" id="participation" size="sm" type="text"></b-form-input>
-              </b-col>
-              <b-col cols="3">
-                <label for="capacity">定員数（人）</label>
-                <b-form-input v-model="seminerInfo.detailMember.capa" id="capacity" size="sm" type="text"></b-form-input>
-              </b-col>
-            </b-row> -->
-
           <!-- イベント画像 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">イベント画像</p>
+            <p slot="header" class="mb-0 header-text">サムネイル</p>
               <b-button v-b-modal.SelPicModal>画像を選択</b-button>
               <div class="img-wrapper">
                 <b-img class="cropped-img" v-if="this.seminerInfo.seminerImage" fluid :src="this.seminerInfo.seminerImage" alt=""/>
@@ -77,11 +54,8 @@
               </b-tab>
             </b-tabs>
           </b-card>
-          <!-- <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">詳細プレビュー</p>
-            <vue-markdown :source="seminerInfo.description"></vue-markdown>
-          </b-card> -->
         </b-col>
+
         <!-- sidebar (right) -->
         <b-col cols="5">
           <b-card header-tag="header" bg-variant="light" class="form-card">
@@ -90,34 +64,20 @@
               <b-col sm="5"><label for="dateStr">開催日</label></b-col>
               <b-col sm="7" id="dateStr">
                 <b-form-input v-model="seminerInfo.seminerDate.date" size="sm" type="date"></b-form-input>
-                {{ seminerInfo.seminerDate.date }}
                 <b-form-input v-model="seminerInfo.seminerDate.startTime" size="sm" type="time"></b-form-input>
-              </b-col>
-              <template>
-                <div class="block">
-                  <span class="demonstration">Default</span>
-                  <el-date-picker
-                    v-model="value"
-                    type="datetime"
-                    placeholder="Select date and time">
-                  </el-date-picker>
-                </div>
-              </template>
-            </b-row>
-            <b-row>
-              <b-col sm="7" id="dateStr">
                 <b-form-input v-model="seminerInfo.seminerDate.endTime" size="sm" type="time"></b-form-input>
               </b-col>
             </b-row>
           </b-card>
+
           <!-- イベント主催者 -->
           <b-card header-tag="header" bg-variant="light" class="form-card">
-            <p slot="header" class="mb-0 header-text">主催者情報</p>
+            <p slot="header" class="mb-0 header-text">主催者</p>
                <b-media>
-                 <b-img v-if="this.getCurrentUserInfo.userIcon" slot="aside" :src="this.getCurrentUserInfo.userIcon" width="70" height="70" alt="placeholder" class="eyecatch"/>
+                 <b-img v-if="this.getCurrentUserIcon" slot="aside" :src="this.getCurrentUserIcon" width="70" height="70" alt="placeholder" class="eyecatch"/>
                  <b-img v-else slot="aside" width="70" height="70" alt="placeholder" blank blank-color="#ccc" class="eyecatch" />
-                 <h5 class="mt-0">{{ this.getCurrentUserInfo.userName }}</h5>
-                 <p>{{ this.getCurrentUserInfo.userBio }}</p>
+                 <h5 class="mt-0">{{ this.getCurrentUserName }}</h5>
+                 <p>{{ this.getCurrentUserBio }}</p>
                </b-media>
           </b-card>
         </b-col>
@@ -142,10 +102,7 @@ export default{
       seminerInfo: {
         title: '',
         subtitle: '',
-        detailMember: {
-          name: '',
-          capa: ''
-        },
+        attendUsers: '',
         seminerImage: '',
         seminerDate: {
           date: '',
@@ -153,8 +110,7 @@ export default{
           endTime: ''
         },
         description: '',
-        ownerId: this.getUserId,
-        value: ''
+        ownerId: this.getUserId
       },
       userInfo: {
         userName: '',
@@ -170,16 +126,19 @@ export default{
       'getUserId',
       'getCurrentUserInfo'
     ]),
-    // getCanpassType () {
-    //   if (this.seminerInfo.place === 'meta') {
-    //     return {lat: 35.566032, lng: 139.403646}
-    //   } else if (this.markers[this.seminerInfo.place].position) {
-    //     return this.markers[this.seminerInfo.place].position
-    //   }
-    // },
-    getUserIcon () {
+    getCurrentUserIcon () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) {
         return this.getCurrentUserInfo.userIcon
+      }
+    },
+    getCurrentUserName () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) {
+        return this.getCurrentUserInfo.userName
+      }
+    },
+    getCurrentUserBio () {
+      if (this.getCurrentUserInfo && this.getCurrentUserInfo.userBio) {
+        return this.getCurrentUserInfo.userBio
       }
     },
     getDescription () {
@@ -188,16 +147,11 @@ export default{
       }
     }
   },
-  updated: function () {
-    console.log(this.seminerInfo)
-  },
   methods: {
     ...mapActions('seminers/', {
       setNewSeminer: 'SET_NEW_SEMINER'
     }),
     onSeminerRegist () {
-      console.log('currentUserId', this.getUserId)
-      console.log('onckick regist button')
       this.seminerInfo.ownerId = this.getUserId
       this.setNewSeminer(this.seminerInfo)
       this.$router.push({ name: 'MainPage' })
@@ -213,14 +167,17 @@ export default{
       // console.log(evt)
       if ((evt.trigger === 'backdrop' || evt.trigger === 'cancel' || evt.trigger === 'header-close') && this.myCroppa.imageSet) {
         evt.preventDefault()
-        if (confirm('てっててててて')) {
+        if (confirm('画像は保存されません、よろしいですか？')) {
           this.removeCroppa()
         }
       } else if ((evt.trigger === 'backdrop' || evt.trigger === 'cancel' || evt.trigger === 'header-close') && !this.myCroppa.imageSet) {
         this.$refs.modal.hide()
       } else if (evt.trigger === 'ok' && !this.myCroppa.imageSet) {
         evt.preventDefault()
-        alert('アラートだよ')
+        this.$swal({
+          title: '画像を選択してください。',
+          type: 'warning'
+        })
       } else if (evt.trigger === 'ok' && this.myCroppa.imageSet) {
         this.uploadResizedPhoto()
       }
@@ -258,19 +215,11 @@ export default{
       })
     }
   }
-  // mounted: function () {
-  //   console.log(this.$route.params)
-  //   if (this.$route.params.item) {
-  //     let items = this.$route.params.item
-  //     this.userInfo.userName = items.userName
-  //     console.log(this.userInfo.userName)
-  //   }
-  // }
 }
 </script>
 
 <style scoped>
-.form-card{
+/* .form-card{
   border: lightgray solid 3px;
   margin-bottom: 10px;
 }
@@ -296,5 +245,5 @@ export default{
 }
 .img-wrapper{
   width: 100%;
-}
+} */
 </style>

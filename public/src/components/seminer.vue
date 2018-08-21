@@ -30,6 +30,7 @@
             <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="30" height="30"/>
              {{ this.getUserInfoByUserId(seminer.ownerId).userName }}
           </div>
+          <p>参加人数：{{ this.getAttendMembersNum }}人</p>
         </b-card-body>
       </b-card>
     </div>
@@ -122,6 +123,11 @@ export default{
         return true
       } else {
         return false
+      }
+    },
+    getAttendMembersNum () {
+      if (this.seminer.attendUsers) {
+        return Object.keys(this.seminer.attendUsers).length
       }
     }
   },
