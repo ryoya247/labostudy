@@ -18,7 +18,6 @@
                 <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="30" height="30" class="m-1" />
               </template>
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0" @click="toProfile">{{ this.getUserName }}</b-dropdown-item-button>
-                <b-dropdown-item-button size="sm" class="my-2 my-sm-0" @click="toMySeminerList">参加リスト</b-dropdown-item-button>
                 <b-dropdown-item-button size="sm" class="my-2 my-sm-0" @click="logout">ログアウト</b-dropdown-item-button>
             </b-dropdown>
           </b-nav-form>
@@ -53,11 +52,8 @@ export default {
     makeSeminer () {
       this.$router.push({ name: 'SeminerRegist' })
     },
-    toMySeminerList () {
-      this.$router.push({ name: 'SeminerMyList' })
-    },
     brandClick () {
-      this.$router.replace({ name: 'MainPage' })
+      this.$router.replace({ name: 'SeminerList' })
     },
     toDushBoard () {
       this.$router.push({ name: 'DushBoard' })

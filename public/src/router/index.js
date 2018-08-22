@@ -4,12 +4,11 @@ import Full from '@/container/Full'
 import Register from '@/views/Register'
 import SignIn from '@/views/SignIn'
 import SeminerRegist from '@/views/SeminerRegist'
-import SeminerMyList from '@/views/SeminerMyList'
 import ProfileRegist from '@/views/ProfileRegist'
 import Profile from '@/views/Profile'
 import DushBoard from '@/views/DushBoard'
 import SeminerDetail from '@/views/SeminerDetail'
-import MainPage from '@/views/MainPage'
+import SeminerList from '@/views/SeminerList'
 
 import firebaseApp from './../../firebase_setup'
 
@@ -21,30 +20,53 @@ let router = new Router({
   routes: [
     {
       path: '/',
+      redirect: 'seminer',
       name: 'full',
       component: Full,
       meta: {
         requiresAuth: true
       },
-      redirect: 'mainpage',
       children: [
         {
-          path: 'mainpage',
-          name: 'MainPage',
-          component: MainPage
+          path: 'seminer',
+          redirect: 'seminer/list',
+          name: 'Seminer',
+          component: {
+            render (c) {
+              return c('router-view')
+            }
+          },
+          children: [
+            {
+              path: 'list',
+              name: 'SeminerList',
+              component: SeminerList
+            },
+            {
+              path: 'regist',
+              name: 'SeminerRegist',
+              component: SeminerRegist
+            },
+            {
+              path: 'detail',
+              name: ':seminerId',
+              component: {
+                render (c) {
+                  return c('router-view')
+                }
+              },
+              children: [
+                {
+                  path: ':seminerId',
+                  name: 'SeminerDetail',
+                  component: SeminerDetail
+                }
+              ]
+            }
+          ]
         },
         {
-          path: 'seminer-regist',
-          name: 'SeminerRegist',
-          component: SeminerRegist
-        },
-        {
-          path: 'seminer-my-list',
-          name: 'SeminerMyList',
-          component: SeminerMyList
-        },
-        {
-          path: 'dush-board',
+          path: 'dushboard',
           name: 'DushBoard',
           component: DushBoard
         },
@@ -52,11 +74,6 @@ let router = new Router({
           path: 'profile',
           name: 'Profile',
           component: Profile
-        },
-        {
-          path: 'seminer-detail',
-          name: 'SeminerDetail',
-          component: SeminerDetail
         }
       ]
     },

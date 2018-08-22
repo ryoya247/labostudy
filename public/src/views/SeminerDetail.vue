@@ -23,8 +23,7 @@ export default{
   },
   data () {
     return {
-      params_oid: '',
-      params_sid: '',
+      params_seminerId: '',
       seminer: {}
     }
   },
@@ -43,12 +42,10 @@ export default{
     }
   },
   mounted: function () {
+    console.log('params', this.params_seminerId)
     if (this.$route.params) {
-      this.params_oid = this.$route.params.oid
-      this.params_sid = this.$route.params.sid
-      this.seminer = this.getSeminerBySeminerId(this.params_sid)
-    } else {
-      this.$router.replace('MainPage')
+      this.params_seminerId = this.$route.params.seminerId
+      this.seminer = this.getSeminerBySeminerId(this.params_seminerId)
     }
   },
   methods: {

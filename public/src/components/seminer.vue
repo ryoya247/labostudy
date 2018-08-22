@@ -5,7 +5,9 @@
         <div slot="header" class="header-group">
           <b-row>
             <b-col cols="10">
-              <p class="mb-0"><router-link :to="{ name: 'SeminerDetail', params: { oid: seminer.ownerId, sid: seminerId } }" class="title-link">{{ seminer.title }}</router-link></p>
+              <!-- <p class="mb-0"><router-link :to="{ name: 'SeminerDetail', params: { oid: seminer.ownerId, sid: seminerId } }" class="title-link">{{ seminer.title }}</router-link></p> -->
+              <p class="mb-0"><router-link @click.prevent :to="{ name: 'SeminerDetail', params: { seminerId: this.seminerId} }" class="title-link">{{ seminer.title }}</router-link></p>
+
             </b-col>
             <b-col cols="2">
               <div v-if="checkSeminerOwner">
