@@ -4,7 +4,8 @@
     <b-row>
       <b-col cols="7">
         <b-card>
-          <b-img v-if="seminer.seminerImage" :src="seminer.seminerImage" width="200" alt="placeholder"/>
+          {{ this.params_seminerId}}
+          <b-img v-if="this.getParamsSeminer" :src="this.getParamsSeminer.seminerImage" width="200" alt="placeholder"/>
         </b-card>
         <b-button @click="onAttendButton">参加する</b-button>
       </b-col>
@@ -23,8 +24,7 @@ export default{
   },
   data () {
     return {
-      params_seminerId: '',
-      seminer: {}
+      params_seminerId: ''
     }
   },
   computed: {
@@ -39,13 +39,20 @@ export default{
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) {
         return this.getCurrentUserInfo.userIcon
       }
+    },
+    getParamsSeminer () {
+      if (this.params_seminerId) {
+        return this.getSeminerBySeminerId(this.params_seminerId)
+      }
     }
   },
+  updated: function () {
+    console.log('updated', this.seminer)
+  },
   mounted: function () {
-    console.log('params', this.params_seminerId)
     if (this.$route.params) {
-      this.params_seminerId = this.$route.params.seminerId
-      this.seminer = this.getSeminerBySeminerId(this.params_seminerId)
+      let seminerId = this.$route.params.seminerId
+      this.params_seminerId = seminerId
     }
   },
   methods: {
@@ -62,11 +69,12 @@ export default{
         cancelButtonColor: '#d33'
       }).then((result) => {
         if (result.value) {
-          console.log(this.addUserToSeminer(this.params_sid))
+          console.log(this.addUserToSeminer(this.params_seminerId))
           this.$swal({
             title: '参加しました。',
             type: 'success'
           })
+          this.$router.push({ name: 'SeminerList' })
         }
       })
     }

@@ -50,7 +50,7 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.userEmail, this.password).then(
         (user) => {
           console.log('*** sign in ***')
-          this.$router.push({ name: 'MainPage' })
+          this.$router.push({ name: 'SeminerList' })
         },
         (err) => {
           console.log('sign in failed', err)

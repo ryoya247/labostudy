@@ -72,7 +72,7 @@ export const seminersModule = {
         let seminer = seminers[seminerId]
         return seminer
       } else {
-        return 'not exist seminer'
+        return {}
       }
     },
     getCurrentMyseminers: (state, getters, rootState) => (currentUserId) => {

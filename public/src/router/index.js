@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Full from '@/container/Full'
+
 import Register from '@/views/Register'
 import SignIn from '@/views/SignIn'
-import SeminerRegist from '@/views/SeminerRegist'
-import ProfileRegist from '@/views/ProfileRegist'
-import Profile from '@/views/Profile'
-import DushBoard from '@/views/DushBoard'
-import SeminerDetail from '@/views/SeminerDetail'
+
 import SeminerList from '@/views/SeminerList'
+import SeminerRegist from '@/views/SeminerRegist'
+import SeminerDetail from '@/views/SeminerDetail'
+
+import Profile from '@/views/Profile'
+import ProfileRegist from '@/views/ProfileRegist'
+
+import DushBoard from '@/views/DushBoard'
+
+import User from '@/views/User'
 
 import firebaseApp from './../../firebase_setup'
 
@@ -74,6 +80,20 @@ let router = new Router({
           path: 'profile',
           name: 'Profile',
           component: Profile
+        },
+        {
+          path: 'user',
+          name: ':userId',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: ':userId',
+              name: 'User',
+              component: User
+            }
+          ]
         }
       ]
     },

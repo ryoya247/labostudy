@@ -33,7 +33,7 @@
           <div class="inCard-user">
             <b-img v-if="this.getUserInfoByUserId(seminer.ownerId).userIcon"  :src="this.getUserInfoByUserId(seminer.ownerId).userIcon" width="20" height="20"/>
             <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="30" height="30"/>
-             {{ this.getUserInfoByUserId(seminer.ownerId).userName }}
+             <router-link @click.prevent :to="{ name: 'User', params: { userId: seminer.ownerId } }" class="title-link">{{ this.getUserInfoByUserId(seminer.ownerId).userName }}</router-link>
           </div>
           <p>参加人数：{{ this.getAttendMembersNum }}人</p>
         </b-card-body>
@@ -146,7 +146,7 @@ export default{
       this.$emit('openDetail')
     },
     toSeminerDetail () {
-      this.$router.push({ name: 'SeminerDetail', params: { oid: this.seminer.ownerId, sid: this.seminerId } })
+      this.$router.push({ name: 'SeminerDetail', params: { seminerId: this.seminerId } })
     },
     deleteMySeminer (seminerId) {
       this.$swal({

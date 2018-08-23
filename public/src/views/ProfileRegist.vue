@@ -94,7 +94,7 @@ export default {
     onRegister () {
       console.log('click onRegister true')
       this.setProfile(this.userInfo)
-      this.$router.push({ name: 'MainPage' })
+      this.$router.push({ name: 'SeminerList' })
     },
     handleClickEvent: function (evt) {
       // console.log(evt)
