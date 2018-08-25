@@ -5,7 +5,7 @@ import * as constants from './constants'
 const db = firebaseApp.database()
 const usersRef = db.ref('users')
 
-export const peoplesModule = {
+export const peopleModule = {
   namespaced: true,
   state: {
     users: {}

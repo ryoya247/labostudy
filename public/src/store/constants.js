@@ -12,7 +12,7 @@ module.exports = {
   SET_NEW_SEMINER: 'SET_NEW_SEMINER',
   ADD_USER_TO_SEMINER: 'ADD_USER_TO_SEMINER',
   REMOVE_MY_SEMINER: 'REMOVE_MY_SEMINER',
-  // peoples
+  // people
   // getters
   GET_USERS: 'GET_USERS'
 }

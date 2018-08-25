@@ -142,7 +142,7 @@
                         <div class="public-detail">
                           <div class="">
                             <label class="control-label status-label" for="status">{{$t('releaseLabelTitle')}}</label>
-                            <span v-if="!this.getTargetObjective.targetItem.limitedAccess">{{$t('allPeopleStrType')}}</span>
+                            <span v-if="!this.getTargetObjective.targetItem.limitedAccess">{{$t('allpeopletrType')}}</span>
                             <span v-else-if="this.getTargetObjective.targetItem.limitedAccess.limitedUsers">{{$t('userBtnTile')}}</span>
                             <span v-else-if="this.getTargetObjective.targetItem.limitedAccess.limitedGroup">{{$t('peopleGroupTileType')}}</span>
                           </div>
@@ -239,7 +239,7 @@
                       <div class="public-detail">
                         <div>
                           <label class="control-label status-label" for="status">{{$t('releaseLabelTitle')}}</label>
-                          <span v-if="!this.getTargetOneItem.targetOneItem.limitedAccess">{{$t('allPeopleStrType')}}</span>
+                          <span v-if="!this.getTargetOneItem.targetOneItem.limitedAccess">{{$t('allpeopletrType')}}</span>
                           <span v-else-if="this.getTargetOneItem.targetOneItem.limitedAccess.limitedUsers">{{$t('userBtnTile')}}</span>
                           <span v-else-if="this.getTargetOneItem.targetOneItem.limitedAccess.limitedGroup">{{$t('peopleGroupTileType')}}</span>
                         </div>
@@ -357,7 +357,7 @@
                         <div class="public-detail">
                           <div>
                             <label class="control-label status-label" for="status">{{$t('releaseLabelTitle')}}</label>
-                            <span v-if="!this.getTargetFbRequest.targetFeed.limitedAccess">{{$t('allPeopleStrType')}}</span>
+                            <span v-if="!this.getTargetFbRequest.targetFeed.limitedAccess">{{$t('allpeopletrType')}}</span>
                             <span v-else-if="this.getTargetFbRequest.targetFeed.limitedAccess.limitedUsers">{{$t('userBtnTile')}}</span>
                           <span v-else-if="this.getTargetFbRequest.targetFeed.limitedAccess.limitedGroup">{{$t('peopleGroupTileType')}}</span>
                           </div>
@@ -537,7 +537,7 @@ export default {
     ...mapGetters('comments/', [
       'getCommentsByItemId'
     ]),
-    ...mapGetters('peoples/', [
+    ...mapGetters('people/', [
       'getUsers',
       'getUserById',
       'getUsersByIds',
@@ -1274,7 +1274,7 @@ export default {
     next()
   },
   methods: {
-    ...mapActions('peoples', {
+    ...mapActions('people', {
       setVisit: 'SET_VISIT_HISTORY'
     }),
     ...mapActions('okrs/', {

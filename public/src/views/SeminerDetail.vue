@@ -2,10 +2,22 @@
   <b-container>
     <h2 class="page_title">勉強会詳細</h2>
     <b-row>
-      <b-col cols="7">
-        <b-card>
-          {{ this.params_seminerId}}
-          <b-img v-if="this.getParamsSeminer" :src="this.getParamsSeminer.seminerImage" width="200" alt="placeholder"/>
+      <b-col cols="10">
+        <b-card v-if="getParamsSeminer">
+          <h3>{{ getParamsSeminer.title }}</h3>
+          <p>{{ getParamsSeminer.subtitle }}</p>
+          <img :src="getParamsSeminer.seminerImage" width="100%"/>
+
+          <div v-if="getParamsSeminer.attendUsers">
+            <p>参加者一覧</p>
+            <div v-for="(val, userId) in getParamsSeminer.attendUsers" :key="userId">
+              <div>
+                <b-img v-if="getUserInfoByUserId(userId).userIcon"  :src="getUserInfoByUserId(userId).userIcon" width="20" height="20"/>
+                <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="30" height="30"/>
+                <router-link @click.prevent :to="{ name: 'User', params: { userId: userId } }" class="title-link">{{ getUserInfoByUserId(userId).userName }}</router-link>
+              </div>
+            </div>
+          </div>
         </b-card>
         <b-button @click="onAttendButton">参加する</b-button>
       </b-col>
@@ -34,6 +46,9 @@ export default{
     ]),
     ...mapGetters('seminers/', [
       'getSeminerBySeminerId'
+    ]),
+    ...mapGetters('people/', [
+      'getUserInfoByUserId'
     ]),
     getUserIcon () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userIcon) {

@@ -14,7 +14,9 @@
             </b-tab>
             <b-tab title="参加する勉強会">
               <div class="intab-card">
-                ppp
+                <div v-for="(seminer, index) in this.getCurrentAttendSeminers(this.getUserId)" :key="index">
+                  <seminer :seminer="seminer" :seminerId="index" :type="'dashboard_attend'"></seminer>
+                </div>
               </div>
             </b-tab>
           </b-tabs>
@@ -51,6 +53,7 @@ export default{
       'getCurrentUserInfo'
     ]),
     ...mapGetters('seminers/', [
+      'getCurrentAttendSeminers',
       'getCurrentMyseminers',
       'getSeminersById'
     ]),

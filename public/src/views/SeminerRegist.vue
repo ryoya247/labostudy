@@ -154,14 +154,14 @@ export default{
     onSeminerRegist () {
       this.seminerInfo.ownerId = this.getUserId
       this.setNewSeminer(this.seminerInfo)
-      this.$router.push({ name: 'MainPage' })
+      this.$router.push({ name: 'SeminerList' })
       this.$swal({
         type: 'success',
         text: '登録しました！'
       })
     },
     cancelRegist () {
-      this.$router.push('/mainpage')
+      this.$router.push('SeminerList')
     },
     handleClickEvent: function (evt) {
       // console.log(evt)

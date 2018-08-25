@@ -67,7 +67,7 @@
   </div>
 
   <!-- ダッシュボード、参加する勉強会 -->
-  <div v-else-if="type === 'dashboard-part'">
+  <div v-else-if="type === 'dashboard_attend'">
     <div class="seminer-component">
       <b-card header-tag="header">
         <div slot="header" class="header-group">
@@ -117,7 +117,7 @@ export default{
     ...mapGetters([
       'getUserId'
     ]),
-    ...mapGetters('peoples/', [
+    ...mapGetters('people/', [
       'getUserInfoByUserId'
     ]),
     ...mapGetters('seminers/', [

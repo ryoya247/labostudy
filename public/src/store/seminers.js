@@ -76,17 +76,32 @@ export const seminersModule = {
       }
     },
     getCurrentMyseminers: (state, getters, rootState) => (currentUserId) => {
-      let returnMySeminers = {}
+      let returnCurrentMySeminers = {}
       const seminers = state.seminers
       const stateMySeminsers = state.mySeminers
       if (stateMySeminsers[currentUserId]) {
         for (let seminerId in stateMySeminsers[currentUserId]) {
           if (seminers[seminerId]) {
-            returnMySeminers[seminerId] = seminers[seminerId]
+            returnCurrentMySeminers[seminerId] = seminers[seminerId]
           }
         }
+        return returnCurrentMySeminers
       }
-      return returnMySeminers
+      return {}
+    },
+    getCurrentAttendSeminers: (state, getters, rootState) => (currentUserId) => {
+      let returnCurrentAttendSeminers = {}
+      const seminers = state.seminers
+      const stateAttendSeminers = state.attendSeminers
+      if (stateAttendSeminers[currentUserId]) {
+        for (let seminerId in stateAttendSeminers[currentUserId]) {
+          if (seminers[seminerId]) {
+            returnCurrentAttendSeminers[seminerId] = seminers[seminerId]
+          }
+        }
+        return returnCurrentAttendSeminers
+      }
+      return {}
     }
   }
 }

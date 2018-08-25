@@ -5,7 +5,7 @@ import firebaseApp from './../../firebase_setup'
 import * as constants from './constants'
 import { profilesModule } from './profiles'
 import { seminersModule } from './seminers'
-import { peoplesModule } from './peoples'
+import { peopleModule } from './people'
 
 const db = firebaseApp.database()
 
@@ -18,7 +18,7 @@ const myplugins = store => {
     console.log('in myPlugins', user)
     if (user) {
       store.dispatch(constants.GET_USER_INFO, user.uid)
-      store.dispatch('peoples/' + constants.GET_USERS)
+      store.dispatch('people/' + constants.GET_USERS)
 
       // var dispatchHeader = 'seminers/'
       store.dispatch('seminers/' + constants.GET_SEMINERS)
@@ -31,7 +31,7 @@ const store = new Vuex.Store({
   modules: {
     profiles: profilesModule,
     seminers: seminersModule,
-    peoples: peoplesModule
+    people: peopleModule
   },
   state: {
     currentUserId: firebaseApp.auth().currentUser

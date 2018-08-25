@@ -43,7 +43,7 @@ export default {
     ...mapGetters('seminers/', [
       'getSeminers'
     ]),
-    ...mapGetters('peoples/', [
+    ...mapGetters('people/', [
       'getUserInfoByUserId'
     ]),
     getUserName () {
