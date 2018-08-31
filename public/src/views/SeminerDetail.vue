@@ -1,15 +1,20 @@
 <template>
   <b-container>
-    <h2 class="page_title">勉強会詳細</h2>
+    <!-- <h2 class="page_title">勉強会詳細</h2> -->
     <b-row>
       <b-col cols="10">
         <b-card v-if="getParamsSeminer">
+          <img :src="getParamsSeminer.seminerImage" width="100%" style="border: solid lightgray 3px;"/>
           <h3>{{ getParamsSeminer.title }}</h3>
           <p>{{ getParamsSeminer.subtitle }}</p>
-          <img :src="getParamsSeminer.seminerImage" width="100%"/>
-
+          <div v-if="getParamsSeminer.description">
+            <b-card>
+              <p>詳細</p>
+              <vue-markdown :source="getParamsSeminer.description"></vue-markdown>
+            </b-card>
+          </div>
           <div v-if="getParamsSeminer.attendUsers">
-            <p>参加者一覧</p>
+            <p>参加者</p>
             <div v-for="(val, userId) in getParamsSeminer.attendUsers" :key="userId">
               <div>
                 <b-img v-if="getUserInfoByUserId(userId).userIcon"  :src="getUserInfoByUserId(userId).userIcon" width="20" height="20"/>

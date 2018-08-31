@@ -9,6 +9,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'fullcalendar/dist/fullcalendar.css';
 @import '../static/css/my.sass';
 </style>

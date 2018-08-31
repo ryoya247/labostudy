@@ -2,11 +2,6 @@
   <div class="dush-board">
     <b-container>
       <h3 class="page_title">ダッシュボード</h3>
-        <div class="calender">
-          <div class="inner-calender">
-            <full-calendar class="fullcalendar" :config="this.config" ref="calender" height="600"></full-calendar>
-          </div>
-        </div>
         <div class="tabs_tabs">
           <b-tabs>
             <b-tab title="主催の勉強会">
@@ -30,22 +25,16 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { FullCalendar } from 'vue-full-calendar'
-import 'fullcalendar/dist/locale/ja'
 import seminer from '@/components/seminer.vue'
 
 export default{
   name: 'DushBoard',
   components: {
-    FullCalendar,
     seminer
   },
   data () {
     return {
-      config: {
-        local: 'ja',
-        defaultView: 'month'
-      }
+
     }
   },
   computed: {
