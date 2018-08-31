@@ -122,8 +122,6 @@ router.beforeEach((to, from, next) => {
   console.log('requireAuth::::', requiresAuth)
   if (requiresAuth && !currentUser) {
     next({ name: 'SignIn' })
-  // } else if (currentUser && !currentUser.displayName) {
-  //   next({ name: 'ProfileRegist' })
   } else if (!requiresAuth && currentUser) {
     next()
   } else {

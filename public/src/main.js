@@ -27,7 +27,6 @@ export const db = firebaseApp.database()
 export const storage = firebaseApp.storage()
 
 sync(store, router)
-console.log('mainjs:: initUser')
 store.dispatch('initUser')
 
 let app

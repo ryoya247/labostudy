@@ -2,7 +2,11 @@
   <div class="dush-board">
     <b-container>
       <h3 class="page_title">ダッシュボード</h3>
-      <div class="flex">
+        <div class="calender">
+          <div class="inner-calender">
+            <full-calendar class="fullcalendar" :config="this.config" ref="calender" height="600"></full-calendar>
+          </div>
+        </div>
         <div class="tabs_tabs">
           <b-tabs>
             <b-tab title="主催の勉強会">
@@ -21,10 +25,6 @@
             </b-tab>
           </b-tabs>
         </div>
-        <div class="calender">
-          <full-calendar :config="this.config" ref="calender"></full-calendar>
-        </div>
-      </div>
     </b-container>
   </div>
 </template>
@@ -43,7 +43,8 @@ export default{
   data () {
     return {
       config: {
-        local: 'ja'
+        local: 'ja',
+        defaultView: 'month'
       }
     }
   },
