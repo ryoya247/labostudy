@@ -61,11 +61,21 @@
           <b-card header-tag="header" bg-variant="light" class="form-card">
             <p slot="header" class="mb-0 header-text">開催日時</p>
             <b-row>
-              <b-col sm="5"><label for="dateStr">開催日</label></b-col>
-              <b-col sm="7" id="dateStr">
-                <b-form-input v-model="seminerInfo.seminerDate.date" size="sm" type="date"></b-form-input>
-                <b-form-input v-model="seminerInfo.seminerDate.startTime" size="sm" type="time"></b-form-input>
-                <b-form-input v-model="seminerInfo.seminerDate.endTime" size="sm" type="time"></b-form-input>
+              <b-col sm="12">
+                <span class="demonstration">開始日時</span>
+                  <el-date-picker
+                    v-model="seminerInfo.seminerDate.start"
+                    type="datetime"
+                    placeholder="日時を選択"
+                    class="datepicker">
+                  </el-date-picker>
+                <span class="demonstration">終了日時</span>
+                  <el-date-picker
+                    v-model="seminerInfo.seminerDate.end"
+                    type="datetime"
+                    placeholder="日時を選択"
+                    class="datepicker">
+                  </el-date-picker>
               </b-col>
             </b-row>
           </b-card>
@@ -105,9 +115,8 @@ export default{
         attendUsers: '',
         seminerImage: '',
         seminerDate: {
-          date: '',
-          startTime: '',
-          endTime: ''
+          start: '',
+          end: ''
         },
         description: '',
         ownerId: this.getUserId
@@ -120,6 +129,9 @@ export default{
       },
       myCroppa: {}
     }
+  },
+  updated: function () {
+    console.log('seminerInfo', this.seminerInfo)
   },
   computed: {
     ...mapGetters([
@@ -151,9 +163,17 @@ export default{
     ...mapActions('seminers/', {
       setNewSeminer: 'SET_NEW_SEMINER'
     }),
+    dateToTimestamp (start, end) {
+      let ts = new Date(start).getTime()
+      this.seminerInfo.seminerDate.start = ts
+      let te = new Date(end).getTime()
+      this.seminerInfo.seminerDate.end = te
+    },
     onSeminerRegist () {
-      this.seminerInfo.ownerId = this.getUserId
-      this.setNewSeminer(this.seminerInfo)
+      let si = this.seminerInfo
+      si.ownerId = this.getUserId
+      this.dateToTimestamp(si.seminerDate.start, si.seminerDate.end)
+      this.setNewSeminer(si)
       this.$router.push({ name: 'SeminerList' })
       this.$swal({
         type: 'success',
@@ -161,7 +181,7 @@ export default{
       })
     },
     cancelRegist () {
-      this.$router.push('SeminerList')
+      this.$router.push({ name: 'SeminerList' })
     },
     handleClickEvent: function (evt) {
       // console.log(evt)
@@ -218,6 +238,9 @@ export default{
 </script>
 
 <style scoped>
+.datepicker {
+  width: 100%;
+}
 /* .form-card{
   border: lightgray solid 3px;
   margin-bottom: 10px;

@@ -10,4 +10,5 @@ export default {
 
 <style lang="scss">
 @import '../static/css/my.sass';
+
 </style>

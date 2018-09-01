@@ -20,7 +20,7 @@
           </b-row>
           <b-row>
             <b-col cols="12">
-              {{ seminer.seminerDate.date }} {{ seminer.seminerDate.startTime }}~
+              {{  getSeminerStart }}~{{ getSeminerEnd }}
             </b-col>
           </b-row>
         </div>
@@ -52,13 +52,16 @@
             </b-col>
             <b-col cols="4">
               <b-button class="header-button mb-0" variant="success">
-                <i class="far fa-edit"></i></b-button>
-              <b-button class="header-button mb-0" variant="danger" style="margin-right: 5px;" @click="deleteMySeminer(seminerId)"><i class="far fa-trash-alt"></i></b-button>
+                <i class="far fa-edit"></i>
+              </b-button>
+              <b-button class="header-button mb-0" variant="danger" style="margin-right: 5px;" @click="deleteMySeminer(seminerId)">
+                <i class="far fa-trash-alt"></i>
+              </b-button>
             </b-col>
           </b-row>
           <b-row>
             <b-col cols="12">
-              {{ seminer.seminerDate.date }}
+              {{ getSeminerStart }}
             </b-col>
           </b-row>
         </div>
@@ -79,7 +82,7 @@
           </b-row>
           <b-row>
             <b-col cols="12">
-              {{ seminer.seminerDate.date }}
+              {{ getSeminerStart }}
             </b-col>
           </b-row>
         </div>
@@ -91,6 +94,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import VueMarkdown from 'vue-markdown'
+import moment from 'moment'
 
 export default{
   name: 'seminer',
@@ -134,6 +138,16 @@ export default{
       if (this.seminer.attendUsers) {
         return Object.keys(this.seminer.attendUsers).length
       }
+    },
+    getSeminerStart () {
+      if (this.seminer.seminerDate.start) {
+        return moment(this.seminer.seminerDate.start).format('YYYY/MM/DD HH:mm')
+      }
+    },
+    getSeminerEnd () {
+      if (this.seminer.seminerDate.end) {
+        return moment(this.seminer.seminerDate.end).format('YYYY/MM/DD HH:mm')
+      }
     }
   },
   methods: {
@@ -155,7 +169,7 @@ export default{
         type: 'warning',
         showCancelButton: true
       }).then((result) => {
-        if (result) {
+        if (result.value) {
           this.removeMySeminer(seminerId)
         }
       })

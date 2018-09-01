@@ -102,6 +102,23 @@ export const seminersModule = {
         return returnCurrentAttendSeminers
       }
       return {}
+    },
+    getLatedAttendSeminer: (state, getters, rootState) => {
+      if (getters.getCurrentAttendSeminers(rootState.currentUserId)) {
+        let currentAttendSeminers = getters.getCurrentAttendSeminers(rootState.currentUserId)
+        Object.values(currentAttendSeminers).sort(function (a, b) {
+          let ca = a.seminerDate.start
+          let cb = b.seminerDate.start
+          let comparison = 0
+          if (ca < cb) {
+            comparison = 1
+          } else if (cb < ca) {
+            comparison = -1
+          }
+          return comparison
+        })
+        console.log(currentAttendSeminers)
+      }
     }
   }
 }

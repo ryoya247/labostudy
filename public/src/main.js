@@ -11,11 +11,15 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-croppa/dist/vue-croppa.css'
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/ja'
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(Croppa)
 Vue.use(VueSweetalert2)
+Vue.use(ElementUI, {locale})
 
 Vue.config.productionTip = false
 Vue.prototype.$firebase = firebaseApp

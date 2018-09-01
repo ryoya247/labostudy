@@ -4,13 +4,10 @@
       <h3 class="page_title">勉強会リスト</h3>
       <p>ハロー、{{ this.getUserName }}さん！</p>
       <b-row>
-          <b-col cols="12" md="6">
+          <b-col cols="10">
             <div v-for="(seminer, index) in getSeminers" :key="index">
               <seminer v-if="index != '.key' && seminer" :seminer="seminer" :seminerId="index" :type="'list'"></seminer>
             </div>
-          </b-col>
-          <b-col cols="12" md="6">
-            sfewf
           </b-col>
       </b-row>
     </b-container>

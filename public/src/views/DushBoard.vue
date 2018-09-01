@@ -2,24 +2,36 @@
   <div class="dush-board">
     <b-container>
       <h3 class="page_title">ダッシュボード</h3>
-        <div class="tabs_tabs">
-          <b-tabs>
-            <b-tab title="主催の勉強会">
-              <div class="intab-card">
-                <div v-for="(seminer, index) in this.getCurrentMyseminers(this.getUserId)" :key="index">
-                  <seminer :seminer="seminer" :seminerId="index" :type="'dashboard_my'"></seminer>
+      <b-row>
+        <b-col cols="7">
+          <div class="tabs_tabs">
+            <b-tabs>
+              <b-tab title="主催の勉強会">
+                <div class="intab-card">
+                  <div v-for="(seminer, index) in this.getCurrentMyseminers(this.getUserId)" :key="index">
+                    <seminer :seminer="seminer" :seminerId="index" :type="'dashboard_my'"></seminer>
+                  </div>
                 </div>
-              </div>
-            </b-tab>
-            <b-tab title="参加する勉強会">
-              <div class="intab-card">
-                <div v-for="(seminer, index) in this.getCurrentAttendSeminers(this.getUserId)" :key="index">
-                  <seminer :seminer="seminer" :seminerId="index" :type="'dashboard_attend'"></seminer>
+              </b-tab>
+              <b-tab title="参加する勉強会">
+                <div class="intab-card">
+                  <div v-for="(seminer, index) in this.getCurrentAttendSeminers(this.getUserId)" :key="index">
+                    <seminer :seminer="seminer" :seminerId="index" :type="'dashboard_attend'"></seminer>
+                  </div>
                 </div>
-              </div>
-            </b-tab>
-          </b-tabs>
-        </div>
+              </b-tab>
+            </b-tabs>
+          </div>
+        </b-col>
+        <b-col cols="5">
+          <b-card>
+            直近の勉強会
+            <b-card-body>
+              {{ this.getLatedAttendSeminer }}
+            </b-card-body>
+          </b-card>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -45,7 +57,8 @@ export default{
     ...mapGetters('seminers/', [
       'getCurrentAttendSeminers',
       'getCurrentMyseminers',
-      'getSeminersById'
+      'getSeminersById',
+      'getLatedAttendSeminer'
     ]),
     getUserName () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName
