@@ -107,9 +107,15 @@ export const seminersModule = {
       if (getters.getCurrentAttendSeminers(rootState.currentUserId)) {
         let currentAttendSeminers = getters.getCurrentAttendSeminers(rootState.currentUserId)
         console.log('1', Object.values(currentAttendSeminers))
-        for (let seminer of Object.values(currentAttendSeminers)) {
-          console.log(typeof(parseInt(seminer.seminerDate.start, 10)))
-        }
+        // for (let seminer of Object.values(currentAttendSeminers)) {
+        //   console.log(parseInt(seminer.seminerDate.start, 10))
+        // }
+        let sortedSeminers = Object.values(currentAttendSeminers).sort(function (a, b) {
+          console.log('a', a, 'b', b)
+          console.log('return', parseInt(a.seminerDate.start) - parseInt(b.seminerDate.start))
+          return parseInt(a.seminerDate.start) - parseInt(b.seminerDate.start)
+        })
+        return sortedSeminers
       }
     }
   }

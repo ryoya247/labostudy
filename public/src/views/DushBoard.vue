@@ -25,9 +25,11 @@
         </b-col>
         <b-col cols="5">
           <b-card>
-            直近の勉強会
+            次の勉強会
             <b-card-body>
-              {{ this.getLatedAttendSeminer }}
+              <div v-for="(seminer, index) in this.getLatedAttendSeminer" :key="index">
+                <seminer :seminer=seminer :type="'dashboard_lated_seminer'"></seminer>
+              </div>
             </b-card-body>
           </b-card>
         </b-col>

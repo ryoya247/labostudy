@@ -89,6 +89,25 @@
       </b-card>
     </div>
   </div>
+  <div v-else-if="type === 'dashboard_lated_seminer'">
+    <div class="seminer-component">
+      <b-card header-tag="header">
+        <div slot="header" class="header-group">
+          <b-row>
+            <b-col cols="12">
+              <h4 class="mb-0">{{ seminer.title }}</h4>
+            </b-col>
+
+          </b-row>
+          <b-row>
+            <b-col cols="12">
+              {{ getSeminerStart }}
+            </b-col>
+          </b-row>
+        </div>
+      </b-card>
+    </div>
+  </div>
 </template>
 
 <script>
