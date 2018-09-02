@@ -131,7 +131,7 @@ export default{
     }
   },
   updated: function () {
-    console.log('seminerInfo', this.seminerInfo)
+    console.log('seminerInfo', moment(this.seminerInfo.seminerDate.start))
   },
   computed: {
     ...mapGetters([
