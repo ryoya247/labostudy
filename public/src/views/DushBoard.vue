@@ -27,10 +27,12 @@
           <b-card>
             次の勉強会
             <b-card-body>
-              <div v-for="(seminer, index) in this.getLatedAttendSeminer" :key="index">
+              <!-- <div v-for="(seminer, index) in this.getLatedAttendSeminer" :key="index">
                 <seminer :seminer=seminer :type="'dashboard_lated_seminer'"></seminer>
-              </div>
+              </div> -->
+              <seminer :seminer=this.getLatedAttendSeminer :type="'dashboard_lated_seminer'"></seminer>
             </b-card-body>
+            あと{{ this.getNextSeminerTime }}
           </b-card>
         </b-col>
       </b-row>
@@ -65,6 +67,9 @@ export default{
     getUserName () {
       if (this.getCurrentUserInfo && this.getCurrentUserInfo.userName) return this.getCurrentUserInfo.userName
       else return ''
+    },
+    getNextSeminerTime () {
+      return 16
     }
   }
 }

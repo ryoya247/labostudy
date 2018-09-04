@@ -89,6 +89,8 @@
       </b-card>
     </div>
   </div>
+
+  <!-- ダッシュボード、次の勉強会 -->
   <div v-else-if="type === 'dashboard_lated_seminer'">
     <div class="seminer-component">
       <b-card header-tag="header">

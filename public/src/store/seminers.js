@@ -106,16 +106,12 @@ export const seminersModule = {
     getLatedAttendSeminer: (state, getters, rootState) => {
       if (getters.getCurrentAttendSeminers(rootState.currentUserId)) {
         let currentAttendSeminers = getters.getCurrentAttendSeminers(rootState.currentUserId)
-        console.log('1', Object.values(currentAttendSeminers))
-        // for (let seminer of Object.values(currentAttendSeminers)) {
-        //   console.log(parseInt(seminer.seminerDate.start, 10))
-        // }
-        let sortedSeminers = Object.values(currentAttendSeminers).sort(function (a, b) {
-          console.log('a', a, 'b', b)
-          console.log('return', parseInt(a.seminerDate.start) - parseInt(b.seminerDate.start))
+        let sortedSeminers = []
+        sortedSeminers = Object.values(currentAttendSeminers).sort(function (a, b) {
           return parseInt(a.seminerDate.start) - parseInt(b.seminerDate.start)
         })
-        return sortedSeminers
+        console.log(sortedSeminers[0])
+        return sortedSeminers[0]
       }
     }
   }
