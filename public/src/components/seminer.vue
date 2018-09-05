@@ -155,6 +155,12 @@ export default{
         return false
       }
     },
+    checkSeminerHoldTime () {
+      if (this.seminer.seminerDate.start && this.seminer.status) {
+        let dt = new Date().getTime()
+        let dts = new Date(this.seminer.seminerDate.start).getTime()
+      }
+    }
     getAttendMembersNum () {
       if (this.seminer.attendUsers) {
         return Object.keys(this.seminer.attendUsers).length
@@ -176,10 +182,6 @@ export default{
       addUserToSeminer: 'ADD_USER_TO_SEMINER',
       removeMySeminer: 'REMOVE_MY_SEMINER'
     }),
-    toParent () {
-      console.log('button clicked')
-      this.$emit('openDetail')
-    },
     toSeminerDetail () {
       this.$router.push({ name: 'SeminerDetail', params: { seminerId: this.seminerId } })
     },

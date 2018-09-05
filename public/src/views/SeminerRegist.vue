@@ -119,6 +119,7 @@ export default{
           end: ''
         },
         description: '',
+        status: 'beforeHold',
         ownerId: this.getUserId
       },
       userInfo: {

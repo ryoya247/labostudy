@@ -69,7 +69,14 @@ export default{
       else return ''
     },
     getNextSeminerTime () {
-      return 16
+      if (this.getLatedAttendSeminer) {
+        let dtNow = new Date().getTime()
+        let dtSeminer = new Date(this.getLatedAttendSeminer.seminerDate.start).getTime()
+        let diff = dtSeminer - dtNow
+        return diff
+      } else {
+        return "参加予定の勉強会はありません。"
+      }
     }
   }
 }
