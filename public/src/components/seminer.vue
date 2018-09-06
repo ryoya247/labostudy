@@ -105,6 +105,7 @@
             <b-col cols="12">
               {{ getSeminerStart }}
             </b-col>
+            check {{ checkSeminerHoldTime }}
           </b-row>
         </div>
       </b-card>
@@ -156,11 +157,19 @@ export default{
       }
     },
     checkSeminerHoldTime () {
-      if (this.seminer.seminerDate.start && this.seminer.status) {
+      if (this.seminer.seminerDate.start) {
         let dt = new Date().getTime()
         let dts = new Date(this.seminer.seminerDate.start).getTime()
+        let diff = dt - dts
+        let diffDate = Math.ceil(diff / 86400000)
+        console.log(diffDate)
+        if (diffDate < 0) {
+          return 'before'
+        } else if (diffDate >= 0) {
+          return 'yet'
+        }
       }
-    }
+    },
     getAttendMembersNum () {
       if (this.seminer.attendUsers) {
         return Object.keys(this.seminer.attendUsers).length

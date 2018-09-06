@@ -32,7 +32,7 @@
               </div> -->
               <seminer :seminer=this.getLatedAttendSeminer :type="'dashboard_lated_seminer'"></seminer>
             </b-card-body>
-            あと{{ this.getNextSeminerTime }}
+            {{ this.getNextSeminerTime }}
           </b-card>
         </b-col>
       </b-row>
@@ -73,9 +73,14 @@ export default{
         let dtNow = new Date().getTime()
         let dtSeminer = new Date(this.getLatedAttendSeminer.seminerDate.start).getTime()
         let diff = dtSeminer - dtNow
-        return diff
+        let diffDate = Math.ceil(diff / 86400000)
+        if (diffDate < 0) {
+          return Math.abs(diffDate) + '日前に終了しています。'
+        } else if (diffDate >= 0) {
+          return '次の勉強会まで' + diffDate + '日です。'
+        }
       } else {
-        return "参加予定の勉強会はありません。"
+        return '参加予定の勉強会はありません。'
       }
     }
   }
