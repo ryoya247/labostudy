@@ -103,6 +103,7 @@
             <b-col cols="12">
               {{ getSeminerStart }}
             </b-col>
+            check {{ checkSeminerHoldTime }}
           </b-row>
         </div>
       </b-card>
