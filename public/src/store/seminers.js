@@ -13,6 +13,9 @@ const seminerAttendUsersRef = (seminerId) => {
 const currentMySeminersRef = (currentUserId, seminerId) => {
   return db.ref('mySeminers/' + currentUserId + '/' + seminerId)
 }
+const seminerStatusRef = (seminerId) => {
+  return db.ref('seminers/' + seminerId + '/seminerDate/status')
+}
 
 export const seminersModule = {
   namespaced: true,
@@ -50,6 +53,11 @@ export const seminersModule = {
 
       const removeMySeminersRef = currentMySeminersRef(currentUserId, value)
       removeMySeminersRef.remove()
+    }),
+    // seminer status update
+    [constants.UPDATE_SEMINER_STATUS]: firebaseAction((context, value) => {
+      const seminer = seminerStatusRef(value.seminerId)
+      seminer.set(value.status)
     }),
     // Getters constants
     [constants.GET_SEMINERS]: firebaseAction(({ bindFirebaseRef }) => {

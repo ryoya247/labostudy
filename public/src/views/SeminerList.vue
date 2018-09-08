@@ -62,9 +62,14 @@ export default {
   },
   created () {
     console.log('::MainPage created::')
-  },
-  mounted () {
-    console.log('getSeminers', Object.keys(this.getSeminers))
+    let seminerIdsArray = []
+    let seminerIds = this.getSeminers
+    for (let seminerId in seminerIds) {
+      if (seminerId !== '.key') {
+        seminerIdsArray.push(seminerId)
+      }
+    }
+    console.log(seminerIdsArray)
   },
   methods: {
 

@@ -26,13 +26,16 @@
         <b-col cols="5">
           <b-card>
             次の勉強会
-            <b-card-body>
+            <b-card-body v-if="this.getLatedAttendSeminer">
               <!-- <div v-for="(seminer, index) in this.getLatedAttendSeminer" :key="index">
                 <seminer :seminer=seminer :type="'dashboard_lated_seminer'"></seminer>
               </div> -->
               <seminer :seminer=this.getLatedAttendSeminer :type="'dashboard_lated_seminer'"></seminer>
+              {{ this.getNextSeminerTime }}
             </b-card-body>
-            あと{{ this.getNextSeminerTime }}
+            <b-card-body v-else>
+              {{ this.getNextSeminerTime }}
+            </b-card-body>
           </b-card>
         </b-col>
       </b-row>
@@ -75,7 +78,7 @@ export default{
         let diff = dtSeminer - dtNow
         return diff
       } else {
-        return "参加予定の勉強会はありません。"
+        return '参加予定の勉強会はありません。'
       }
     }
   }

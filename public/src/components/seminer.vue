@@ -7,7 +7,6 @@
             <b-col cols="10">
               <!-- <p class="mb-0"><router-link :to="{ name: 'SeminerDetail', params: { oid: seminer.ownerId, sid: seminerId } }" class="title-link">{{ seminer.title }}</router-link></p> -->
               <p class="mb-0"><router-link @click.prevent :to="{ name: 'SeminerDetail', params: { seminerId: this.seminerId} }" class="title-link">{{ seminer.title }}</router-link></p>
-
             </b-col>
             <b-col cols="2">
               <div v-if="checkSeminerOwner">
@@ -20,7 +19,7 @@
           </b-row>
           <b-row>
             <b-col cols="12">
-              {{  getSeminerStart }}~{{ getSeminerEnd }}
+              {{ getSeminerStart }}~{{ getSeminerEnd }}
             </b-col>
           </b-row>
         </div>
@@ -33,7 +32,7 @@
           <div class="inCard-user">
             <b-img v-if="this.getUserInfoByUserId(seminer.ownerId).userIcon"  :src="this.getUserInfoByUserId(seminer.ownerId).userIcon" width="20" height="20"/>
             <b-img  v-else :src="'static/img/IMG_1680.PNG'" width="30" height="30"/>
-             <router-link @click.prevent :to="{ name: 'User', params: { userId: seminer.ownerId } }" class="title-link">{{ this.getUserInfoByUserId(seminer.ownerId).userName }}</router-link>
+             <router-link v-if="seminer" @click.prevent :to="{ name: 'User', params: { userId: seminer.ownerId } }" class="title-link">{{ this.getUserInfoByUserId(seminer.ownerId).userName }}</router-link>
           </div>
           <p>参加人数：{{ this.getAttendMembersNum }}人</p>
         </b-card-body>
@@ -99,7 +98,6 @@
             <b-col cols="12">
               <h4 class="mb-0">{{ seminer.title }}</h4>
             </b-col>
-
           </b-row>
           <b-row>
             <b-col cols="12">
@@ -135,7 +133,6 @@ export default{
   },
   data () {
     return {
-
     }
   },
   computed: {
@@ -146,7 +143,8 @@ export default{
       'getUserInfoByUserId'
     ]),
     ...mapGetters('seminers/', [
-      'getCurrentMyseminers'
+      'getCurrentMyseminers',
+      'getSeminers'
     ]),
     checkSeminerOwner () {
       if (this.getUserId === this.seminer.ownerId) {
@@ -155,32 +153,47 @@ export default{
         return false
       }
     },
-    checkSeminerHoldTime () {
-      if (this.seminer.seminerDate.start && this.seminer.status) {
-        let dt = new Date().getTime()
-        let dts = new Date(this.seminer.seminerDate.start).getTime()
-      }
-    }
     getAttendMembersNum () {
       if (this.seminer.attendUsers) {
         return Object.keys(this.seminer.attendUsers).length
       }
     },
     getSeminerStart () {
-      if (this.seminer.seminerDate.start) {
+      if (this.seminer.seminerDate) {
         return moment(this.seminer.seminerDate.start).format('YYYY/MM/DD HH:mm')
       }
     },
     getSeminerEnd () {
-      if (this.seminer.seminerDate.end) {
+      if (this.seminer.seminerDate) {
         return moment(this.seminer.seminerDate.end).format('YYYY/MM/DD HH:mm')
       }
+    }
+  },
+  mounted: function () {
+    console.log(this.seminer)
+    if (this.seminer.seminerDate) {
+      let dtNow = new Date().getTime()
+      let dtSeminer = new Date(this.seminer.seminerDate.start).getTime()
+      let diff = dtSeminer - dtNow
+      let value = {
+        seminerId: this.seminerId,
+        status: ''
+      }
+      if (diff < 0) {
+        value.statue = 'beforeHold'
+      } else if (diff >= 0) {
+        value.status = 'nowHold'
+      }
+
+      this.updateSeminerStatus(value)
+      console.log(this.seminerId)
     }
   },
   methods: {
     ...mapActions('seminers/', {
       addUserToSeminer: 'ADD_USER_TO_SEMINER',
-      removeMySeminer: 'REMOVE_MY_SEMINER'
+      removeMySeminer: 'REMOVE_MY_SEMINER',
+      updateSeminerStatus: 'UPDATE_SEMINER_STATUS'
     }),
     toSeminerDetail () {
       this.$router.push({ name: 'SeminerDetail', params: { seminerId: this.seminerId } })
